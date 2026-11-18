@@ -146,6 +146,18 @@
   line-height: 1.05;
 }
 
+/* Mentor cards: from sm up the whole composition is 30% larger
+   (--mc-text-scale is set on .mentor-card from MENTOR_CARD_SCALE). */
+@media (min-width: 40rem) {
+  .mentor-card .aardvark-h3 {
+    font-size: calc(clamp(1.7rem, 2.15vw, 2.3rem) * var(--mc-text-scale, 1));
+  }
+
+  .mentor-card .aardvark-body {
+    font-size: calc(clamp(1.02rem, 1.18vw, 1.2rem) * var(--mc-text-scale, 1));
+  }
+}
+
 /* ============================================================
    Aardvark SplitText Staggered Vertical Squash Wave
    ============================================================ */

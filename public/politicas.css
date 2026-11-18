@@ -1,0 +1,97 @@
+:root {
+  --canvas: #f4f6ff;
+  --midnight: #0a0c1a;
+  --neutral-11: #525770;
+  --periwinkle-2: #eef0fd;
+  --periwinkle-11: #5a5bb6;
+  --periwinkle-12: #303163;
+  --display: 'Familjen Grotesk', Arial, sans-serif;
+  --body: 'Atkinson Hyperlegible Next', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--midnight);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.doc {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 40px;
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--periwinkle-12);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font: 700 0.75rem/1 var(--display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--periwinkle-11);
+}
+
+h1,
+h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  margin-top: 36px;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.draft {
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--periwinkle-2);
+  color: var(--neutral-11);
+  font-size: 0.9375rem;
+}
+
+a {
+  color: var(--periwinkle-12);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--periwinkle-11);
+  outline-offset: 3px;
+}
+
+ul {
+  padding-left: 1.2em;
+}
+
+li + li {
+  margin-top: 6px;
+}
+
+.company {
+  margin-top: 48px;
+  color: var(--neutral-11);
+  font-size: 0.9375rem;
+}

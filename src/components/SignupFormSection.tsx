@@ -8,6 +8,7 @@ import { SignupFormSchema, type SignupFormValues } from '../utils/schemas';
 import { calculatePriceBreakdown } from '../utils/pricing';
 import { useAppStore } from '../store/useAppStore';
 import { AardvarkButtonAlt, SquaiCornerBlocks } from './AardvarkPrimitives';
+import { FOOTER, SIGNUP } from '../content/landing';
 import {
   createBoldCheckoutSession,
   submitInscription,
@@ -106,7 +107,7 @@ export function SignupFormSection() {
   return (
     <section
       id="inscripcion"
-      className="w-full relative z-20 bg-white rounded-[40px] md:rounded-[96px] lg:rounded-[120px] -mt-10 sm:-mt-16 lg:-mt-24 pt-20 sm:pt-28 lg:pt-32 pb-20 sm:pb-28 px-5 sm:px-8 lg:px-12 scroll-mt-24"
+      className="w-full relative z-20 bg-white pt-12 sm:pt-16 pb-12 sm:pb-16 px-5 sm:px-8 lg:px-12 scroll-mt-24"
       aria-labelledby="signup-heading"
     >
       <div className="max-w-[1680px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -118,23 +119,29 @@ export function SignupFormSection() {
           className="lg:col-span-5 space-y-6"
         >
           <h2 id="signup-heading" className="aardvark-h2 text-[#0A0C1A]">
-            Inscríbete en dos minutos.
+            {SIGNUP.title}
           </h2>
-          <p className="aardvark-lead text-[#525770] max-w-[460px]">
-            Solo te pedimos tres datos básicos para crear tu acceso y abrir tu enlace de pago seguro en línea. No llenas formularios eternos ni creas contraseñas antes de tiempo.
-          </p>
+          <p className="aardvark-lead text-[#525770] max-w-[460px]">{SIGNUP.lead}</p>
 
           <div className="bg-[#eef0fd] rounded-[28px] p-7 space-y-4">
             <div className="flex items-baseline justify-between gap-4">
-              <span className="text-base font-medium text-[#525770]">Valor del programa</span>
+              <span className="text-base font-medium text-[#525770]">{SIGNUP.priceLabel}</span>
               <span className="font-display font-bold text-3xl text-[#0A0C1A] tabular-nums">
                 {breakdown.formattedTotal}
               </span>
             </div>
+            <p className="font-display font-bold text-base text-[#0A0C1A]">{SIGNUP.priceNote}</p>
             <p className="text-sm sm:text-base text-[#525770] leading-relaxed">
-              {currency === 'COP'
-                ? 'Medios disponibles en línea: PSE, Nequi, Bancolombia y tarjetas débito o crédito.'
-                : 'Medios internacionales en línea: tarjetas Visa, Mastercard y American Express.'}
+              {currency === 'COP' ? SIGNUP.methodsCOP : SIGNUP.methodsUSD}
+            </p>
+            <p className="text-sm sm:text-base text-[#525770] leading-relaxed">
+              {SIGNUP.refundNote}{' '}
+              <a
+                href={FOOTER.legalLinks[0].href}
+                className="font-display font-bold text-[#303163] underline decoration-2 underline-offset-2 hover:text-[#5a5bb6]"
+              >
+                {SIGNUP.refundLinkLabel}
+              </a>
             </p>
           </div>
         </motion.div>
@@ -167,7 +174,7 @@ export function SignupFormSection() {
                     type="button"
                     onClick={() => handleCurrencyChange('COP')}
                     aria-pressed={currency === 'COP'}
-                    className={`py-2.5 px-4 rounded-xl text-base font-display font-bold transition-colors cursor-pointer whitespace-nowrap ${
+                    className={`py-2.5 px-2 min-[380px]:px-4 rounded-xl text-sm min-[380px]:text-base font-display font-bold transition-colors cursor-pointer whitespace-nowrap ${
                       currency === 'COP'
                         ? 'bg-[#8A8EF9] text-[#0A0C1A]'
                         : 'text-[#525770] hover:text-[#0A0C1A]'
@@ -179,7 +186,7 @@ export function SignupFormSection() {
                     type="button"
                     onClick={() => handleCurrencyChange('USD')}
                     aria-pressed={currency === 'USD'}
-                    className={`py-2.5 px-4 rounded-xl text-base font-display font-bold transition-colors cursor-pointer whitespace-nowrap ${
+                    className={`py-2.5 px-2 min-[380px]:px-4 rounded-xl text-sm min-[380px]:text-base font-display font-bold transition-colors cursor-pointer whitespace-nowrap ${
                       currency === 'USD'
                         ? 'bg-[#F9C24D] text-[#0A0C1A]'
                         : 'text-[#525770] hover:text-[#0A0C1A]'
@@ -256,7 +263,13 @@ export function SignupFormSection() {
               </div>
 
               <p className="text-sm text-[#525770] leading-relaxed">
-                Al enviar tus datos confirmas que son tuyos y correctos. El pago completo se procesa de forma segura en nuestra pasarela en línea.
+                {SIGNUP.consent}{' '}
+                <a
+                  href={FOOTER.legalLinks[1].href}
+                  className="font-display font-bold text-[#303163] underline decoration-2 underline-offset-2 hover:text-[#5a5bb6]"
+                >
+                  {FOOTER.legalLinks[1].label}
+                </a>
               </p>
 
               {signupMutation.isError && (
@@ -269,23 +282,37 @@ export function SignupFormSection() {
               )}
 
               <div className="pt-1">
-                <AardvarkButtonAlt
-                  type="submit"
-                  disabled={signupMutation.isPending}
-                  variant="periwinkle"
-                  size="lg"
-                  label={
-                    signupMutation.isPending
-                      ? 'Preparando enlace...'
-                      : `Ir al pago seguro (${breakdown.formattedDueNow})`
-                  }
-                  className="w-full"
-                />
+                {/* Phones get the short label so the two-part button fits the card.
+                    Wrappers toggle display because .aardvark-btn-alt sets it unlayered. */}
+                <div className="sm:hidden">
+                  <AardvarkButtonAlt
+                    type="submit"
+                    disabled={signupMutation.isPending}
+                    variant="periwinkle"
+                    size="md"
+                    label={signupMutation.isPending ? `${SIGNUP.pendingLabel}...` : SIGNUP.ctaSubmit}
+                    className="w-full"
+                  />
+                </div>
+                <div className="hidden sm:block">
+                  <AardvarkButtonAlt
+                    type="submit"
+                    disabled={signupMutation.isPending}
+                    variant="periwinkle"
+                    size="lg"
+                    label={
+                      signupMutation.isPending
+                        ? `${SIGNUP.pendingLabel}...`
+                        : `${SIGNUP.ctaSubmit} (${breakdown.formattedDueNow})`
+                    }
+                    className="w-full"
+                  />
+                </div>
               </div>
 
               <div className="flex items-center justify-center gap-2 text-sm text-[#525770]">
                 <Lock className="w-4 h-4 text-[#5a5bb6]" aria-hidden="true" />
-                <span>Transacción segura en línea · Confirmación inmediata</span>
+                <span>{SIGNUP.secureNote}</span>
               </div>
             </form>
           </motion.div>
