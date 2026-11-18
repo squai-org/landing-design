@@ -1,0 +1,576 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Familjen Grotesk", Arial, sans-serif;
+  --font-sans: "Atkinson Hyperlegible Next", Arial, sans-serif;
+  --font-human: "Gloria Hallelujah", cursive;
+
+  --color-squai-canvas: #F4F6FF;
+  --color-squai-midnight: #0A0C1A;
+
+  --color-neutral-1: #f2f3f6;
+  --color-neutral-2: #edeff5;
+  --color-neutral-3: #e3e5ef;
+  --color-neutral-4: #d9dcea;
+  --color-neutral-5: #d1d5e5;
+  --color-neutral-6: #c8cce0;
+  --color-neutral-7: #bbc1d9;
+  --color-neutral-8: #a7adcc;
+  --color-neutral-9: #7a7f9c;
+  --color-neutral-10: #6f7591;
+  --color-neutral-11: #525770;
+  --color-neutral-12: #1c1e2e;
+
+  --color-periwinkle-1: #f9faff;
+  --color-periwinkle-2: #eef0fd;
+  --color-periwinkle-3: #e1e4fd;
+  --color-periwinkle-4: #d2d7fc;
+  --color-periwinkle-5: #c3c9fc;
+  --color-periwinkle-6: #b4bafc;
+  --color-periwinkle-7: #a5abfc;
+  --color-periwinkle-8: #969bfc;
+  --color-periwinkle-9: #8a8ef9;
+  --color-periwinkle-10: #777ae3;
+  --color-periwinkle-11: #5a5bb6;
+  --color-periwinkle-12: #303163;
+}
+
+:root {
+  --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-soft-overshoot: cubic-bezier(0.59, 1, 0.88, 1.01);
+  --ease-bounce: cubic-bezier(0.34, 1.57, 0.64, 1);
+  --button-ease-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
+  --button-alt-ease-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
+  --ease-click: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: #FFFFFF;
+    color: #0A0C1A;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid #5a5bb6;
+    outline-offset: 3px;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Aardvark Reference Fluid Typography Scale (Familjen Grotesk Heavy Optical Weight)
+   ============================================================ */
+.aardvark-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.35rem, 8.4vw, 8rem);
+  line-height: 0.84;
+  letter-spacing: -0.032em;
+  -webkit-text-stroke: 0.018em currentColor;
+  paint-order: stroke fill;
+}
+
+.aardvark-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 5.55vw, 5.4rem);
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  -webkit-text-stroke: 0.018em currentColor;
+  paint-order: stroke fill;
+}
+
+.aardvark-h2-giant {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.2rem, 8.8vw, 8.2rem);
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  -webkit-text-stroke: 0.018em currentColor;
+  paint-order: stroke fill;
+}
+
+.aardvark-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.7rem, 2.15vw, 2.3rem);
+  line-height: 0.98;
+  letter-spacing: -0.018em;
+  -webkit-text-stroke: 0.012em currentColor;
+  paint-order: stroke fill;
+}
+
+.aardvark-benefit-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  -webkit-text-stroke: 0.02em currentColor;
+  paint-order: stroke fill;
+}
+
+.aardvark-benefit-pill-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.15rem, 5.2vw, 4.875rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  -webkit-text-stroke: 0.02em currentColor;
+  paint-order: stroke fill;
+}
+
+.aardvark-lead {
+  font-size: clamp(1.125rem, 1.48vw, 1.5rem);
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+}
+
+.aardvark-body {
+  font-size: clamp(1.02rem, 1.18vw, 1.2rem);
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+}
+
+.aardvark-handwritten-lg {
+  font-family: var(--font-human);
+  font-size: clamp(1.4rem, 2.15vw, 2.05rem);
+  line-height: 1.05;
+}
+
+/* ============================================================
+   Aardvark SplitText Staggered Vertical Squash Wave
+   ============================================================ */
+.aardvark-char {
+  display: inline-block;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes aardvark-char-wave {
+  0% {
+    transform: translateY(0) scaleY(1) rotate(0deg);
+  }
+  24% {
+    transform: translateY(45%) scaleY(0.32) rotate(16deg);
+  }
+  58% {
+    transform: translateY(-10%) scaleY(1.06) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(0) scaleY(1) rotate(0deg);
+  }
+}
+
+/* ============================================================
+   Aardvark Exact 2-Part Detached Button Alt (.button-alt)
+   ============================================================ */
+.aardvark-btn-alt {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  user-select: none;
+  background: transparent;
+  padding: 0;
+  transition: scale 0.15s var(--ease-click);
+}
+
+.aardvark-btn-alt:active {
+  scale: 0.955 0.925;
+}
+
+.aardvark-btn-alt__text-wrap {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  pointer-events: none;
+  transition:
+    translate 0.15s var(--ease-soft-overshoot),
+    rotate 0.15s var(--ease-soft-overshoot),
+    transform 0.15s var(--ease-soft-overshoot);
+}
+
+.aardvark-btn-alt__icon-wrap {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1;
+  margin-left: -1px;
+  flex-shrink: 0;
+  pointer-events: none;
+  transition:
+    translate 0.15s var(--ease-soft-overshoot),
+    rotate 0.15s var(--ease-soft-overshoot),
+    transform 0.15s var(--ease-soft-overshoot);
+}
+
+.aardvark-btn-alt__bg {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  transition:
+    scale 0.15s var(--ease-soft-overshoot),
+    transform 0.15s var(--ease-soft-overshoot);
+}
+
+.aardvark-btn-alt__text-outer,
+.aardvark-btn-alt__icon-outer {
+  grid-area: 1 / 1;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .aardvark-btn-alt:is(:hover, :focus-visible) .aardvark-btn-alt__bg,
+  .group\/card:hover .aardvark-btn-alt__bg {
+    scale: 0.955 0.925;
+    transform: scale(1.047, 1.081);
+    transition:
+      scale 0.15s var(--ease-soft-overshoot),
+      transform 0.35s 0.15s var(--button-alt-ease-bounce);
+  }
+
+  .aardvark-btn-alt:is(:hover, :focus-visible) .aardvark-btn-alt__text-wrap,
+  .group\/card:hover .aardvark-btn-alt__text-wrap {
+    translate: 0.25em 0.125em 0;
+    rotate: 4deg;
+    transform: rotate(-4deg) translate3d(-0.25em, -0.125em, 0);
+    transition:
+      translate 0.15s var(--ease-soft-overshoot),
+      rotate 0.15s var(--ease-soft-overshoot),
+      transform 0.35s 0.15s var(--button-alt-ease-bounce);
+  }
+
+  .aardvark-btn-alt:is(:hover, :focus-visible) .aardvark-btn-alt__icon-wrap,
+  .group\/card:hover .aardvark-btn-alt__icon-wrap {
+    translate: -0.5em 0.25em 0;
+    rotate: -18deg;
+    transform: rotate(18deg) translate3d(0.5em, -0.25em, 0);
+    transition:
+      translate 0.15s var(--ease-soft-overshoot),
+      rotate 0.15s var(--ease-soft-overshoot),
+      transform 0.35s 0.15s var(--button-alt-ease-bounce);
+  }
+
+  .aardvark-btn-alt:is(:hover, :focus-visible) .aardvark-char,
+  .aardvark-nav-pill:is(:hover, :focus-visible) .aardvark-char,
+  .aardvark-squash-btn:is(:hover, :focus-visible) .aardvark-char {
+    animation: aardvark-char-wave 0.62s var(--ease-bounce) forwards;
+    animation-delay: calc(var(--char-i, 0) * 16ms);
+  }
+}
+
+/* ============================================================
+   Asymmetrical Varied Squai Logo Accent Blocks Behind Rounded Cards & Pills
+   Uses CSS custom properties (--base-rot, --shift-x, --shift-y, --anim-delay)
+   so each card and pill gets unique angle, size, edge placement, and cadence.
+   ============================================================ */
+@keyframes squai-block-drift {
+  0%, 66%, 100% {
+    transform: translate3d(0, 0, 0) rotate(var(--base-rot, -14deg)) scale(1);
+  }
+  74% {
+    transform: translate3d(var(--shift-x, -4px), var(--shift-y, -6px), 0) rotate(calc(var(--base-rot, -14deg) + var(--rot-delta, -7deg))) scale(1.07);
+  }
+  82% {
+    transform: translate3d(calc(var(--shift-x, -4px) * -0.35), calc(var(--shift-y, -6px) * -0.35), 0) rotate(calc(var(--base-rot, -14deg) - var(--rot-delta, -7deg) * 0.45)) scale(0.97);
+  }
+  90% {
+    transform: translate3d(calc(var(--shift-x, -4px) * 0.6), calc(var(--shift-y, -6px) * 0.6), 0) rotate(calc(var(--base-rot, -14deg) + var(--rot-delta, -7deg) * 0.4)) scale(1.03);
+  }
+}
+
+.squai-block-drift {
+  animation: squai-block-drift var(--anim-dur, 4.8s) var(--anim-delay, 0s) infinite;
+  transform-origin: center center;
+}
+
+/* Hover-only wrapper used behind the 4 Module Cards (.books reference parity) */
+.squai-corner-hover-only {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0) scale(0.58);
+  transition:
+    opacity 0.22s var(--ease-smooth),
+    transform 0.36s var(--ease-bounce);
+}
+
+.group\/card:hover .squai-corner-hover-only,
+.group\/card:focus-within .squai-corner-hover-only {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ============================================================
+   Aardvark Pill Button (.button) & Social Circle Button
+   ============================================================ */
+.aardvark-nav-pill {
+  position: relative;
+  display: inline-grid;
+  user-select: none;
+  transition: scale 0.15s var(--ease-click);
+}
+
+.aardvark-nav-pill:active {
+  scale: 0.955 0.925;
+}
+
+.aardvark-nav-pill__bg {
+  grid-area: 1 / 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  transition:
+    scale 0.15s var(--ease-soft-overshoot),
+    transform 0.15s var(--ease-soft-overshoot),
+    background-color 0.2s var(--ease-smooth);
+}
+
+.aardvark-nav-pill__inner {
+  grid-area: 1 / 1;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .aardvark-nav-pill:is(:hover, :focus-visible) .aardvark-nav-pill__bg,
+  .aardvark-squash-btn:is(:hover, :focus-visible) .aardvark-squash-btn__bg {
+    scale: 0.955 0.925;
+    transform: scale(1.047, 1.081);
+    transition:
+      scale 0.15s var(--ease-soft-overshoot),
+      transform 0.35s 0.15s var(--button-ease-bounce);
+  }
+}
+
+.aardvark-squash-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: scale 0.15s var(--ease-click);
+}
+
+.aardvark-squash-btn:active {
+  scale: 0.95;
+}
+
+.aardvark-squash-btn__bg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+  transition:
+    scale 0.15s var(--ease-soft-overshoot),
+    transform 0.15s var(--ease-soft-overshoot),
+    background-color 0.25s var(--ease-smooth);
+}
+
+/* ============================================================
+   Aardvark Books / Modules Card Bottom Extension & Popping CTA
+   ============================================================ */
+.aardvark-book-card {
+  position: relative;
+  user-select: none;
+}
+
+.aardvark-book-card__inner {
+  display: grid;
+  transition: transform 0.35s var(--ease-bounce);
+}
+
+.aardvark-book-card__bg-bottom {
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  height: 4.5rem;
+  width: 100%;
+  transition: translate 0.3s var(--ease-smooth);
+}
+
+.aardvark-book-card__cta {
+  position: absolute;
+  bottom: -1.65rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.aardvark-book-card__cta .aardvark-btn-alt__text-wrap,
+.aardvark-book-card__cta .aardvark-btn-alt__icon-wrap {
+  opacity: 0;
+  translate: 0 -1.5rem 0;
+  transition:
+    opacity 0.18s var(--ease-smooth),
+    translate 0.25s var(--ease-smooth),
+    transform 0.25s var(--ease-smooth);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .group\/card:hover .aardvark-book-card__inner {
+    transform: rotate(0deg) translateY(-8px) !important;
+  }
+
+  .group\/card:hover .aardvark-book-card__bg-bottom {
+    translate: 0 1.45rem 0;
+    transition: translate 0.35s 0.1s var(--ease-bounce);
+  }
+
+  .group\/card:hover .aardvark-book-card__cta .aardvark-btn-alt__text-wrap {
+    opacity: 1;
+    translate: 0 0 0;
+    rotate: -12deg;
+    transform: rotate(12deg);
+    transition:
+      opacity 0.2s var(--ease-smooth),
+      translate 0.35s var(--button-alt-ease-bounce),
+      rotate 0.15s var(--button-alt-ease-bounce),
+      transform 0.35s 0.18s var(--button-alt-ease-bounce);
+    transition-delay: 0.12s;
+  }
+
+  .group\/card:hover .aardvark-book-card__cta .aardvark-btn-alt__icon-wrap {
+    opacity: 1;
+    translate: 0 0 0;
+    rotate: 12deg;
+    transform: rotate(-12deg);
+    transition:
+      opacity 0.2s var(--ease-smooth),
+      translate 0.35s var(--button-alt-ease-bounce),
+      rotate 0.15s var(--button-alt-ease-bounce),
+      transform 0.35s 0.18s var(--button-alt-ease-bounce);
+    transition-delay: 0.12s;
+  }
+}
+
+/* ============================================================
+   Aardvark Flow Cards Overlap
+   ============================================================ */
+@media (min-width: 1024px) {
+  .aardvark-flow-item:not(:first-child) {
+    margin-left: -1.4rem;
+  }
+}
+
+/* ============================================================
+   Aardvark Interactive Genre List (Blur+Scale Swap into Handwritten + Spread)
+   ============================================================ */
+.aardvark-genre-btn {
+  transition: transform 0.45s var(--ease-smooth);
+}
+
+.aardvark-genre-link-default {
+  will-change: transform, filter, opacity;
+  transition:
+    opacity 0.15s 0.05s var(--ease-smooth),
+    scale 0.35s var(--ease-bounce),
+    filter 0.25s 0.05s var(--ease-smooth);
+}
+
+.aardvark-genre-link-hover {
+  will-change: transform, filter, opacity;
+  opacity: 0;
+  scale: 0.75 1.25;
+  filter: blur(2px);
+  transition:
+    opacity 0.15s 0.05s var(--ease-smooth),
+    scale 0.35s var(--ease-bounce),
+    filter 0.25s 0.05s var(--ease-smooth);
+}
+
+.aardvark-genre-item:hover .aardvark-genre-link-default,
+.aardvark-genre-item[data-selected="true"] .aardvark-genre-link-default {
+  filter: blur(2px);
+  opacity: 0;
+  scale: 0.75 1.25;
+}
+
+.aardvark-genre-item:hover .aardvark-genre-link-hover,
+.aardvark-genre-item[data-selected="true"] .aardvark-genre-link-hover {
+  opacity: 1;
+  scale: 1 1;
+  filter: blur(0px);
+}
+
+.aardvark-genre-item:hover + .aardvark-genre-item .aardvark-genre-btn {
+  transform: translateY(1.5rem);
+}
+
+.aardvark-genre-item:hover + .aardvark-genre-item + .aardvark-genre-item .aardvark-genre-btn {
+  transform: translateY(0.6rem);
+}
+
+.aardvark-genre-item:has(+ .aardvark-genre-item:hover .aardvark-genre-btn) .aardvark-genre-btn {
+  transform: translateY(-1.5rem);
+}
+
+.aardvark-genre-item:has(+ .aardvark-genre-item + .aardvark-genre-item:hover .aardvark-genre-btn) .aardvark-genre-btn {
+  transform: translateY(-0.6rem);
+}
+
+@media (max-width: 991px) {
+  .aardvark-genre-item:hover + .aardvark-genre-item .aardvark-genre-btn {
+    transform: translateY(0.35rem);
+  }
+  .aardvark-genre-item:has(+ .aardvark-genre-item:hover .aardvark-genre-btn) .aardvark-genre-btn {
+    transform: translateY(-0.35rem);
+  }
+}
+
+/* ============================================================
+   Continuous Marquee Strip
+   ============================================================ */
+@keyframes aardvark-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.aardvark-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: aardvark-marquee 26s linear infinite;
+}
+
+.aardvark-marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  animation: aardvark-marquee 30s linear infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .aardvark-marquee-track,
+  .aardvark-marquee-track-reverse,
+  .aardvark-char,
+  .squai-block-tl-back,
+  .squai-block-tl-front,
+  .squai-block-tr-back,
+  .squai-block-tr-front {
+    animation: none !important;
+  }
+}
