@@ -7,9 +7,9 @@ import { trackConversionEvent } from '../utils/analyticsClient';
 
 const QUICK_TOPICS = [
   {
-    label: 'Dudas sobre los 4 módulos del programa',
+    label: 'Dudas sobre las 8 sesiones del programa',
     message:
-      'Hola Squai, quiero resolver una duda sobre los módulos de Fundamentos de IA para el Trabajo.',
+      'Hola Squai, quiero resolver una duda sobre las sesiones de Fundamentos de IA para el Trabajo.',
   },
   {
     label: 'Medios de pago disponibles',

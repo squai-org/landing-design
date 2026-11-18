@@ -1,0 +1,11 @@
+WEBVTT
+
+NOTE
+MUESTRA: subtítulos provisionales. Se reemplazan cuando el video de
+presentación esté grabado (PRESENTATION.video.src en src/content/landing.ts).
+
+00:00:00.000 --> 00:00:04.000
+Hola, somos Laura y Sebastián, y enseñamos IA en Squai.
+
+00:00:04.000 --> 00:00:09.000
+En este video te contamos para quién es el programa y cómo son las clases.

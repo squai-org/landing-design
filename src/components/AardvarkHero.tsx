@@ -1,13 +1,14 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { AardvarkButtonAlt, HeroRibbonSvg, SquaiCornerBlocks } from './AardvarkPrimitives';
+import { HERO, pexelsUrl } from '../content/landing';
 
 interface AardvarkHeroProps {
   onPrimaryCta: () => void;
-  onExploreModules: () => void;
+  onExploreSessions: () => void;
 }
 
-export function AardvarkHero({ onPrimaryCta, onExploreModules }: AardvarkHeroProps) {
+export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroProps) {
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -19,10 +20,11 @@ export function AardvarkHero({ onPrimaryCta, onExploreModules }: AardvarkHeroPro
   const ribbonY = useTransform(scrollYProgress, [0, 1], [0, 84]);
 
   return (
-    <div id="programa" className="bg-white">
+    <div className="bg-white">
       <section
         id="inicio"
         ref={heroRef}
+        aria-labelledby="hero-heading"
         className="w-full relative bg-[#8A8EF9] text-[#0A0C1A] rounded-b-[40px] md:rounded-b-[96px] lg:rounded-b-[120px] pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-24 px-5 sm:px-8 lg:px-12 min-h-[calc(100vh-16px)] flex flex-col justify-between overflow-x-clip"
       >
         {/* Inner backdrop clip for organic Aardvark ribbon wave */}
@@ -41,34 +43,32 @@ export function AardvarkHero({ onPrimaryCta, onExploreModules }: AardvarkHeroPro
         <div className="max-w-[1680px] w-full mx-auto relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Giant Aardvark-Scale Display H1 + Copy + Single Clear CTA + Handwritten Pricing Note */}
           <div className="lg:col-span-6 space-y-7 sm:space-y-8 pt-2 lg:pt-4">
-            <h1 className="aardvark-h1 text-[#0A0C1A]">
-              Aprende a usar IA en tu trabajo sin vueltas.
+            <h1 id="hero-heading" className="aardvark-h1 text-[#0A0C1A]">
+              {HERO.title}
             </h1>
 
-            <p className="aardvark-lead text-[#0A0C1A] max-w-[440px]">
-              Cuatro sesiones prácticas para entender cómo funciona la IA, pedirle bien desde la primera vez y cuidar la información de tu trabajo.
-            </p>
+            <p className="aardvark-lead text-[#0A0C1A] max-w-[440px]">{HERO.lead}</p>
 
             <div className="flex flex-wrap items-center gap-5 pt-1">
               <AardvarkButtonAlt
-                label="Inscribirme al programa"
+                label={HERO.ctaPrimary}
                 variant="dark"
                 size="lg"
                 onClick={onPrimaryCta}
               />
               <button
                 type="button"
-                onClick={onExploreModules}
+                onClick={onExploreSessions}
                 className="font-display font-bold text-lg text-[#0A0C1A] underline decoration-2 underline-offset-4 hover:text-[#303163] transition-colors py-2 cursor-pointer whitespace-nowrap"
               >
-                Ver los 4 módulos
+                {HERO.ctaSecondary}
               </button>
             </div>
 
             <div className="pt-1">
-              <span className="font-human text-lg sm:text-xl lg:text-[26px] leading-tight text-[#0A0C1A] inline-block -rotate-1 sm:whitespace-nowrap">
-                $399.000 COP / $129 USD · Pago único en línea
-              </span>
+              <p className="font-human text-lg sm:text-xl lg:text-[26px] leading-tight text-[#0A0C1A] inline-block -rotate-1 xl:whitespace-nowrap">
+                {HERO.note}
+              </p>
             </div>
           </div>
 
@@ -83,17 +83,13 @@ export function AardvarkHero({ onPrimaryCta, onExploreModules }: AardvarkHeroPro
                 <SquaiCornerBlocks size="card" preset="hero-left" backColor="#d2d7fc" />
                 <div className="relative z-10 bg-white rounded-[32px] sm:rounded-[38px] p-3 sm:p-4 shadow-2xl">
                   <div className="pb-2.5 sm:pb-3 pt-1 px-2 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
-                    <span className="aardvark-h3 text-[#0A0C1A]">
-                      Programa en vivo
-                    </span>
-                    <span className="font-human text-sm sm:text-lg text-[#5a5bb6]">
-                      4 sesiones
-                    </span>
+                    <span className="aardvark-h3 text-[#0A0C1A]">{HERO.cardLive.title}</span>
+                    <span className="font-human text-sm sm:text-lg text-[#5a5bb6]">{HERO.cardLive.note}</span>
                   </div>
                   <div className="aspect-[4/4.7] rounded-[22px] sm:rounded-[28px] overflow-hidden bg-[#eef0fd]">
                     <img
-                      src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1000"
-                      alt="Equipo revisando procesos reales de trabajo en sesión práctica"
+                      src={pexelsUrl(HERO.cardLive.imageId, 1000)}
+                      alt={HERO.cardLive.alt}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
@@ -110,19 +106,15 @@ export function AardvarkHero({ onPrimaryCta, onExploreModules }: AardvarkHeroPro
                 <div className="relative z-10 bg-[#F9C24D] rounded-[32px] sm:rounded-[38px] p-3 sm:p-4 shadow-2xl">
                   <div className="aspect-[4/4.7] rounded-[22px] sm:rounded-[28px] overflow-hidden bg-[#eef0fd]">
                     <img
-                      src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1000"
-                      alt="Profesionales practicando instrucciones útiles con IA"
+                      src={pexelsUrl(HERO.cardNoCode.imageId, 1000)}
+                      alt={HERO.cardNoCode.alt}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="pt-3.5 sm:pt-4 pb-1 px-2">
-                    <p className="aardvark-h3 text-[#0A0C1A]">
-                      Sin saber programar
-                    </p>
-                    <p className="font-human text-sm sm:text-lg text-[#0A0C1A] mt-0.5">
-                      De casos reales a tu semana
-                    </p>
+                    <p className="aardvark-h3 text-[#0A0C1A]">{HERO.cardNoCode.title}</p>
+                    <p className="font-human text-sm sm:text-lg text-[#0A0C1A] mt-0.5">{HERO.cardNoCode.note}</p>
                   </div>
                 </div>
               </motion.div>

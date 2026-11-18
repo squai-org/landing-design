@@ -58,7 +58,7 @@ export type SquaiBlockPreset =
   | 'mod-3'
   | 'mod-4'
   | 'mentor-laura'
-  | 'mentor-sebas'
+  | 'mentor-sebastian'
   | 'signup-form'
   | 'pill-diag-tl'
   | 'pill-diag-tr'
@@ -215,11 +215,13 @@ const BLOCK_PRESETS: Record<SquaiBlockPreset, [BlockPlacement, BlockPlacement]> 
       dur: '5.1s',
     },
   ],
-  // Mentor Laura (portrait overlaps left side at top-20, role stamp top-right -> blocks hug top-left-center & bottom-right)
+  // Mentor cards are 30% larger from sm up: offsets are scaled here and the
+  // block sizes read the card's --mc-block-lg / --mc-block-sm variables.
+  // Mentor Laura (portrait overlaps left side, role stamp top-right -> blocks hug top-left-center & bottom-right)
   'mentor-laura': [
     {
-      posClass: '-top-7 left-10',
-      sizeClass: 'w-22 h-22 sm:w-24 sm:h-24',
+      posClass: '-top-7 left-10 sm:-top-9 sm:left-13',
+      sizeClass: 'w-22 h-22 sm:w-[var(--mc-block-lg)] sm:h-[var(--mc-block-lg)]',
       rot: '-19deg',
       shiftX: '-4px',
       shiftY: '-4px',
@@ -228,8 +230,8 @@ const BLOCK_PRESETS: Record<SquaiBlockPreset, [BlockPlacement, BlockPlacement]> 
       dur: '4.8s',
     },
     {
-      posClass: '-bottom-6 right-8',
-      sizeClass: 'w-20 h-20 sm:w-22 sm:h-22',
+      posClass: '-bottom-6 right-8 sm:-bottom-8 sm:right-[42px]',
+      sizeClass: 'w-20 h-20 sm:w-[var(--mc-block-sm)] sm:h-[var(--mc-block-sm)]',
       rot: '21deg',
       shiftX: '4px',
       shiftY: '4px',
@@ -238,11 +240,11 @@ const BLOCK_PRESETS: Record<SquaiBlockPreset, [BlockPlacement, BlockPlacement]> 
       dur: '4.4s',
     },
   ],
-  // Mentor Sebas (portrait overlaps left side at top-20, role stamp top-right -> blocks hug top-center-left & bottom-left)
-  'mentor-sebas': [
+  // Mentor Sebastián (portrait overlaps left side, role stamp top-right -> blocks hug top-center-left & bottom-left)
+  'mentor-sebastian': [
     {
-      posClass: '-top-7 left-16',
-      sizeClass: 'w-22 h-22 sm:w-24 sm:h-24',
+      posClass: '-top-7 left-16 sm:-top-9 sm:left-[83px]',
+      sizeClass: 'w-22 h-22 sm:w-[var(--mc-block-lg)] sm:h-[var(--mc-block-lg)]',
       rot: '15deg',
       shiftX: '4px',
       shiftY: '-4px',
@@ -251,8 +253,8 @@ const BLOCK_PRESETS: Record<SquaiBlockPreset, [BlockPlacement, BlockPlacement]> 
       dur: '5.0s',
     },
     {
-      posClass: '-bottom-6 left-8',
-      sizeClass: 'w-20 h-20 sm:w-22 sm:h-22',
+      posClass: '-bottom-6 left-8 sm:-bottom-8 sm:left-[42px]',
+      sizeClass: 'w-20 h-20 sm:w-[var(--mc-block-sm)] sm:h-[var(--mc-block-sm)]',
       rot: '-21deg',
       shiftX: '-4px',
       shiftY: '4px',
@@ -510,6 +512,8 @@ export interface AardvarkButtonAltProps {
   size?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
   className?: string;
+  tabIndex?: number;
+  ariaExpanded?: boolean;
 }
 
 const ALT_VARIANTS: Record<
@@ -579,6 +583,8 @@ export function AardvarkButtonAlt({
   size = 'lg',
   icon,
   className = '',
+  tabIndex,
+  ariaExpanded,
 }: AardvarkButtonAltProps) {
   const colors = ALT_VARIANTS[variant];
   const dims = ALT_SIZES[size];
@@ -613,14 +619,21 @@ export function AardvarkButtonAlt({
 
   if (href) {
     return (
-      <a href={href} onClick={onClick} className={shared}>
+      <a href={href} onClick={onClick} className={shared} tabIndex={tabIndex}>
         {content}
       </a>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={shared}>
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={shared}
+      tabIndex={tabIndex}
+      aria-expanded={ariaExpanded}
+    >
       {content}
     </button>
   );
@@ -935,111 +948,3 @@ export function FlowStepIllustration({ stepIndex }: { stepIndex: number }) {
     </svg>
   );
 }
-
-/**
- * Custom Squai-styled editorial illustrations inside the Mentor cards:
- * - laura: Structured multi-step learning blocks connected smoothly + clear human spark
- * - sebas: Technical filter distilling scattered hype/smoke into a solid functional core
- */
-export function MentorIllustration({ mentor }: { mentor: 'laura' | 'sebas' }) {
-  if (mentor === 'laura') {
-    return (
-      <svg viewBox="0 0 280 150" className="w-full max-w-[205px] h-auto mx-auto" aria-hidden="true">
-        {/* Flowing learning architecture connectors */}
-        <path
-          d="M52 108 C92 108, 94 74, 134 74 C174 74, 176 42, 220 42"
-          fill="none"
-          stroke="#0A0C1A"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeDasharray="7 7"
-        />
-        {/* Step 1 Foundation Block */}
-        <rect
-          x="18"
-          y="80"
-          width="74"
-          height="52"
-          rx="14"
-          fill="#eef0fd"
-          stroke="#0A0C1A"
-          strokeWidth="3.2"
-          transform="rotate(-3 55 106)"
-        />
-        <rect x="30" y="96" width="38" height="8" rx="4" fill="#0A0C1A" />
-        <rect x="30" y="110" width="50" height="6" rx="3" fill="#8A8EF9" />
-
-        {/* Step 2 Mid Practice Block */}
-        <rect
-          x="104"
-          y="48"
-          width="76"
-          height="54"
-          rx="15"
-          fill="#8A8EF9"
-          stroke="#0A0C1A"
-          strokeWidth="3.2"
-          transform="rotate(2 142 75)"
-        />
-        <rect x="116" y="65" width="44" height="8" rx="4" fill="#0A0C1A" />
-        <rect x="116" y="80" width="52" height="6" rx="3" fill="#FFFFFF" />
-
-        {/* Step 3 Sustainable Habit Block */}
-        <rect
-          x="190"
-          y="16"
-          width="74"
-          height="54"
-          rx="15"
-          fill="#F9C24D"
-          stroke="#0A0C1A"
-          strokeWidth="3.2"
-          transform="rotate(-2 227 43)"
-        />
-        <circle cx="227" cy="43" r="13" fill="#FFFFFF" stroke="#0A0C1A" strokeWidth="2.8" />
-        <path
-          d="M221 43l4 4 8-8"
-          stroke="#0A0C1A"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </svg>
-    );
-  }
-
-  return (
-    <svg viewBox="0 0 280 150" className="w-full max-w-[205px] h-auto mx-auto" aria-hidden="true">
-      {/* Top noisy smoke / hype shapes being filtered out cleanly */}
-      <circle cx="72" cy="24" r="10" fill="#d2d7fc" stroke="#0A0C1A" strokeWidth="2.5" strokeDasharray="3 3" />
-      <circle cx="140" cy="18" r="12" fill="#d2d7fc" stroke="#0A0C1A" strokeWidth="2.5" strokeDasharray="3 3" />
-      <circle cx="206" cy="24" r="9" fill="#d2d7fc" stroke="#0A0C1A" strokeWidth="2.5" strokeDasharray="3 3" />
-      <path
-        d="M52 38 L228 38 L174 84 L106 84 Z"
-        fill="#FFFFFF"
-        stroke="#0A0C1A"
-        strokeWidth="3.2"
-        strokeLinejoin="round"
-      />
-      <line x1="94" y1="54" x2="186" y2="54" stroke="#8A8EF9" strokeWidth="4" strokeLinecap="round" />
-      <line x1="112" y1="68" x2="168" y2="68" stroke="#0A0C1A" strokeWidth="3.5" strokeLinecap="round" />
-
-      {/* Crisp solid technical engine core distilled below filter */}
-      <rect
-        x="86"
-        y="94"
-        width="108"
-        height="44"
-        rx="14"
-        fill="#8A8EF9"
-        stroke="#0A0C1A"
-        strokeWidth="3.2"
-      />
-      <rect x="102" y="108" width="20" height="16" rx="6" fill="#F9C24D" stroke="#0A0C1A" strokeWidth="2.5" />
-      <rect x="132" y="108" width="46" height="7" rx="3.5" fill="#0A0C1A" />
-      <rect x="132" y="119" width="32" height="5" rx="2.5" fill="#FFFFFF" />
-    </svg>
-  );
-}
-

@@ -4,8 +4,16 @@ import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
 import { AardvarkTopBar } from './components/AardvarkTopBar';
 import { AardvarkHero } from './components/AardvarkHero';
-import { AardvarkSections } from './components/AardvarkSections';
-import { AardvarkInteractiveSections } from './components/AardvarkInteractiveSections';
+import { FlowSection, IncludesSection, SessionsSection } from './components/AardvarkSections';
+import {
+  AudienceSection,
+  FaqSection,
+  KeyFactsMarquee,
+  MentorsSection,
+  OutcomesSection,
+  PresentationSection,
+} from './components/AardvarkInteractiveSections';
+import { TestimonialsSection } from './components/TestimonialsSection';
 import { AardvarkButtonAlt, SquaiSocialLinks } from './components/AardvarkPrimitives';
 import { SignupFormSection } from './components/SignupFormSection';
 import { BoldCheckoutModal } from './components/BoldCheckoutModal';
@@ -14,6 +22,7 @@ import { NotificationCenter } from './components/NotificationCenter';
 import { SquaiLockup } from './components/SquaiBrand';
 import { useAppStore } from './store/useAppStore';
 import { trackConversionEvent } from './utils/analyticsClient';
+import { FOOTER, NAV, PROGRAM } from './content/landing';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,7 +63,7 @@ function LandingContent() {
       trackedPageViewRef.current = true;
       void trackConversionEvent({
         type: 'page_view',
-        label: 'Visita a Fundamentos de IA para el Trabajo',
+        label: `Visita a ${PROGRAM.name}`,
       });
     }
 
@@ -124,31 +133,40 @@ function LandingContent() {
       <AardvarkTopBar />
 
       <main>
+        {/* Orden de la guía: 1 Encabezado */}
         <AardvarkHero
-          onPrimaryCta={() =>
-            goToSignup(currency, 'Hero CTA: Inscribirme al programa')
-          }
-          onExploreModules={() =>
-            scrollToSection('contenido', 'Hero CTA: Ver los 4 módulos')
-          }
+          onPrimaryCta={() => goToSignup(currency, 'Hero CTA: Inscribirme al programa')}
+          onExploreSessions={() => scrollToSection('sesiones', 'Hero CTA: Ver las 8 sesiones')}
         />
-
-        <AardvarkSections
-          onSelectCta={() =>
-            goToSignup(currency, 'Sección módulos/flujo CTA: Inscribirme')
-          }
+        {/* 2 Datos clave */}
+        <IncludesSection onSelectCta={() => goToSignup(currency, 'Datos clave CTA: Inscribirme')} />
+        {/* 3 Presentación */}
+        <PresentationSection
+          onMeetMentors={() => scrollToSection('mentores', 'Presentación CTA: Conocer a Laura y Sebastián')}
         />
-
-        <AardvarkInteractiveSections
-          currency={currency}
-          onSelectCta={goToSignup}
-        />
-
+        {/* 4 ¿Es para ti? */}
+        <AudienceSection currency={currency} onSelectCta={goToSignup} />
+        {/* 5 Qué vas a lograr */}
+        <OutcomesSection />
+        {/* 6 Cómo es el programa */}
+        <FlowSection onSelectCta={() => goToSignup(currency, 'Cómo funciona CTA: Empezar mi inscripción')} />
+        {/* 7 Programa + franja con fecha, horario y precio */}
+        <SessionsSection onSelectCta={() => goToSignup(currency, 'Sesiones CTA: Reservar mi cupo')} />
+        <KeyFactsMarquee />
+        {/* 8 Quiénes enseñan */}
+        <MentorsSection currency={currency} onSelectCta={goToSignup} />
+        {/* 9 Lo que dicen */}
+        <TestimonialsSection onSelectCta={() => goToSignup(currency, 'Testimonios CTA: Reservar mi cupo')} />
+        {/* 10 Inscripción */}
         <SignupFormSection />
+        {/* 11 Preguntas frecuentes */}
+        <FaqSection />
       </main>
 
-      {/* Deep Periwinkle Footer aligned to aardvarkbookclub.com (without bottom Squai watermark) */}
+      {/* 12 Pie de página · Deep Periwinkle Footer aligned to aardvarkbookclub.com */}
       <footer
+        id="contacto"
+        aria-label="Pie de página"
         className="w-full relative z-0 bg-[#303163] text-[#F4F6FF] -mt-10 sm:-mt-16 lg:-mt-24 pt-24 sm:pt-36 lg:pt-44 pb-10 overflow-hidden"
       >
         <div className="max-w-[1680px] mx-auto px-5 sm:px-8 lg:px-12">
@@ -156,13 +174,24 @@ function LandingContent() {
             {/* Left Column: Lockup, Social (Instagram & LinkedIn), Links */}
             <div className="lg:col-span-6 space-y-8">
               <div className="space-y-4">
-                <a href="#programa" aria-label="Volver al inicio de Squai" className="inline-flex">
+                <a href="#inicio" aria-label="Volver al inicio de Squai" className="inline-flex">
                   <SquaiLockup size="lg" variant="color" className="text-[#F4F6FF]" />
                 </a>
-                <p className="text-base sm:text-lg text-[#d2d7fc] leading-relaxed max-w-md">
-                  Formación práctica en inteligencia artificial para personas y equipos. Clara, cercana y aplicable desde el primer día.
-                </p>
+                <p className="text-base sm:text-lg text-[#d2d7fc] leading-relaxed max-w-md">{FOOTER.blurb}</p>
               </div>
+
+              <address className="not-italic text-base text-[#d2d7fc] leading-relaxed">
+                <span className="block font-display font-bold text-[#F4F6FF]">{FOOTER.company.legalName}</span>
+                <span className="block">
+                  {FOOTER.company.taxId} · {FOOTER.company.city}
+                </span>
+                <a
+                  href={`mailto:${FOOTER.company.email}`}
+                  className="underline decoration-1 underline-offset-2 hover:text-[#F9C24D] transition-colors"
+                >
+                  {FOOTER.company.email}
+                </a>
+              </address>
 
               <div className="flex flex-wrap items-center gap-4">
                 <SquaiSocialLinks
@@ -174,35 +203,22 @@ function LandingContent() {
                   onClick={() => setWhatsappOpen(true)}
                   className="text-base font-display font-bold text-[#F9C24D] hover:text-[#F4F6FF] transition-colors cursor-pointer px-2 py-1"
                 >
-                  Escribir al equipo Squai
+                  {FOOTER.ctaWhatsApp}
                 </button>
               </div>
 
               <nav aria-label="Navegación de pie de página">
                 <ul className="flex flex-wrap gap-x-8 gap-y-3 text-base font-display font-bold text-[#F4F6FF]">
-                  <li>
-                    <a href="#programa" className="hover:text-[#F9C24D] transition-colors">
-                      El programa
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#contenido" className="hover:text-[#F9C24D] transition-colors">
-                      Módulos
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#como-funciona" className="hover:text-[#F9C24D] transition-colors">
-                      Cómo funciona
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#preguntas" className="hover:text-[#F9C24D] transition-colors">
-                      Preguntas
-                    </a>
-                  </li>
+                  {NAV.items.map((item) => (
+                    <li key={item.id}>
+                      <a href={`#${item.id}`} className="hover:text-[#F9C24D] transition-colors">
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
                   <li>
                     <a href="#inscripcion" className="hover:text-[#F9C24D] transition-colors">
-                      Inscribirme
+                      {NAV.ctaHeader}
                     </a>
                   </li>
                 </ul>
@@ -212,12 +228,8 @@ function LandingContent() {
             {/* Right Column: Newsletter Subscription matching Aardvark's "Join our mailing list" */}
             <div className="lg:col-span-6 lg:pl-12 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
-                <h3 className="aardvark-h3 text-[#F4F6FF]">
-                  Recibe novedades del programa
-                </h3>
-                <p className="text-base text-[#d2d7fc] leading-relaxed max-w-lg">
-                  Fechas de nuevas cohortes, plantillas editables y ejemplos aplicados para tu equipo. Sin spam.
-                </p>
+                <h2 className="aardvark-h3 text-[#F4F6FF]">{FOOTER.newsletter.title}</h2>
+                <p className="text-base text-[#d2d7fc] leading-relaxed max-w-lg">{FOOTER.newsletter.copy}</p>
               </div>
 
               <form
@@ -235,25 +247,37 @@ function LandingContent() {
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Tu correo electrónico"
-                  className="flex-1 h-13 px-5 rounded-[13px] bg-[#F4F6FF] text-base text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-white transition-colors outline-none"
+                  className="flex-none sm:flex-1 h-13 px-5 rounded-[13px] bg-[#F4F6FF] text-base text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-white transition-colors outline-none"
                 />
                 <AardvarkButtonAlt
                   type="submit"
-                  label="Suscribirme"
+                  label={FOOTER.newsletter.cta}
                   variant="marigold"
                   size="md"
                 />
               </form>
 
-              <p className="text-sm text-[#d2d7fc] tabular-nums">
-                Pago en Colombia: $399.000 COP · Internacional: $129 USD · PSE, Nequi, Bancolombia y tarjetas
-              </p>
+              <p className="text-sm text-[#d2d7fc] tabular-nums">{FOOTER.priceLine}</p>
             </div>
           </div>
 
           <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-[#d2d7fc]">
-            <span>© 2026 Squai. Todos los derechos reservados.</span>
-            <span>Fundamentos de IA para el Trabajo · Programa práctico en línea</span>
+            <span>© 2026 {FOOTER.rights}</span>
+            <nav aria-label="Documentos legales">
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {FOOTER.legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="underline decoration-1 underline-offset-2 hover:text-[#F9C24D] transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <span>{FOOTER.tagline}</span>
           </div>
         </div>
       </footer>

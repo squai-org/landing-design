@@ -5,13 +5,9 @@ import { SquaiLockup } from './SquaiBrand';
 import { AardvarkButtonAlt, AardvarkPillButton, SquaiSocialLinks } from './AardvarkPrimitives';
 import { useAppStore } from '../store/useAppStore';
 import { trackConversionEvent } from '../utils/analyticsClient';
+import { NAV, SECTION_ORDER } from '../content/landing';
 
-const NAV_ITEMS = [
-  { id: 'programa', label: 'El programa' },
-  { id: 'contenido', label: 'Módulos' },
-  { id: 'como-funciona', label: 'Cómo funciona' },
-  { id: 'preguntas', label: 'Preguntas' },
-];
+const NAV_ITEMS = NAV.items;
 
 export function AardvarkTopBar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,7 +26,7 @@ export function AardvarkTopBar() {
   }, []);
 
   useEffect(() => {
-    const ids = ['inicio', ...NAV_ITEMS.map((item) => item.id), 'mentores', 'inscripcion'];
+    const ids = SECTION_ORDER.map((section) => section.id);
     const observer = new IntersectionObserver(
       (entries) => {
         if (Date.now() < manualLockUntilRef.current) return;
@@ -108,9 +104,7 @@ export function AardvarkTopBar() {
           <nav className="hidden lg:flex items-center justify-center pointer-events-auto" aria-label="Navegación principal">
             <ul className="flex items-center gap-3.5">
               {NAV_ITEMS.map((item, idx) => {
-                const isActive =
-                  activeSection === item.id ||
-                  (item.id === 'programa' && activeSection === 'inicio');
+                const isActive = activeSection === item.id;
                 const pillPresets = ['pill-diag-tl', 'pill-diag-tr', 'pill-bottom-spread', 'pill-edge-mix'] as const;
                 return (
                   <li key={item.id} className={isActive ? 'relative z-10' : 'relative z-0'}>
@@ -133,7 +127,7 @@ export function AardvarkTopBar() {
               })}
               <li className="pl-1.5 relative z-10">
                 <AardvarkButtonAlt
-                  label="Inscribirme"
+                  label={NAV.ctaHeader}
                   size="sm"
                   variant="dark"
                   onClick={() => scrollToSection('inscripcion', 'Header CTA: Inscribirme')}
@@ -161,6 +155,7 @@ export function AardvarkTopBar() {
               variant="dark"
               icon={mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
               onClick={() => setMobileMenuOpen((prev) => !prev)}
+              ariaExpanded={mobileMenuOpen}
             />
           </div>
         </div>
@@ -202,7 +197,7 @@ export function AardvarkTopBar() {
 
               <div className="pt-2">
                 <AardvarkButtonAlt
-                  label="Inscribirme al programa"
+                  label={NAV.ctaMobile}
                   size="md"
                   variant="dark"
                   onClick={() => scrollToSection('inscripcion', 'Menú móvil CTA: Inscribirme')}
