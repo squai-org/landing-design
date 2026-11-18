@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Squai — Brand Guideline v8.7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Familjen+Grotesk:wght@400;500;600;700&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+<style>
+:root{--p11:#5a5bb6;--n11:#525770;--canvas:#F4F6FF;--peri:#8A8EF9;--mid:#0A0C1A;--teal:#44D4C8;--gold:#F9C24D;--line:#DCE1F0;--muted:#525770;--display:"Familjen Grotesk",Arial,sans-serif;--body:"Atkinson Hyperlegible Next",Arial,sans-serif;--human:"Gloria Hallelujah",cursive}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--mid);font-family:var(--body);line-height:1.48}
+svg{display:block}
+a{color:inherit}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;height:100vh;overflow:auto;padding:28px 22px;border-right:1px solid var(--line);background:rgba(244,246,255,.94);backdrop-filter:blur(18px);z-index:10}
+.sidebrand{display:flex;align-items:center;gap:calc(1cap * .15);font:700 22px/1 var(--display);margin-bottom:28px}
+.sidebrand svg{width:1cap;height:1cap;flex:0 0 auto}
+aside small{display:block;margin:24px 0 8px;color:var(--muted);font:700 10px var(--display);letter-spacing:.13em;text-transform:uppercase}
+aside a{display:block;text-decoration:none;font-size:13px;padding:6px 0;color:#394056}
+aside a:hover{color:var(--p11)}
+main{min-width:0}
+.section{padding:88px clamp(30px,6vw,96px);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.04em}
+h1{font-size:clamp(60px,9vw,128px);line-height:.86}
+h2{font-size:clamp(44px,6.4vw,86px);line-height:.91;max-width:1050px}
+h3{font-size:28px;line-height:1.04}
+.lead{font-size:clamp(20px,2.2vw,29px);max-width:900px;margin:26px 0 0;color:#525770}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:40px}
+.grid5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:36px}
+.card{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:24px;padding:26px;min-width:0}
+.card p{margin:10px 0 0;color:#525770}
+.hero{min-height:100vh;display:grid;align-content:center}
+.hero-lockup{display:flex;align-items:center;gap:calc(1cap * .15);margin-bottom:54px;font:700 74px/1 var(--display);letter-spacing:-.055em}
+.hero-lockup svg{width:1cap;height:1cap;flex:0 0 auto}
+.hero-lockup .wm{font:inherit;letter-spacing:inherit}
+.tagline{font:700 clamp(50px,7vw,102px)/.9 var(--display);letter-spacing:-.055em;max-width:1000px}
+.hero-sub{font-size:20px;color:var(--n11);max-width:720px;margin-top:28px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;position:relative;z-index:1}
+.hero-meta span{font:700 13px var(--display);padding:9px 16px;border-radius:999px;color:var(--mid)}
+.hero .tagline,.hero .hero-sub,.hero-lockup{position:relative;z-index:1}
+.hero-mark{position:absolute;width:440px;height:440px;right:-70px;bottom:-70px}
+@media(max-width:1000px){
+.hero-mark{width:260px;height:260px;opacity:.35}
+}
+.value{min-height:240px;display:flex;flex-direction:column;justify-content:space-between}
+.value:nth-child(1){background:var(--peri)}
+.value:nth-child(2){background:#fff}
+.value:nth-child(3){background:var(--teal)}
+.value:nth-child(4){background:var(--gold)}
+.value:nth-child(5){background:var(--mid);color:var(--canvas)}
+.value:nth-child(5) p{color:#C1C5D4}
+.value:not(:nth-child(5)) p{color:var(--mid)}
+.value:nth-child(2) p{color:var(--n11)}
+.statement{font:700 clamp(44px,6vw,84px)/.95 var(--display);letter-spacing:-.05em;max-width:1050px}
+.hand{font:400 25px/1.35 var(--human);display:inline-block;margin-top:26px}
+.arch-master{margin-top:42px;background:var(--peri);color:var(--mid);padding:30px;border-radius:28px;font:700 36px/1 var(--display)}
+.arch-ecos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.arch-eco{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px}
+.arch-eco small{font:700 11px var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.journey{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:center;margin-top:42px}
+.journey>div:not(.arrow){background:#fff;border:1px solid var(--line);border-radius:26px;padding:28px;min-height:210px}
+.arrow{font:700 28px var(--display);color:var(--p11)}
+.mark-stage{min-height:390px;background:#fff;border:1px solid var(--line);border-radius:28px;padding:34px;display:grid;place-items:center}
+.mark-stage svg{width:min(100%,330px);height:auto}
+.logo-lockup{display:flex;align-items:center;font-family:var(--display);font-weight:700;line-height:1;letter-spacing:-.055em}
+.h100{font-size:72px;gap:calc(1cap * .15)}
+.h100 svg{width:1cap;height:1cap;flex:0 0 auto}
+.h100 .wm{font:inherit;letter-spacing:inherit}
+.h72{font-size:52px;gap:calc(1cap * .15)}
+.h72 svg{width:1cap;height:1cap;flex:0 0 auto}
+.h72 .wm{font:inherit;letter-spacing:inherit}
+.measure{position:relative;padding:52px 30px}
+.measure:before{content:"H = altura de la S · gap = 0.15 H";position:absolute;left:30px;top:20px;font:700 11px var(--display);color:var(--p11)}
+.source-note{margin-top:24px;background:#EEF0FA;border:1px solid var(--line);padding:16px;border-radius:16px;font-size:14px}
+.variant{min-height:180px;display:flex;flex-direction:column;justify-content:center}
+.variant-label{font:700 10px var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.dna-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px}
+.dna-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px}
+.dna-vis{height:320px;display:grid;place-items:center}
+.dna-vis svg{width:82%;height:82%}
+.dna-card h3{color:var(--mid)}
+.dna-card p{color:var(--n11)}
+.grid-origin{margin-top:42px;background:#fff;border:1px solid var(--line);border-radius:28px;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.grid-origin svg{width:100%;max-height:480px}
+.swatch{min-height:185px;border-radius:28px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(10,12,26,.08)}
+.swatch strong{font:700 18px var(--display)}
+.swatch code{font-size:12px}
+.canvas{background:var(--canvas)}
+.speri{background:var(--peri)}
+.smid{background:var(--mid);color:var(--canvas)}
+.steal{background:var(--teal)}
+.sgold{background:var(--gold)}
+.contrast{margin-top:28px;font-size:14px}
+.imagery{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;margin-top:40px}
+.photo{min-height:430px;border-radius:30px;background:linear-gradient(135deg,#D9DDEA,#F2EEE5);position:relative}
+.photo span{position:absolute;left:22px;bottom:22px;background:rgba(244,246,255,.92);padding:10px 14px;border-radius:999px;font:700 11px var(--display)}
+.voice-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;margin-top:42px}
+.voice-main{font:700 clamp(44px,5vw,74px)/.95 var(--display);letter-spacing:-.05em}
+.voice-note{font:400 28px/1.35 var(--human)}
+.footer{padding:34px clamp(30px,6vw,96px);font-size:13px;color:var(--muted)}
+@media(max-width:1000px){
+.app{grid-template-columns:1fr}
+aside{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+aside a{display:inline-block;margin-right:14px}
+.grid2,.grid5,.dna-pair,.grid-origin,.imagery,.voice-grid{grid-template-columns:1fr}
+.arch-ecos{grid-template-columns:1fr}
+.journey{grid-template-columns:1fr}
+.arrow{transform:rotate(90deg);justify-self:center}
+}
+.sidebrand svg,.hero-lockup svg,.logo-lockup svg{transform:translateY(.03em);transform-origin:center}
+.type-intro{max-width:980px}
+.type-foundations{display:grid;gap:24px;margin-top:44px}
+.type-family{background:#fff;border:1px solid var(--line);border-radius:30px;padding:34px}
+.type-family-head{display:grid;grid-template-columns:minmax(260px,.85fr) 1.15fr;gap:34px;align-items:start}
+.type-index{font:700 11px/1 var(--display);letter-spacing:.12em;color:var(--p11);margin-bottom:10px}
+.type-name{font:700 clamp(30px,3vw,46px)/.96 var(--display);letter-spacing:-.04em}
+.type-role{margin-top:8px;font:700 11px/1.2 var(--display);letter-spacing:.10em;text-transform:uppercase;color:var(--muted)}
+.type-purpose{max-width:700px;color:#525770;font-size:17px;line-height:1.55}
+.type-specimen{margin-top:30px;border-radius:22px;padding:30px;min-height:230px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.type-specimen small{font:700 10px/1.2 var(--display);letter-spacing:.10em;text-transform:uppercase}
+.familjen-specimen{background:#edeff5;color:var(--mid)}
+.familjen-specimen>span{font:700 clamp(62px,7vw,112px)/.95 var(--display);letter-spacing:-.05em}
+.atkinson-specimen{background:#edeff5;color:var(--mid)}
+.atkinson-specimen>span{font:400 clamp(56px,6vw,98px)/1.04 var(--body);letter-spacing:-.02em}
+.gloria-specimen{background:#edeff5;color:var(--mid)}
+.gloria-specimen>span{font:400 clamp(34px,4.6vw,70px)/1.35 var(--human);max-width:900px}
+.type-token-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+.atkinson-tokens{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gloria-tokens{grid-template-columns:minmax(220px,1fr)}
+.type-token{background:#edeff5;border:1px solid var(--line);border-radius:18px;padding:16px}
+.token-label{display:block;font:700 10px/1.2 var(--display);letter-spacing:.10em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.type-token strong{display:block;font:700 22px/1 var(--display);margin-bottom:10px}
+.type-token code{display:block;font-size:12px;line-height:1.55;color:#525770}
+.type-divider{height:1px;background:var(--line);margin:58px 0 38px}
+.type-practice-head,.type-quick-head{display:grid;grid-template-columns:70px 1fr;gap:18px;align-items:start}
+.type-practice-head h3,.type-quick-head h3{font-size:34px;margin:0}
+.type-practice-head p,.type-quick-head p{margin:8px 0 0;color:#525770;max-width:850px}
+.type-practice{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;margin-top:24px}
+.type-practice-demo{background:var(--canvas);border:1px solid var(--line);border-radius:26px;padding:34px;min-height:430px;display:flex;flex-direction:column;justify-content:center}
+.practice-line{color:var(--mid)}
+.practice-primary{font:700 clamp(62px,6.6vw,112px)/.92 var(--display);letter-spacing:-.055em}
+.practice-secondary{font:400 clamp(52px,5.3vw,92px)/1.04 var(--body);letter-spacing:-.02em}
+.type-practice-notes{display:grid;align-content:start;gap:12px}
+.practice-note{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;grid-template-columns:36px 1fr;gap:12px}
+.practice-note>span{width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#e3e5ef;color:var(--mid);font:700 10px var(--display)}
+.practice-note strong{font-family:var(--display);font-size:17px}
+.practice-note p{margin:4px 0 0;color:#525770;font-size:14px}
+.type-table-wrap{margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:24px;overflow:auto}
+.type-table{width:100%;border-collapse:collapse;min-width:760px}
+.type-table th,.type-table td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+.type-table th{font:700 10px/1.2 var(--display);letter-spacing:.10em;text-transform:uppercase;color:var(--muted);background:#edeff5}
+.type-table td{font-size:14px;color:#525770}
+.type-table td:first-child,.type-table td:nth-child(2){font-family:var(--display);font-weight:700;color:var(--mid)}
+.type-table tbody tr:last-child td{border-bottom:0}
+@media(max-width:1050px){
+.type-family-head,.type-practice{grid-template-columns:1fr}
+.type-token-grid,.atkinson-tokens{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+.type-family{padding:22px}
+.type-token-grid,.atkinson-tokens,.gloria-tokens{grid-template-columns:1fr}
+.type-practice-head,.type-quick-head{grid-template-columns:1fr}
+}
+img,svg{max-width:100%}
+.type-practice>*,.type-family-head>*,.grid2>*{min-width:0}
+.type-practice-demo{overflow:hidden}
+@media(max-width:1000px){
+.section{padding:64px 24px}
+.value{min-height:150px}
+.hero{min-height:auto;padding-bottom:230px}
+.hero-lockup{font-size:54px;margin-bottom:36px}
+.hero-mark{width:170px;height:170px;right:-40px;bottom:-40px}
+.hero-sub{max-width:none}
+.practice-primary{font-size:clamp(40px,9vw,80px)}
+.practice-secondary{font-size:clamp(34px,8vw,68px)}
+.type-practice-demo{min-height:0;padding:24px}
+.type-specimen{padding:22px;min-height:180px}
+.familjen-specimen>span{font-size:clamp(44px,11vw,96px)}
+.atkinson-specimen>span{font-size:clamp(40px,10vw,84px)}
+.gloria-specimen>span{font-size:clamp(26px,6.5vw,56px)}
+.imagery,.voice-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+.section{padding:52px 20px}
+h2{font-size:clamp(34px,10vw,48px)}
+.tagline{font-size:clamp(40px,12vw,60px)}
+.hero-lockup{font-size:44px}
+.hero-meta span{font-size:12px;padding:8px 12px}
+.grid5{grid-template-columns:1fr 1fr}
+.grid5:has(.value){grid-template-columns:1fr}
+.value h3{overflow-wrap:anywhere}
+.grid5 .swatch{min-height:130px}
+.xrow{grid-template-columns:repeat(4,minmax(0,1fr))}
+.xs{min-height:78px}
+.xs code{font-size:9px}
+.xrule{padding:22px 0}
+.xrule-ex{grid-template-columns:1fr}
+.ex{min-height:0}
+.type-family{padding:20px}
+.type-table{min-width:560px}
+.practice-note{grid-template-columns:30px 1fr}
+.eco2-top h3{font-size:28px}
+.voice-main{font-size:clamp(34px,10vw,48px)}
+.statement{font-size:clamp(34px,10vw,48px)}
+.arch-master{font-size:28px;padding:22px}
+aside{padding:18px 20px}
+aside a{margin-right:10px}
+}
+.xscale{margin-top:28px}
+.xhead{display:flex;gap:14px;align-items:baseline;margin-bottom:10px}
+.xhead strong{font:700 18px var(--display)}
+.xhead span{font-size:13px;color:var(--n11)}
+.xrow{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.xs{min-height:92px;padding:8px;border-radius:10px;display:flex;flex-direction:column;justify-content:space-between;font-size:11px}
+.xs b{font:700 12px var(--display)}
+.xs code{font-size:10px}
+.xs.brand{outline:2px solid #0A0C1A;outline-offset:2px}
+.xroles{columns:2;list-style:none;padding:0;margin:20px 0 0;font-size:14px}
+.xroles li{break-inside:avoid;padding:6px 0;border-bottom:1px solid var(--line)}
+.xroles b{display:inline-block;min-width:48px}
+.xlist{margin:16px 0 0;padding-left:20px;font-size:14px;max-width:900px}
+.xlist li{margin:8px 0}
+.xtbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px}
+.xtbl td,.xtbl th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.xtbl code{font-size:11px;color:var(--n11)}
+.xtbl .bad{color:#9b1c1c;font-weight:700}
+.dot{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:8px;vertical-align:-1px;border:1px solid rgba(10,12,26,.15)}
+.xsub{font:700 28px var(--display);letter-spacing:-.03em;margin:64px 0 0}
+.xnote{font-size:14px;color:var(--n11);max-width:900px;margin-top:12px}
+.xrule{display:grid;grid-template-columns:minmax(220px,.8fr) 1.2fr;gap:28px;padding:28px 0;border-top:1px solid var(--line)}
+.xrules{margin-top:24px}
+.xrule-n{font:700 11px var(--display);letter-spacing:.12em;color:var(--p11)}
+.xrule h4{font:700 22px/1.1 var(--display);margin:6px 0 8px}
+.xrule p{margin:0;font-size:14px;color:var(--n11)}
+.xrule-ex{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tag{display:inline-block;font:700 11px var(--display);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;padding:4px 10px;border-radius:999px}
+.tag.yes{background:#dff3e6;color:#14532d}
+.tag.no{background:#fde2e2;color:#9b1c1c}
+.ex{border:1px solid var(--line);border-radius:18px;padding:20px;min-height:140px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.ex-h{font:700 24px/1.05 var(--display);letter-spacing:-.03em}
+.ex-p{font-size:14px}
+.ex-k{font:700 20px var(--display)}
+.ex-btn{display:inline-block;align-self:flex-start;font:700 14px var(--display);padding:10px 18px;border-radius:999px}
+.ex-card{display:flex;align-items:center;gap:12px;border:2px solid;border-radius:14px;padding:14px;background:#fff;font:700 15px var(--display)}
+.ex-row{flex-direction:row;align-items:center;gap:10px}
+.ex-row i{flex:1;height:84px;border-radius:12px;border:1px solid rgba(10,12,26,.08)}
+.ex-why{font-size:12px;color:#9b1c1c;margin-top:8px}
+.xtok summary{cursor:pointer;font:700 14px var(--display);margin-top:20px}
+.xtok pre{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;font-size:12px;overflow:auto}
+@media(max-width:1000px){
+.xrow{grid-template-columns:repeat(6,minmax(0,1fr))}
+.xroles{columns:1}
+.xtbl{display:block;overflow-x:auto}
+.xrule,.xrule-ex{grid-template-columns:1fr}
+}
+.eco2-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.eco2{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden}
+.eco2-top{padding:26px;color:var(--mid)}
+.eco2-top small{font:700 11px var(--display);letter-spacing:.1em;text-transform:uppercase}
+.eco2-top h3{font-size:34px}
+.eco2-body{padding:22px 26px 26px}
+.eco2-body p{margin:0 0 12px;font-size:14px;color:var(--n11)}
+.eco2-body p strong{color:var(--mid)}
+.eco2-note{margin-top:28px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 26px;font-size:14px;color:var(--n11);max-width:1000px}
+.eco2-note strong{color:var(--mid)}
+@media(max-width:1000px){
+.eco2-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+<defs>
+<symbol id="markColor" viewBox="292 298 424 428"><path fill="#8A8EF9" d="M667.299 496.021C660.393 498.244 648.638 497.554 641.034 497.531L598.273 497.507C590.329 497.508 578.095 497.155 570.551 498.379C558.006 500.413 541.775 507.42 531.091 514.673C510.344 528.756 494.709 554.287 490.491 578.903C489.406 585.232 489.598 598.536 489.58 605.458L489.553 644.125C489.547 652.121 489.94 666.615 488.485 673.902C484.754 690.534 475.301 704.329 461.355 713.843C444.968 725.022 434.837 724.558 416.006 724.461L384.188 724.231C373.603 724.153 362.975 724.296 352.403 724.112C332.371 723.764 314.682 711.671 303.868 695.298C293.874 680.168 293.893 669.715 293.984 652.597L294.112 623.927C294.11 611.78 294.048 599.493 293.923 587.301C293.778 573.194 298.704 561.874 307.527 550.865C326 527.817 344.915 526.89 372.002 526.925L411.242 526.991C424.235 527.016 434.157 527.776 446.888 524.145C481.341 514.318 508.631 486.971 516.794 451.897C519.006 442.389 518.681 428.195 518.75 418.411L518.84 380.581C518.851 371.88 518.304 357.285 520.119 349.42C523.754 333.67 533.784 318.109 547.734 309.68C552.812 306.611 564.166 300.971 569.998 300.537C581.843 299.655 597.23 299.762 609.28 299.991C625.138 300.292 643.598 299.188 659.038 299.969C661.651 300.098 664.246 300.476 666.788 301.096C682.997 305.072 697.664 316.142 706.179 330.458C708.468 334.306 713.09 344.223 713.497 348.528C714.723 361.498 714.11 376.13 714.18 389.313C714.13 407.131 714.562 424.932 714.166 442.751C713.979 451.12 712.124 454.263 708.527 461.609C701.865 475.209 694.088 482.805 681.101 490.246C676.645 492.501 672.032 494.431 667.299 496.021Z"/><path fill="#F9C24D" d="M301.875 464.584C299.686 460.273 294.981 450.754 294.841 446.004C293.933 415.328 294.583 384.41 294.573 353.694C294.572 351.011 295.382 347.694 296.199 345.159C301.682 328.106 313.764 313.957 329.748 305.871C342.896 299.325 350.854 299.811 364.963 299.857L391.129 299.948C406.571 299.983 430.79 298.253 444.804 302.295C466.884 308.664 486.126 330.753 488.872 353.522C489.759 359.623 489.454 367.061 489.471 373.313L489.491 403.063C489.483 412.667 490.184 429.965 489.392 438.854C488.915 443.866 487.81 448.798 486.105 453.535C479.921 470.71 468.091 484.235 451.429 492.033C437.277 498.657 428.141 497.722 412.932 497.679C395.629 497.63 378.016 497.718 360.683 497.633C351.283 497.679 346.296 496.661 337.402 494.095C319.753 487.045 311.845 480.484 301.875 464.584Z"/><path fill="#F9C24D" d="M573.706 527.155C576.335 526.811 583.9 526.918 586.766 526.924L610.555 526.995L641.488 526.957C647.496 526.949 658.177 526.419 663.924 527.806C685.855 533.099 707.554 553.346 713.32 575.305C714.513 579.845 714.054 590.053 714.046 594.713L714.014 624.866L714.167 655.355C714.244 672.665 714.346 681.178 703.941 696.442C692.829 712.743 678.95 720.89 659.776 724.607C654.076 725.181 645.285 724.839 639.269 724.774C627.123 724.676 614.977 724.485 602.833 724.199C579.653 723.784 566.395 727.179 545.889 712.526C517.056 691.923 517.853 664.084 518.636 632.291C518.818 624.878 518.419 617.168 518.572 609.728C518.872 599.912 517.922 588.809 519.941 579.205C525.293 553.734 547.819 531.164 573.706 527.155Z"/></symbol>
+<symbol id="markMono" viewBox="292 298 424 428"><path fill="currentColor" d="M667.299 496.021C660.393 498.244 648.638 497.554 641.034 497.531L598.273 497.507C590.329 497.508 578.095 497.155 570.551 498.379C558.006 500.413 541.775 507.42 531.091 514.673C510.344 528.756 494.709 554.287 490.491 578.903C489.406 585.232 489.598 598.536 489.58 605.458L489.553 644.125C489.547 652.121 489.94 666.615 488.485 673.902C484.754 690.534 475.301 704.329 461.355 713.843C444.968 725.022 434.837 724.558 416.006 724.461L384.188 724.231C373.603 724.153 362.975 724.296 352.403 724.112C332.371 723.764 314.682 711.671 303.868 695.298C293.874 680.168 293.893 669.715 293.984 652.597L294.112 623.927C294.11 611.78 294.048 599.493 293.923 587.301C293.778 573.194 298.704 561.874 307.527 550.865C326 527.817 344.915 526.89 372.002 526.925L411.242 526.991C424.235 527.016 434.157 527.776 446.888 524.145C481.341 514.318 508.631 486.971 516.794 451.897C519.006 442.389 518.681 428.195 518.75 418.411L518.84 380.581C518.851 371.88 518.304 357.285 520.119 349.42C523.754 333.67 533.784 318.109 547.734 309.68C552.812 306.611 564.166 300.971 569.998 300.537C581.843 299.655 597.23 299.762 609.28 299.991C625.138 300.292 643.598 299.188 659.038 299.969C661.651 300.098 664.246 300.476 666.788 301.096C682.997 305.072 697.664 316.142 706.179 330.458C708.468 334.306 713.09 344.223 713.497 348.528C714.723 361.498 714.11 376.13 714.18 389.313C714.13 407.131 714.562 424.932 714.166 442.751C713.979 451.12 712.124 454.263 708.527 461.609C701.865 475.209 694.088 482.805 681.101 490.246C676.645 492.501 672.032 494.431 667.299 496.021Z"/><path fill="currentColor" d="M301.875 464.584C299.686 460.273 294.981 450.754 294.841 446.004C293.933 415.328 294.583 384.41 294.573 353.694C294.572 351.011 295.382 347.694 296.199 345.159C301.682 328.106 313.764 313.957 329.748 305.871C342.896 299.325 350.854 299.811 364.963 299.857L391.129 299.948C406.571 299.983 430.79 298.253 444.804 302.295C466.884 308.664 486.126 330.753 488.872 353.522C489.759 359.623 489.454 367.061 489.471 373.313L489.491 403.063C489.483 412.667 490.184 429.965 489.392 438.854C488.915 443.866 487.81 448.798 486.105 453.535C479.921 470.71 468.091 484.235 451.429 492.033C437.277 498.657 428.141 497.722 412.932 497.679C395.629 497.63 378.016 497.718 360.683 497.633C351.283 497.679 346.296 496.661 337.402 494.095C319.753 487.045 311.845 480.484 301.875 464.584Z"/><path fill="currentColor" d="M573.706 527.155C576.335 526.811 583.9 526.918 586.766 526.924L610.555 526.995L641.488 526.957C647.496 526.949 658.177 526.419 663.924 527.806C685.855 533.099 707.554 553.346 713.32 575.305C714.513 579.845 714.054 590.053 714.046 594.713L714.014 624.866L714.167 655.355C714.244 672.665 714.346 681.178 703.941 696.442C692.829 712.743 678.95 720.89 659.776 724.607C654.076 725.181 645.285 724.839 639.269 724.774C627.123 724.676 614.977 724.485 602.833 724.199C579.653 723.784 566.395 727.179 545.889 712.526C517.056 691.923 517.853 664.084 518.636 632.291C518.818 624.878 518.419 617.168 518.572 609.728C518.872 599.912 517.922 588.809 519.941 579.205C525.293 553.734 547.819 531.164 573.706 527.155Z"/></symbol>
+<symbol id="union" viewBox="292 298 424 428"><path fill="currentColor" d="M667.299 496.021C660.393 498.244 648.638 497.554 641.034 497.531L598.273 497.507C590.329 497.508 578.095 497.155 570.551 498.379C558.006 500.413 541.775 507.42 531.091 514.673C510.344 528.756 494.709 554.287 490.491 578.903C489.406 585.232 489.598 598.536 489.58 605.458L489.553 644.125C489.547 652.121 489.94 666.615 488.485 673.902C484.754 690.534 475.301 704.329 461.355 713.843C444.968 725.022 434.837 724.558 416.006 724.461L384.188 724.231C373.603 724.153 362.975 724.296 352.403 724.112C332.371 723.764 314.682 711.671 303.868 695.298C293.874 680.168 293.893 669.715 293.984 652.597L294.112 623.927C294.11 611.78 294.048 599.493 293.923 587.301C293.778 573.194 298.704 561.874 307.527 550.865C326 527.817 344.915 526.89 372.002 526.925L411.242 526.991C424.235 527.016 434.157 527.776 446.888 524.145C481.341 514.318 508.631 486.971 516.794 451.897C519.006 442.389 518.681 428.195 518.75 418.411L518.84 380.581C518.851 371.88 518.304 357.285 520.119 349.42C523.754 333.67 533.784 318.109 547.734 309.68C552.812 306.611 564.166 300.971 569.998 300.537C581.843 299.655 597.23 299.762 609.28 299.991C625.138 300.292 643.598 299.188 659.038 299.969C661.651 300.098 664.246 300.476 666.788 301.096C682.997 305.072 697.664 316.142 706.179 330.458C708.468 334.306 713.09 344.223 713.497 348.528C714.723 361.498 714.11 376.13 714.18 389.313C714.13 407.131 714.562 424.932 714.166 442.751C713.979 451.12 712.124 454.263 708.527 461.609C701.865 475.209 694.088 482.805 681.101 490.246C676.645 492.501 672.032 494.431 667.299 496.021Z"/></symbol>
+<symbol id="block" viewBox="293 298 199 201"><path fill="currentColor" d="M301.875 464.584C299.686 460.273 294.981 450.754 294.841 446.004C293.933 415.328 294.583 384.41 294.573 353.694C294.572 351.011 295.382 347.694 296.199 345.159C301.682 328.106 313.764 313.957 329.748 305.871C342.896 299.325 350.854 299.811 364.963 299.857L391.129 299.948C406.571 299.983 430.79 298.253 444.804 302.295C466.884 308.664 486.126 330.753 488.872 353.522C489.759 359.623 489.454 367.061 489.471 373.313L489.491 403.063C489.483 412.667 490.184 429.965 489.392 438.854C488.915 443.866 487.81 448.798 486.105 453.535C479.921 470.71 468.091 484.235 451.429 492.033C437.277 498.657 428.141 497.722 412.932 497.679C395.629 497.63 378.016 497.718 360.683 497.633C351.283 497.679 346.296 496.661 337.402 494.095C319.753 487.045 311.845 480.484 301.875 464.584Z"/></symbol>
+</defs></svg>
+<div class="app">
+<aside><div class="sidebrand"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg>Squai</div><small>Brand Guideline</small>
+<a href="#cover">00 · This is Squai</a><a href="#strategy">01 · Antes de lo visual</a><a href="#principles">02 · Principios</a><a href="#personality">03 · Cómo se siente</a><a href="#architecture">04 · Arquitectura</a><a href="#experience">05 · Experiencia</a><a href="#visualdna">06 · Visual DNA</a><a href="#logo">07 · Logo</a><a href="#shapedna">08 · Shape DNA</a><a href="#color">10 · Color</a><a href="#type">11 · Typography</a><a href="#composition">12 · Composition</a><a href="#imagery">13 · Imagery</a><a href="#voice">14 · Voice made visible</a><a href="#motion">15 · Motion</a><a href="#levels">16 · Expression levels</a><a href="#references">17 · Template references</a><a href="#ecosystems">18 · One / Grow / Learn</a>
+</aside>
+<main>
+<section class="section hero" id="cover"><div class="hero-lockup"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg><div class="wm">Squai</div></div><div class="tagline">Aprende IA,<br>potencia tus habilidades.</div><p class="hero-sub">Squai hace comprensible la inteligencia artificial para personas, equipos y comunidades. Este documento reúne las decisiones de marca para que cada pieza, la haga quien la haga, se reconozca como Squai.</p><div class="hero-meta"><span style="background:var(--peri)">Squai One · Aprender</span><span style="background:var(--teal)">Squai Grow · Integrar</span><span style="background:var(--gold)">Squai Learn · Preparar</span></div><svg class="hero-mark" viewBox="0 0 1 1" aria-hidden="true"><use href="#markColor"/></svg></section>
+<section class="section" id="strategy"><h2>Una marca que hace comprensible la inteligencia artificial.</h2><div class="grid2"><div class="card"><h3>Propósito</h3><p>Democratizar la comprensión de la inteligencia artificial para que más personas puedan descubrir su potencial y utilizarla de manera significativa en su vida.</p></div><div class="card"><h3>Misión</h3><p>Hacer que la inteligencia artificial sea comprensible y aplicable para personas, equipos y comunidades de cualquier contexto, mediante una formación clara, práctica y cercana.</p></div></div><div class="card" style="margin-top:20px"><h3>Visión</h3><p>Un entorno donde comprender y utilizar la inteligencia artificial no sea una habilidad reservada para personas técnicas, sino una capacidad accesible para cualquier persona, equipo o comunidad.</p></div></section>
+<section class="section" id="principles"><h2>Lo que Squai defiende, incluso cuando cambia el formato.</h2><div class="grid5"><div class="card value"><h3>Claridad</h3><p>Hacer comprensible lo complejo sin esconderlo detrás de tecnicismos.</p></div><div class="card value"><h3>Práctica</h3><p>Convertir conceptos en experiencias que puedan probarse y aplicarse.</p></div><div class="card value"><h3>Cercanía</h3><p>Enseñar desde la conversación, la escucha y la empatía.</p></div><div class="card value"><h3>Curiosidad</h3><p>Explorar la IA más allá de sus usos obvios.</p></div><div class="card value"><h3>Honestidad</h3><p>No exagerar ni utilizar miedo o humo para convencer.</p></div></div></section>
+<section class="section" id="personality"><div class="statement">Profesionales en lo que sabemos. Relajados en cómo lo contamos.</div><p class="lead">El experto cercano: humano, directo, juguetón, curioso y sin humo.</p><div class="hand">La imperfección aparece cuando tiene algo que decir.</div></section>
+<section class="section" id="architecture"><h2>Una metodología. Diferentes contextos.</h2><div class="arch-master">Squai</div><div class="arch-ecos"><div class="arch-eco"><small>Squai One</small><h3>Aprender</h3><p>Personas individuales.</p></div><div class="arch-eco"><small>Squai Grow</small><h3>Integrar</h3><p>Equipos y organizaciones.</p></div><div class="arch-eco"><small>Squai Learn</small><h3>Preparar</h3><p>Comunidades educativas.</p></div></div></section>
+<section class="section" id="experience"><h2>Primero comprensión. Después práctica. Luego posibilidades.</h2><div class="journey"><div><h3>Entender</h3><p>“Ahora sí entiendo.”</p></div><div class="arrow">→</div><div><h3>Experimentar</h3><p>“Ahora sé cómo utilizarla.”</p></div><div class="arrow">→</div><div><h3>Ampliar</h3><p>“Ahora veo más posibilidades de lo que puedo hacer.”</p></div></div></section>
+<section class="section" id="visualdna"><h2>El sistema nace dentro del logo.</h2><p class="lead">No construimos un universo visual con formas genéricas. El isotipo maestro contiene la gramática: una Unión continua + dos instancias de Bloque.</p><div class="grid2"><div class="mark-stage" style="margin-top:34px"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg></div><div style="display:flex;flex-direction:column;justify-content:center"><h3>3 paths → 2 familias formales → 1 sistema.</h3><p>El logo permanece intacto. El Visual DNA deriva de sus paths reales.</p><div class="hand">Squai construye, no adorna.</div></div></div></section>
+<section class="section" id="logo"><h2>Isotipo maestro + Familjen Grotesk 700.</h2><p class="lead">El lockup principal usa exactamente #8A8EF9 y #F9C24D, Familjen Grotesk 700 y un espaciado fijo de 0.15 H entre isotipo y wordmark.</p><div class="grid2"><div class="card measure"><div class="logo-lockup h100"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg><div class="wm">Squai</div></div><div class="source-note"><strong>H = altura visible del isotipo.</strong> Para H = 100, el gap es 15. La geometría del isotipo no se modifica.</div></div><div class="mark-stage"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg></div></div><div class="grid2"><div class="card variant"><div class="variant-label">Primary · Light</div><div class="logo-lockup h72"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg><div class="wm">Squai</div></div></div><div class="card variant" style="background:#fff"><div class="variant-label">Primary · Blanco</div><div class="logo-lockup h72"><svg viewBox="0 0 1 1"><use href="#markColor"/></svg><div class="wm">Squai</div></div></div><div class="card variant"><div class="variant-label">Monochrome · Light</div><div class="logo-lockup h72" style="color:var(--mid)"><svg viewBox="0 0 1 1"><use href="#markMono"/></svg><div class="wm">Squai</div></div></div><div class="card variant" style="background:var(--peri);border-color:var(--peri)"><div class="variant-label" style="color:var(--mid)">Monochrome · Sobre color de marca</div><div class="logo-lockup h72" style="color:var(--mid)"><svg viewBox="0 0 1 1"><use href="#markMono"/></svg><div class="wm">Squai</div></div></div></div></section>
+<section class="section" id="shapedna"><h2>Bloque + Unión. Extraídos, no reinterpretados.</h2><div class="dna-pair"><div class="dna-card"><div class="dna-vis" style="color:var(--gold)"><svg viewBox="0 0 1 1"><use href="#block"/></svg></div><h3>Bloque</h3><p>Unidad estable. El master deriva del primer path Gold independiente del SVG.</p></div><div class="dna-card"><div class="dna-vis" style="color:var(--peri)"><svg viewBox="0 0 1 1"><use href="#union"/></svg></div><h3>Unión</h3><p>Pieza conectiva. Corresponde al primer path del SVG y conserva terminales, cuello y continuidad.</p></div></div><div class="grid-origin"><svg viewBox="292 298 424 428"><rect x="294" y="300" width="196" height="198" fill="none" stroke="#939AB2" stroke-width="2" stroke-dasharray="9 8"/><rect x="518" y="300" width="196" height="198" fill="none" stroke="#939AB2" stroke-width="2" stroke-dasharray="9 8"/><rect x="294" y="527" width="196" height="198" fill="none" stroke="#939AB2" stroke-width="2" stroke-dasharray="9 8"/><rect x="518" y="527" width="196" height="198" fill="none" stroke="#939AB2" stroke-width="2" stroke-dasharray="9 8"/><path fill="#8A8EF9" d="M667.299 496.021C660.393 498.244 648.638 497.554 641.034 497.531L598.273 497.507C590.329 497.508 578.095 497.155 570.551 498.379C558.006 500.413 541.775 507.42 531.091 514.673C510.344 528.756 494.709 554.287 490.491 578.903C489.406 585.232 489.598 598.536 489.58 605.458L489.553 644.125C489.547 652.121 489.94 666.615 488.485 673.902C484.754 690.534 475.301 704.329 461.355 713.843C444.968 725.022 434.837 724.558 416.006 724.461L384.188 724.231C373.603 724.153 362.975 724.296 352.403 724.112C332.371 723.764 314.682 711.671 303.868 695.298C293.874 680.168 293.893 669.715 293.984 652.597L294.112 623.927C294.11 611.78 294.048 599.493 293.923 587.301C293.778 573.194 298.704 561.874 307.527 550.865C326 527.817 344.915 526.89 372.002 526.925L411.242 526.991C424.235 527.016 434.157 527.776 446.888 524.145C481.341 514.318 508.631 486.971 516.794 451.897C519.006 442.389 518.681 428.195 518.75 418.411L518.84 380.581C518.851 371.88 518.304 357.285 520.119 349.42C523.754 333.67 533.784 318.109 547.734 309.68C552.812 306.611 564.166 300.971 569.998 300.537C581.843 299.655 597.23 299.762 609.28 299.991C625.138 300.292 643.598 299.188 659.038 299.969C661.651 300.098 664.246 300.476 666.788 301.096C682.997 305.072 697.664 316.142 706.179 330.458C708.468 334.306 713.09 344.223 713.497 348.528C714.723 361.498 714.11 376.13 714.18 389.313C714.13 407.131 714.562 424.932 714.166 442.751C713.979 451.12 712.124 454.263 708.527 461.609C701.865 475.209 694.088 482.805 681.101 490.246C676.645 492.501 672.032 494.431 667.299 496.021Z"/><path fill="#F9C24D" d="M301.875 464.584C299.686 460.273 294.981 450.754 294.841 446.004C293.933 415.328 294.583 384.41 294.573 353.694C294.572 351.011 295.382 347.694 296.199 345.159C301.682 328.106 313.764 313.957 329.748 305.871C342.896 299.325 350.854 299.811 364.963 299.857L391.129 299.948C406.571 299.983 430.79 298.253 444.804 302.295C466.884 308.664 486.126 330.753 488.872 353.522C489.759 359.623 489.454 367.061 489.471 373.313L489.491 403.063C489.483 412.667 490.184 429.965 489.392 438.854C488.915 443.866 487.81 448.798 486.105 453.535C479.921 470.71 468.091 484.235 451.429 492.033C437.277 498.657 428.141 497.722 412.932 497.679C395.629 497.63 378.016 497.718 360.683 497.633C351.283 497.679 346.296 496.661 337.402 494.095C319.753 487.045 311.845 480.484 301.875 464.584Z"/><path fill="#F9C24D" d="M573.706 527.155C576.335 526.811 583.9 526.918 586.766 526.924L610.555 526.995L641.488 526.957C647.496 526.949 658.177 526.419 663.924 527.806C685.855 533.099 707.554 553.346 713.32 575.305C714.513 579.845 714.054 590.053 714.046 594.713L714.014 624.866L714.167 655.355C714.244 672.665 714.346 681.178 703.941 696.442C692.829 712.743 678.95 720.89 659.776 724.607C654.076 725.181 645.285 724.839 639.269 724.774C627.123 724.676 614.977 724.485 602.833 724.199C579.653 723.784 566.395 727.179 545.889 712.526C517.056 691.923 517.853 664.084 518.636 632.291C518.818 624.878 518.419 617.168 518.572 609.728C518.872 599.912 517.922 588.809 519.941 579.205C525.293 553.734 547.819 531.164 573.706 527.155Z"/></svg><div><h3>La retícula se descubre; no se impone.</h3><p>La lectura 2 × 2 explica ocupación, continuidad y espacio negativo del SVG. No redibuja el símbolo.</p></div></div></section><section class="section" id="color"><h2>Los colores del logo son los colores del sistema.</h2><div class="grid5"><div class="swatch canvas"><strong>Canvas Light</strong><code>#F4F6FF</code></div><div class="swatch speri"><strong>Periwinkle</strong><code>#8A8EF9</code></div><div class="swatch smid"><strong>Midnight</strong><code>#0A0C1A</code></div><div class="swatch steal"><strong>Teal</strong><code>#44D4C8</code></div><div class="swatch sgold"><strong>Gold</strong><code>#F9C24D</code></div></div><div class="contrast"><strong>Contraste con Midnight:</strong> Periwinkle 6.77:1 · Teal 10.64:1 · Gold 11.90:1.</div><h3 class="xsub">Paleta expandida</h3><p class="lead">Cada color de marca se extiende en una escala de 12 pasos. El tono avanza de claro a oscuro sin saltos, y el paso 9 es siempre el hex exacto de marca (marcado con contorno).</p><p class="xnote">Alcance: contenido digital y web, pantalla, fondo claro, nivel WCAG AA (4.5:1 texto normal, 3:1 texto grande y elementos gráficos). No incluye colores semánticos (son de producto). Método: roles por paso de Radix Colors; escalas generadas en OKLCH para que la luminosidad descienda de forma continua del paso 1 al 12; ratios WCAG 2.x calculados, no estimados.</p><div class="xscale"><div class="xhead"><strong>Neutros</strong><span>Derivados de Midnight</span></div><div class="xrow"><div class="xs" style="background:#f2f3f6;color:#0A0C1A"><b>1</b><code>#f2f3f6</code></div><div class="xs" style="background:#edeff5;color:#0A0C1A"><b>2</b><code>#edeff5</code></div><div class="xs" style="background:#e3e5ef;color:#0A0C1A"><b>3</b><code>#e3e5ef</code></div><div class="xs" style="background:#d9dcea;color:#0A0C1A"><b>4</b><code>#d9dcea</code></div><div class="xs" style="background:#d1d5e5;color:#0A0C1A"><b>5</b><code>#d1d5e5</code></div><div class="xs" style="background:#c8cce0;color:#0A0C1A"><b>6</b><code>#c8cce0</code></div><div class="xs" style="background:#bbc1d9;color:#0A0C1A"><b>7</b><code>#bbc1d9</code></div><div class="xs" style="background:#a7adcc;color:#0A0C1A"><b>8</b><code>#a7adcc</code></div><div class="xs" style="background:#7a7f9c;color:#0A0C1A"><b>9</b><code>#7a7f9c</code></div><div class="xs" style="background:#6f7591;color:#0A0C1A"><b>10</b><code>#6f7591</code></div><div class="xs" style="background:#525770;color:#F4F6FF"><b>11</b><code>#525770</code></div><div class="xs" style="background:#1c1e2e;color:#F4F6FF"><b>12</b><code>#1c1e2e</code></div></div></div><div class="xscale"><div class="xhead"><strong>Periwinkle</strong><span>Squai One · personas</span></div><div class="xrow"><div class="xs" style="background:#f9faff;color:#0A0C1A"><b>1</b><code>#f9faff</code></div><div class="xs" style="background:#eef0fd;color:#0A0C1A"><b>2</b><code>#eef0fd</code></div><div class="xs" style="background:#e1e4fd;color:#0A0C1A"><b>3</b><code>#e1e4fd</code></div><div class="xs" style="background:#d2d7fc;color:#0A0C1A"><b>4</b><code>#d2d7fc</code></div><div class="xs" style="background:#c3c9fc;color:#0A0C1A"><b>5</b><code>#c3c9fc</code></div><div class="xs" style="background:#b4bafc;color:#0A0C1A"><b>6</b><code>#b4bafc</code></div><div class="xs" style="background:#a5abfc;color:#0A0C1A"><b>7</b><code>#a5abfc</code></div><div class="xs" style="background:#969bfc;color:#0A0C1A"><b>8</b><code>#969bfc</code></div><div class="xs brand" style="background:#8a8ef9;color:#0A0C1A"><b>9</b><code>#8a8ef9</code></div><div class="xs" style="background:#777ae3;color:#0A0C1A"><b>10</b><code>#777ae3</code></div><div class="xs" style="background:#5a5bb6;color:#F4F6FF"><b>11</b><code>#5a5bb6</code></div><div class="xs" style="background:#303163;color:#F4F6FF"><b>12</b><code>#303163</code></div></div></div><div class="xscale"><div class="xhead"><strong>Teal</strong><span>Squai Grow · equipos y organizaciones</span></div><div class="xrow"><div class="xs" style="background:#f6fbfb;color:#0A0C1A"><b>1</b><code>#f6fbfb</code></div><div class="xs" style="background:#eaf8f6;color:#0A0C1A"><b>2</b><code>#eaf8f6</code></div><div class="xs" style="background:#dbf4f0;color:#0A0C1A"><b>3</b><code>#dbf4f0</code></div><div class="xs" style="background:#c9f0eb;color:#0A0C1A"><b>4</b><code>#c9f0eb</code></div><div class="xs" style="background:#b5ebe5;color:#0A0C1A"><b>5</b><code>#b5ebe5</code></div><div class="xs" style="background:#9fe7df;color:#0A0C1A"><b>6</b><code>#9fe7df</code></div><div class="xs" style="background:#85e2d8;color:#0A0C1A"><b>7</b><code>#85e2d8</code></div><div class="xs" style="background:#66ddd2;color:#0A0C1A"><b>8</b><code>#66ddd2</code></div><div class="xs brand" style="background:#44d4c8;color:#0A0C1A"><b>9</b><code>#44d4c8</code></div><div class="xs" style="background:#21bfb4;color:#0A0C1A"><b>10</b><code>#21bfb4</code></div><div class="xs" style="background:#007872;color:#F4F6FF"><b>11</b><code>#007872</code></div><div class="xs" style="background:#004441;color:#F4F6FF"><b>12</b><code>#004441</code></div></div></div><div class="xscale"><div class="xhead"><strong>Gold</strong><span>Squai Learn · comunidades educativas</span></div><div class="xrow"><div class="xs" style="background:#fcfaf5;color:#0A0C1A"><b>1</b><code>#fcfaf5</code></div><div class="xs" style="background:#fcf6ea;color:#0A0C1A"><b>2</b><code>#fcf6ea</code></div><div class="xs" style="background:#fcf0db;color:#0A0C1A"><b>3</b><code>#fcf0db</code></div><div class="xs" style="background:#fdebc9;color:#0A0C1A"><b>4</b><code>#fdebc9</code></div><div class="xs" style="background:#fde4b5;color:#0A0C1A"><b>5</b><code>#fde4b5</code></div><div class="xs" style="background:#fedea0;color:#0A0C1A"><b>6</b><code>#fedea0</code></div><div class="xs" style="background:#ffd688;color:#0A0C1A"><b>7</b><code>#ffd688</code></div><div class="xs" style="background:#ffcf70;color:#0A0C1A"><b>8</b><code>#ffcf70</code></div><div class="xs brand" style="background:#f9c24d;color:#0A0C1A"><b>9</b><code>#f9c24d</code></div><div class="xs" style="background:#e8aa36;color:#0A0C1A"><b>10</b><code>#e8aa36</code></div><div class="xs" style="background:#9a6000;color:#F4F6FF"><b>11</b><code>#9a6000</code></div><div class="xs" style="background:#593600;color:#F4F6FF"><b>12</b><code>#593600</code></div></div></div><h3 class="xsub">Roles por paso</h3><ul class="xroles"><li><b>1</b><span>Fondo de página</span></li><li><b>2</b><span>Fondo sutil (tarjetas, bandas)</span></li><li><b>3-5</b><span>Fondos de componentes, hover, activo</span></li><li><b>6-8</b><span>Bordes y separadores</span></li><li><b>9</b><span>Color sólido de marca</span></li><li><b>10</b><span>Hover del sólido</span></li><li><b>11</b><span>Texto de bajo contraste, íconos</span></li><li><b>12</b><span>Texto de alto contraste</span></li></ul><h3 class="xsub">Reglas de uso</h3><div class="xrules"><div class="xrule"><div class="xrule-copy"><span class="xrule-n">01</span><h4>Texto de cuerpo</h4><p>Sobre Canvas Light: Midnight (18.02) o Neutral 12 (15.28). Texto secundario: Neutral 11 (6.59).</p></div><div class="xrule-ex"><div><div class="tag yes">Sí</div><div class="ex" style="background:#F4F6FF"><div class="ex-h" style="color:#0A0C1A">Ahora sí entiendo.</div><div class="ex-p" style="color:#525770">La IA no es magia: es una herramienta que puedes aprender a usar.</div></div></div><div><div class="tag no">No</div><div class="ex" style="background:#F4F6FF"><div class="ex-h" style="color:#8a8ef9">Ahora sí entiendo.</div><div class="ex-p" style="color:#a7adcc">La IA no es magia: es una herramienta que puedes aprender a usar.</div></div><div class="ex-why">Periwinkle 9 sobre Canvas: 2.66. Neutral 8: 2.05.</div></div></div></div><div class="xrule"><div class="xrule-copy"><span class="xrule-n">02</span><h4>Texto de color</h4><p>Usar el paso 11 o 12 de la escala. El paso 9 nunca es texto sobre fondo claro: Periwinkle 2.66, Teal 1.69, Gold 1.52.</p></div><div class="xrule-ex"><div><div class="tag yes">Sí</div><div class="ex" style="background:#F4F6FF"><div class="ex-k" style="color:#5a5bb6">Squai One</div><div class="ex-k" style="color:#007872">Squai Grow</div><div class="ex-k" style="color:#9a6000">Squai Learn</div></div></div><div><div class="tag no">No</div><div class="ex" style="background:#F4F6FF"><div class="ex-k" style="color:#8a8ef9">Squai One</div><div class="ex-k" style="color:#44d4c8">Squai Grow</div><div class="ex-k" style="color:#f9c24d">Squai Learn</div></div><div class="ex-why">Paso 9 como texto: falla AA en las tres escalas.</div></div></div></div><div class="xrule"><div class="xrule-copy"><span class="xrule-n">03</span><h4>Texto sobre color sólido</h4><p>Sobre un paso 9 (botones, etiquetas, bloques) el texto es Midnight, nunca blanco. Midnight: Periwinkle 6.77, Teal 10.64, Gold 11.90.</p></div><div class="xrule-ex"><div><div class="tag yes">Sí</div><div class="ex" style="background:#F4F6FF"><span class="ex-btn" style="background:#8a8ef9;color:#0A0C1A">Empieza aquí</span><span class="ex-btn" style="background:#44d4c8;color:#0A0C1A">Agenda</span><span class="ex-btn" style="background:#f9c24d;color:#0A0C1A">Inscribirse</span></div></div><div><div class="tag no">No</div><div class="ex" style="background:#F4F6FF"><span class="ex-btn" style="background:#8a8ef9;color:#fff">Empieza aquí</span><span class="ex-btn" style="background:#44d4c8;color:#fff">Agenda</span><span class="ex-btn" style="background:#f9c24d;color:#fff">Inscribirse</span></div><div class="ex-why">Blanco: Periwinkle 2.87, Teal 1.83, Gold 1.63.</div></div></div></div><div class="xrule"><div class="xrule-copy"><span class="xrule-n">04</span><h4>Fondos de color claros</h4><p>Bandas y tarjetas con pasos 2-3. Encima: paso 12 para títulos y paso 11 para texto. En las tres escalas el paso 11 pasa AA sobre el paso 3 (Periwinkle 4.64, Teal 4.63, Gold 4.60).</p></div><div class="xrule-ex"><div><div class="tag yes">Sí</div><div class="ex" style="background:#fcf0db"><div class="ex-h" style="color:#593600">Preparar para lo que viene.</div><div class="ex-p" style="color:#9a6000">Programa para comunidades educativas.</div></div></div><div><div class="tag no">No</div><div class="ex" style="background:#fcf0db"><div class="ex-h" style="color:#f9c24d">Preparar para lo que viene.</div><div class="ex-p" style="color:#ffd688">Programa para comunidades educativas.</div></div><div class="ex-why">Gold 9 sobre Gold 3: 1.45.</div></div></div></div><div class="xrule"><div class="xrule-copy"><span class="xrule-n">05</span><h4>Bordes, íconos y gráficas</h4><p>Bordes y separadores decorativos: pasos 6-8. Íconos y líneas que transmiten información necesitan 3:1: paso 11 o 12 (Teal 11 sobre Canvas: 4.96).</p></div><div class="xrule-ex"><div><div class="tag yes">Sí</div><div class="ex" style="background:#F4F6FF"><div class="ex-card" style="border-color:#85e2d8;color:#007872"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span style="color:#0A0C1A">Módulo completado</span></div></div></div><div><div class="tag no">No</div><div class="ex" style="background:#F4F6FF"><div class="ex-card" style="border-color:#44d4c8;color:#44d4c8"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span style="color:#0A0C1A">Módulo completado</span></div></div><div class="ex-why">Ícono en Teal 9 sobre Canvas: 1.69, no llega a 3:1.</div></div></div></div><div class="xrule"><div class="xrule-copy"><span class="xrule-n">06</span><h4>Un servicio por pieza</h4><p>Cada pieza usa los pasos de una sola escala de servicio, más neutros y Midnight. Los tres colores de servicio no se mezclan como fondos.</p></div><div class="xrule-ex"><div><div class="tag yes">Sí</div><div class="ex ex-row" style="background:#F4F6FF"><i style="background:#44d4c8"></i><i style="background:#dbf4f0"></i><i style="background:#e3e5ef"></i><i style="background:#0A0C1A"></i></div></div><div><div class="tag no">No</div><div class="ex ex-row" style="background:#F4F6FF"><i style="background:#8a8ef9"></i><i style="background:#44d4c8"></i><i style="background:#f9c24d"></i><i style="background:#0A0C1A"></i></div><div class="ex-why">Tres servicios en la misma pieza: el color deja de identificar el contexto.</div></div></div></div></div><h3 class="xsub">Pares verificados</h3><table class="xtbl"><tr><th>Texto / elemento</th><th>Fondo</th><th>Ratio</th><th>Uso</th></tr><tr><td><i class="dot" style="background:#0A0C1A"></i>Midnight <code>#0a0c1a</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>18.02</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#1c1e2e"></i>Neutral 12 <code>#1c1e2e</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>15.28</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#525770"></i>Neutral 11 <code>#525770</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>6.59</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#525770"></i>Neutral 11 <code>#525770</code></td><td><i class="dot" style="background:#e3e5ef"></i>Neutral 3 <code>#e3e5ef</code></td><td>5.66</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#303163"></i>Periwinkle 12 <code>#303163</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>11.16</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#5a5bb6"></i>Periwinkle 11 <code>#5a5bb6</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>5.40</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#303163"></i>Periwinkle 12 <code>#303163</code></td><td><i class="dot" style="background:#e1e4fd"></i>Periwinkle 3 <code>#e1e4fd</code></td><td>9.58</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#5a5bb6"></i>Periwinkle 11 <code>#5a5bb6</code></td><td><i class="dot" style="background:#e1e4fd"></i>Periwinkle 3 <code>#e1e4fd</code></td><td>4.64</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#0A0C1A"></i>Midnight <code>#0a0c1a</code></td><td><i class="dot" style="background:#8a8ef9"></i>Periwinkle 9 <code>#8a8ef9</code></td><td>6.77</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#FFFFFF"></i>Blanco <code>#ffffff</code></td><td><i class="dot" style="background:#8a8ef9"></i>Periwinkle 9 <code>#8a8ef9</code></td><td>2.87</td><td class="bad">No usar</td></tr><tr><td><i class="dot" style="background:#8a8ef9"></i>Periwinkle 9 <code>#8a8ef9</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>2.66</td><td class="bad">No usar</td></tr><tr><td><i class="dot" style="background:#004441"></i>Teal 12 <code>#004441</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>10.23</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#007872"></i>Teal 11 <code>#007872</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>4.96</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#004441"></i>Teal 12 <code>#004441</code></td><td><i class="dot" style="background:#dbf4f0"></i>Teal 3 <code>#dbf4f0</code></td><td>9.57</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#007872"></i>Teal 11 <code>#007872</code></td><td><i class="dot" style="background:#dbf4f0"></i>Teal 3 <code>#dbf4f0</code></td><td>4.63</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#0A0C1A"></i>Midnight <code>#0a0c1a</code></td><td><i class="dot" style="background:#44d4c8"></i>Teal 9 <code>#44d4c8</code></td><td>10.64</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#FFFFFF"></i>Blanco <code>#ffffff</code></td><td><i class="dot" style="background:#44d4c8"></i>Teal 9 <code>#44d4c8</code></td><td>1.83</td><td class="bad">No usar</td></tr><tr><td><i class="dot" style="background:#44d4c8"></i>Teal 9 <code>#44d4c8</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>1.69</td><td class="bad">No usar</td></tr><tr><td><i class="dot" style="background:#593600"></i>Gold 12 <code>#593600</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>9.97</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#9a6000"></i>Gold 11 <code>#9a6000</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>4.81</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#593600"></i>Gold 12 <code>#593600</code></td><td><i class="dot" style="background:#fcf0db"></i>Gold 3 <code>#fcf0db</code></td><td>9.54</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#9a6000"></i>Gold 11 <code>#9a6000</code></td><td><i class="dot" style="background:#fcf0db"></i>Gold 3 <code>#fcf0db</code></td><td>4.60</td><td class="">AA</td></tr><tr><td><i class="dot" style="background:#0A0C1A"></i>Midnight <code>#0a0c1a</code></td><td><i class="dot" style="background:#f9c24d"></i>Gold 9 <code>#f9c24d</code></td><td>11.90</td><td class="">AAA</td></tr><tr><td><i class="dot" style="background:#FFFFFF"></i>Blanco <code>#ffffff</code></td><td><i class="dot" style="background:#f9c24d"></i>Gold 9 <code>#f9c24d</code></td><td>1.63</td><td class="bad">No usar</td></tr><tr><td><i class="dot" style="background:#f9c24d"></i>Gold 9 <code>#f9c24d</code></td><td><i class="dot" style="background:#F4F6FF"></i>Canvas Light <code>#f4f6ff</code></td><td>1.52</td><td class="bad">No usar</td></tr></table><details class="xtok"><summary>Tokens CSS</summary><pre>:root {
+  --squai-canvas: #F4F6FF;
+  --squai-midnight: #0A0C1A;
+  /* Neutros */
+  --neutral-1: #f2f3f6; --neutral-2: #edeff5; --neutral-3: #e3e5ef; --neutral-4: #d9dcea; --neutral-5: #d1d5e5; --neutral-6: #c8cce0; --neutral-7: #bbc1d9; --neutral-8: #a7adcc; --neutral-9: #7a7f9c; --neutral-10: #6f7591; --neutral-11: #525770; --neutral-12: #1c1e2e;
+  /* Periwinkle · Squai One */
+  --periwinkle-1: #f9faff; --periwinkle-2: #eef0fd; --periwinkle-3: #e1e4fd; --periwinkle-4: #d2d7fc; --periwinkle-5: #c3c9fc; --periwinkle-6: #b4bafc; --periwinkle-7: #a5abfc; --periwinkle-8: #969bfc; --periwinkle-9: #8a8ef9; --periwinkle-10: #777ae3; --periwinkle-11: #5a5bb6; --periwinkle-12: #303163;
+  /* Teal · Squai Grow */
+  --teal-1: #f6fbfb; --teal-2: #eaf8f6; --teal-3: #dbf4f0; --teal-4: #c9f0eb; --teal-5: #b5ebe5; --teal-6: #9fe7df; --teal-7: #85e2d8; --teal-8: #66ddd2; --teal-9: #44d4c8; --teal-10: #21bfb4; --teal-11: #007872; --teal-12: #004441;
+  /* Gold · Squai Learn */
+  --gold-1: #fcfaf5; --gold-2: #fcf6ea; --gold-3: #fcf0db; --gold-4: #fdebc9; --gold-5: #fde4b5; --gold-6: #fedea0; --gold-7: #ffd688; --gold-8: #ffcf70; --gold-9: #f9c24d; --gold-10: #e8aa36; --gold-11: #9a6000; --gold-12: #593600;
+}</pre></details><h3 class="xsub">Pendientes y límites</h3><ul class="xlist"><li>lab10 (lab10.ai): la paleta no está diferenciada contra sus colores. Falta URL, captura o hex.</li><li>Los ratios son umbrales: revisar a ojo antes de publicar (tipografía delgada, pantallas de bajo brillo).</li><li>Solo hex sRGB; no se incluye gamut P3.</li></ul></section>
+<section class="section" id="type">
+<h2>Una jerarquía clara antes que una mezcla de fuentes.</h2>
+<p class="lead type-intro">
+    Squai usa tres familias con funciones distintas. Cada una se define por <strong>rol, peso, tracking y leading</strong>.
+    La intención no es usar las tres al mismo tiempo, sino elegir la voz correcta para cada nivel de información.
+</p>
+<div class="type-foundations">
+<article class="type-family">
+<div class="type-family-head">
+<div>
+<div class="type-index">01</div>
+<div class="type-name">Familjen Grotesk</div>
+<div class="type-role">Display · Brand · Wordmark</div>
+</div>
+<div class="type-purpose">
+          Construye la voz principal de Squai: directa, fuerte y reconocible. Se usa para el wordmark,
+          titulares, statements y jerarquías de alto impacto.
+</div>
+</div>
+<div class="type-specimen familjen-specimen">
+<span>Aprende IA</span>
+<small>Familjen Grotesk 700 · Display</small>
+</div>
+<div class="type-token-grid">
+<div class="type-token">
+<span class="token-label">Wordmark</span>
+<strong>700</strong>
+<code>tracking −0.055em</code>
+<code>leading 1.00</code>
+</div>
+<div class="type-token">
+<span class="token-label">Hero / statement</span>
+<strong>700</strong>
+<code>tracking −0.050em</code>
+<code>leading 0.95</code>
+</div>
+<div class="type-token">
+<span class="token-label">Section heading</span>
+<strong>700</strong>
+<code>tracking −0.040em</code>
+<code>leading 0.91</code>
+</div>
+<div class="type-token">
+<span class="token-label">Label / eyebrow</span>
+<strong>700</strong>
+<code>tracking +0.12em</code>
+<code>leading 1.00</code>
+</div>
+</div>
+</article>
+<article class="type-family">
+<div class="type-family-head">
+<div>
+<div class="type-index">02</div>
+<div class="type-name">Atkinson Hyperlegible Next</div>
+<div class="type-role">Body · UI · Education</div>
+</div>
+<div class="type-purpose">
+          Es la voz de lectura y explicación. Prioriza claridad en párrafos, contenidos educativos,
+          interfaces y líneas secundarias que no deben competir con el titular.
+</div>
+</div>
+<div class="type-specimen atkinson-specimen">
+<span>Potencia tus</span>
+<small>Atkinson Hyperlegible Next 400 · Secondary display</small>
+</div>
+<div class="type-token-grid atkinson-tokens">
+<div class="type-token">
+<span class="token-label">Body</span>
+<strong>400</strong>
+<code>tracking 0em</code>
+<code>leading 1.48</code>
+</div>
+<div class="type-token">
+<span class="token-label">Secondary display</span>
+<strong>400</strong>
+<code>tracking −0.020em</code>
+<code>leading 1.04</code>
+</div>
+<div class="type-token">
+<span class="token-label">UI / emphasis</span>
+<strong>500</strong>
+<code>tracking 0em</code>
+<code>leading 1.30</code>
+</div>
+</div>
+</article>
+<article class="type-family human-family">
+<div class="type-family-head">
+<div>
+<div class="type-index">03</div>
+<div class="type-name">Gloria Hallelujah</div>
+<div class="type-role">Human annotation</div>
+</div>
+<div class="type-purpose">
+          Funciona como una segunda voz humana. Solo aparece cuando una observación, nota o comentario
+          aporta cercanía. No reemplaza titulares, cuerpos ni elementos de interfaz.
+</div>
+</div>
+<div class="type-specimen gloria-specimen">
+<span>La imperfección aparece cuando tiene algo que decir.</span>
+<small>Gloria Hallelujah Regular · Annotation</small>
+</div>
+<div class="type-token-grid gloria-tokens">
+<div class="type-token">
+<span class="token-label">Annotation</span>
+<strong>Regular</strong>
+<code>tracking 0em</code>
+<code>leading 1.35</code>
+</div>
+</div>
+</article>
+</div>
+<div class="type-divider"></div>
+<div class="type-practice-head">
+<div class="type-index">04</div>
+<div>
+<h3>Jerarquía en práctica</h3>
+<p>
+        Los ejemplos compartidos introducen una variante válida donde Familjen y Atkinson conviven dentro
+        del mismo mensaje. No es una regla obligatoria; es una composición disponible dentro del sistema.
+</p>
+</div>
+</div>
+<div class="type-practice">
+<div class="type-practice-demo">
+<div class="practice-line practice-primary">Aprende IA</div>
+<div class="practice-line practice-secondary">Potencia tus</div>
+<div class="practice-line practice-primary">Habilidades</div>
+</div>
+<div class="type-practice-notes">
+<div class="practice-note">
+<span>01</span>
+<div><strong>Familjen 700</strong><p>Abre y cierra el mensaje con el mayor peso visual.</p></div>
+</div>
+<div class="practice-note">
+<span>02</span>
+<div><strong>Atkinson 400</strong><p>Introduce contraste de ritmo en la línea secundaria.</p></div>
+</div>
+<div class="practice-note">
+<span>03</span>
+<div><strong>Leading compacto</strong><p>El bloque se percibe como una sola unidad tipográfica, no como tres títulos independientes.</p></div>
+</div>
+</div>
+</div>
+<div class="type-divider"></div>
+<div class="type-quick-head">
+<div class="type-index">05</div>
+<div>
+<h3>Referencia rápida</h3>
+<p>Los valores se aplican según el rol tipográfico, no como un único ajuste universal por fuente.</p>
+</div>
+</div>
+<div class="type-table-wrap">
+<table class="type-table">
+<thead>
+<tr>
+<th>Uso</th>
+<th>Fuente</th>
+<th>Peso</th>
+<th>Tracking</th>
+<th>Leading</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Wordmark</td><td>Familjen Grotesk</td><td>700</td><td>−0.055em</td><td>1.00</td></tr>
+<tr><td>Hero / statement</td><td>Familjen Grotesk</td><td>700</td><td>−0.050em</td><td>0.95</td></tr>
+<tr><td>Section heading</td><td>Familjen Grotesk</td><td>700</td><td>−0.040em</td><td>0.91</td></tr>
+<tr><td>Label / eyebrow</td><td>Familjen Grotesk</td><td>700</td><td>+0.12em</td><td>1.00</td></tr>
+<tr><td>Body</td><td>Atkinson Hyperlegible Next</td><td>400</td><td>0em</td><td>1.48</td></tr>
+<tr><td>Secondary display</td><td>Atkinson Hyperlegible Next</td><td>400</td><td>−0.020em</td><td>1.04</td></tr>
+<tr><td>UI / emphasis</td><td>Atkinson Hyperlegible Next</td><td>500</td><td>0em</td><td>1.30</td></tr>
+<tr><td>Human annotation</td><td>Gloria Hallelujah</td><td>Regular</td><td>0em</td><td>1.35</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="section" id="composition">
+<h2>Composición.</h2>
+<p class="lead empty-note">Sección vacía. Las composiciones se agregarán a medida que se iteren las piezas visuales.</p>
+</section>
+<section class="section" id="imagery"><h2>Humanidad antes que futurismo.</h2><div class="imagery"><div class="photo"><span>Dirección: documental ligera</span></div><div><div class="card"><h3>Contexto antes que pose.</h3><p>Personas aprendiendo, explicando, practicando o colaborando.</p></div><div class="card" style="margin-top:14px"><h3>Práctica antes que espectáculo.</h3><p>Herramientas y pantallas solo cuando ayudan a comprender.</p></div><div class="card" style="margin-top:14px"><h3>Sin clichés de IA.</h3><p>Evitar robots, cerebros digitales, hologramas y futurismo genérico.</p></div></div></div></section>
+<section class="section" id="voice"><div class="voice-grid"><div><div class="voice-main">Profesionales en lo que sabemos. Relajados en cómo lo contamos.</div><p class="lead">Familjen establece la voz principal. Atkinson explica. Gloria aparece como una segunda voz humana y puntual.</p></div><div class="voice-note">Nunca impresionar antes que enseñar.</div></div></section>
+<section class="section" id="motion">
+<h2>Motion.</h2>
+<p class="lead empty-note">Sección vacía. El comportamiento dinámico se agregará a medida que se iteren las piezas visuales.</p>
+</section>
+<section class="section" id="levels">
+<h2>Niveles de expresión.</h2>
+<p class="lead empty-note">Sección vacía. Los ejemplos de Calm, Character y Expressive se agregarán a medida que se iteren las piezas visuales.</p>
+</section>
+<section class="section" id="references">
+<h2>Referencias por categoría.</h2>
+<p class="lead empty-note">Sección vacía. Las referencias se agregarán a medida que se iteren las piezas visuales.</p>
+</section><section class="section" id="ecosystems"><h2>Una metodología. Tres contextos. Un tono por servicio.</h2><p class="lead">Los tres servicios comparten el mismo sistema: formas, tipografía y composición. El color de servicio es la única variable y sirve para identificar el contexto, no para crear sub-marcas.</p><div class="eco2-grid"><div class="eco2"><div class="eco2-top" style="background:var(--peri)"><h3>Squai One</h3></div><div class="eco2-body"><p><strong>Contexto:</strong> Personas individuales<br><strong>Territorio:</strong> Aprender</p><p>Es el color núcleo de Squai y One es su territorio principal: la persona que aprende. Los tonos azul-violeta se asocian con calma, confianza y curiosidad, útil para alguien que se acerca a la IA con dudas.</p></div></div><div class="eco2"><div class="eco2-top" style="background:var(--teal)"><h3>Squai Grow</h3></div><div class="eco2-body"><p><strong>Contexto:</strong> Equipos y organizaciones<br><strong>Territorio:</strong> Integrar</p><p>El verde-azulado se asocia con crecimiento, equilibrio y progreso sostenido, y el nombre Grow refuerza esa lectura. Se percibe profesional sin caer en el azul corporativo genérico.</p></div></div><div class="eco2"><div class="eco2-top" style="background:var(--gold)"><h3>Squai Learn</h3></div><div class="eco2-body"><p><strong>Contexto:</strong> Comunidades educativas<br><strong>Territorio:</strong> Preparar</p><p>El amarillo se asocia con optimismo, atención y energía, y con códigos del aula (lápiz, resaltador, la idea). Aporta calidez para docentes y estudiantes.</p></div></div></div><div class="eco2-note"><strong>Sobre la psicología del color.</strong> La evidencia de que un tono transmite por sí solo un significado es limitada: el efecto depende del contexto y de la cultura (Elliot y Maier, 2014). Hay estudios que relacionan el tono con la personalidad percibida de una marca, como el azul con la competencia (Labrecque y Milne, 2012), pero el factor que más pesa es la consistencia: un color se asocia a un servicio porque se usa siempre igual (Romaniuk, activos distintivos). Las razones de arriba son hipótesis a validar con la audiencia.<br><br><strong>Regla:</strong> una pieza usa la escala de un solo servicio. Las piezas de la marca madre Squai usan Periwinkle + Midnight; se distinguen de Squai One por el lockup sin descriptor.</div></section>
+<div class="footer">Squai Brand Guideline · v8.7</div>
+</main></div></body></html>

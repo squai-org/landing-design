@@ -1,0 +1,679 @@
+{
+  "events": [
+    {
+      "id": "ev-1",
+      "type": "page_view",
+      "label": "Visita a la página del programa",
+      "timestamp": "2026-11-18T13:08:05.416Z"
+    },
+    {
+      "id": "ev-2",
+      "type": "scroll_depth",
+      "label": "Lectura hasta sección de pago Bold (75%)",
+      "timestamp": "2026-11-18T13:13:05.416Z"
+    },
+    {
+      "id": "ev-3",
+      "type": "cta_click",
+      "label": "Clic en botón principal de inscripción",
+      "timestamp": "2026-11-18T13:18:05.416Z"
+    },
+    {
+      "id": "ev-4",
+      "type": "signup_submitted",
+      "label": "Registro completado (COP)",
+      "timestamp": "2026-11-18T13:23:05.416Z",
+      "currency": "COP",
+      "amount": 399000
+    },
+    {
+      "id": "ev-5",
+      "type": "bold_checkout_opened",
+      "label": "Pasarela Bold iniciada (PSE)",
+      "timestamp": "2026-11-18T13:25:05.416Z",
+      "currency": "COP",
+      "amount": 399000
+    },
+    {
+      "id": "ev-6",
+      "type": "payment_completed",
+      "label": "Pago confirmado con Bold (PSE)",
+      "timestamp": "2026-11-18T13:27:05.416Z",
+      "currency": "COP",
+      "amount": 399000
+    },
+    {
+      "id": "ev-7",
+      "type": "page_view",
+      "label": "Visita a la página del programa",
+      "timestamp": "2026-11-18T13:58:05.416Z"
+    },
+    {
+      "id": "ev-8",
+      "type": "whatsapp_click",
+      "label": "Consulta rápida por WhatsApp",
+      "timestamp": "2026-11-18T14:08:05.416Z"
+    },
+    {
+      "id": "ev-9",
+      "type": "page_view",
+      "label": "Visita a la página del programa",
+      "timestamp": "2026-11-18T14:23:05.416Z"
+    },
+    {
+      "id": "ev-10",
+      "type": "scroll_depth",
+      "label": "Lectura completa de módulos (50%)",
+      "timestamp": "2026-11-18T14:29:05.416Z"
+    },
+    {
+      "id": "ev-11",
+      "type": "form_start",
+      "label": "Inicio de formulario de inscripción",
+      "timestamp": "2026-11-18T14:33:05.416Z"
+    },
+    {
+      "id": "ev-12",
+      "type": "signup_submitted",
+      "label": "Registro completado (USD)",
+      "timestamp": "2026-11-18T14:38:05.416Z",
+      "currency": "USD",
+      "amount": 129
+    },
+    {
+      "id": "ev-13",
+      "type": "bold_checkout_opened",
+      "label": "Pasarela Bold iniciada (Tarjeta)",
+      "timestamp": "2026-11-18T14:40:05.416Z",
+      "currency": "USD",
+      "amount": 129
+    },
+    {
+      "id": "ev-14",
+      "type": "payment_completed",
+      "label": "Pago confirmado con Bold (Tarjeta)",
+      "timestamp": "2026-11-18T14:43:05.416Z",
+      "currency": "USD",
+      "amount": 129
+    },
+    {
+      "id": "ev-15",
+      "type": "page_view",
+      "label": "Visita a la página del programa",
+      "timestamp": "2026-11-18T15:08:05.416Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-7178d1ed",
+      "timestamp": "2026-11-18T15:53:17.191Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-237f3e4f",
+      "timestamp": "2026-11-18T15:53:44.994Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-4117dade",
+      "timestamp": "2026-11-18T15:54:03.087Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-17c598fd",
+      "timestamp": "2026-11-18T15:54:08.354Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-18d671df",
+      "timestamp": "2026-11-18T15:55:17.504Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-12ba0183",
+      "timestamp": "2026-11-18T15:55:17.510Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-d5677657",
+      "timestamp": "2026-11-18T15:55:17.514Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-60e53c0d",
+      "timestamp": "2026-11-18T15:55:17.518Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-026d88b7",
+      "timestamp": "2026-11-18T15:55:22.126Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-1d030173",
+      "timestamp": "2026-11-18T15:55:22.128Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-6fec6d56",
+      "timestamp": "2026-11-18T15:55:22.131Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-f161642a",
+      "timestamp": "2026-11-18T15:55:22.133Z"
+    },
+    {
+      "type": "form_start",
+      "label": "Inicio de formulario de inscripción",
+      "id": "ev-f95835d4",
+      "timestamp": "2026-11-18T15:55:41.820Z"
+    },
+    {
+      "type": "signup_submitted",
+      "label": "Inscripción de Laura Gómez (COP)",
+      "currency": "COP",
+      "amount": 399000,
+      "metadata": {
+        "inscriptionId": "ins-4b5a6e33"
+      },
+      "id": "ev-dea9e4fb",
+      "timestamp": "2026-11-18T15:55:42.008Z"
+    },
+    {
+      "type": "bold_checkout_opened",
+      "label": "Pasarela Bold abierta · Orden SQUAI-BOLD-MWMAZ9E2",
+      "currency": "COP",
+      "amount": 399000,
+      "metadata": {
+        "orderId": "SQUAI-BOLD-MWMAZ9E2",
+        "inscriptionId": "ins-4b5a6e33"
+      },
+      "id": "ev-e1828a15",
+      "timestamp": "2026-11-18T15:55:42.026Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-bf119bd3",
+      "timestamp": "2026-11-18T15:56:29.981Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-6390ac5b",
+      "timestamp": "2026-11-18T15:58:03.058Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-5507b22e",
+      "timestamp": "2026-11-18T15:58:03.954Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-8d718ae3",
+      "timestamp": "2026-11-18T15:58:05.615Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-5b553572",
+      "timestamp": "2026-11-18T15:58:06.281Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-24c958bc",
+      "timestamp": "2026-11-18T15:58:10.823Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-de87e6f7",
+      "timestamp": "2026-11-18T15:58:10.831Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-4042b413",
+      "timestamp": "2026-11-18T15:58:29.089Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-039efd94",
+      "timestamp": "2026-11-18T16:28:27.169Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-46337847",
+      "timestamp": "2026-11-18T16:28:38.221Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-0ca16eeb",
+      "timestamp": "2026-11-18T16:28:38.224Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-bdea9f3f",
+      "timestamp": "2026-11-18T16:28:38.227Z"
+    },
+    {
+      "type": "cta_click",
+      "label": "Newsletter footer: carlos@equipo.co",
+      "id": "ev-752f5781",
+      "timestamp": "2026-11-18T16:28:42.767Z"
+    },
+    {
+      "type": "form_start",
+      "label": "Inicio de formulario de inscripción",
+      "id": "ev-6d3534a6",
+      "timestamp": "2026-11-18T16:28:46.937Z"
+    },
+    {
+      "type": "signup_submitted",
+      "label": "Inscripción de Carlos Méndez (COP)",
+      "currency": "COP",
+      "amount": 399000,
+      "metadata": {
+        "inscriptionId": "ins-d5df30e5"
+      },
+      "id": "ev-63d4687b",
+      "timestamp": "2026-11-18T16:28:49.793Z"
+    },
+    {
+      "type": "bold_checkout_opened",
+      "label": "Pasarela Bold abierta · Orden SQUAI-BOLD-MWMC5V6C",
+      "currency": "COP",
+      "amount": 399000,
+      "metadata": {
+        "orderId": "SQUAI-BOLD-MWMC5V6C",
+        "inscriptionId": "ins-d5df30e5"
+      },
+      "id": "ev-0372438d",
+      "timestamp": "2026-11-18T16:28:49.813Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-8c540a55",
+      "timestamp": "2026-11-18T16:30:37.901Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-404d955f",
+      "timestamp": "2026-11-18T16:30:46.251Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-73f66db9",
+      "timestamp": "2026-11-18T16:30:46.258Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-33effd26",
+      "timestamp": "2026-11-18T16:30:46.261Z"
+    },
+    {
+      "type": "cta_click",
+      "label": "Newsletter footer: laura@equipo.co",
+      "id": "ev-1073f0af",
+      "timestamp": "2026-11-18T16:30:55.888Z"
+    },
+    {
+      "type": "form_start",
+      "label": "Inicio de formulario de inscripción",
+      "id": "ev-d4506a38",
+      "timestamp": "2026-11-18T16:30:59.655Z"
+    },
+    {
+      "type": "signup_submitted",
+      "label": "Inscripción de Laura Gómez (COP)",
+      "currency": "COP",
+      "amount": 399000,
+      "metadata": {
+        "inscriptionId": "ins-4eb829f9"
+      },
+      "id": "ev-32044256",
+      "timestamp": "2026-11-18T16:31:02.125Z"
+    },
+    {
+      "type": "bold_checkout_opened",
+      "label": "Pasarela segura abierta · Orden SQUAI-PAY-MWMC8PA1",
+      "currency": "COP",
+      "amount": 399000,
+      "metadata": {
+        "orderId": "SQUAI-PAY-MWMC8PA1",
+        "inscriptionId": "ins-4eb829f9"
+      },
+      "id": "ev-7ec7ff28",
+      "timestamp": "2026-11-18T16:31:02.138Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-89c8a401",
+      "timestamp": "2026-11-18T16:31:22.214Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-f432b6bb",
+      "timestamp": "2026-11-18T16:32:07.210Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-6da4d351",
+      "timestamp": "2026-11-18T16:32:18.818Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-813c5aa6",
+      "timestamp": "2026-11-18T16:32:35.124Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-a1ce1887",
+      "timestamp": "2026-11-18T16:32:49.763Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-22dc950d",
+      "timestamp": "2026-11-18T16:32:57.444Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-a310aa3f",
+      "timestamp": "2026-11-18T16:32:57.533Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-04897082",
+      "timestamp": "2026-11-18T16:32:57.539Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-f3535965",
+      "timestamp": "2026-11-18T17:25:28.803Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-c8e79e07",
+      "timestamp": "2026-11-18T17:25:35.297Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-ba5064f3",
+      "timestamp": "2026-11-18T17:25:38.312Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-9adad3a3",
+      "timestamp": "2026-11-18T17:25:41.418Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-1812c408",
+      "timestamp": "2026-11-18T17:27:27.166Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-614b2adb",
+      "timestamp": "2026-11-18T17:27:33.029Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-c3288ae1",
+      "timestamp": "2026-11-18T17:27:35.845Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-4c59c2ab",
+      "timestamp": "2026-11-18T17:27:38.235Z"
+    },
+    {
+      "type": "cta_click",
+      "label": "Selección de rol: Liderazgo",
+      "id": "ev-6555443f",
+      "timestamp": "2026-11-18T17:28:05.145Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-f798c6b5",
+      "timestamp": "2026-11-18T17:28:54.079Z"
+    },
+    {
+      "type": "whatsapp_click",
+      "label": "Apertura del panel de WhatsApp",
+      "id": "ev-a1baa1e4",
+      "timestamp": "2026-11-18T17:42:58.808Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-a6174aa2",
+      "timestamp": "2026-11-18T17:43:35.046Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-b1123320",
+      "timestamp": "2026-11-18T17:43:36.668Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-1ce6b3b4",
+      "timestamp": "2026-11-18T17:43:36.795Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-8bce2772",
+      "timestamp": "2026-11-18T17:43:36.935Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-29d0d8e6",
+      "timestamp": "2026-11-18T17:47:07.663Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-76aa8c11",
+      "timestamp": "2026-11-18T17:47:14.803Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-75def504",
+      "timestamp": "2026-11-18T17:47:40.471Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-f9fb2156",
+      "timestamp": "2026-11-18T17:47:49.597Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-1ffcb349",
+      "timestamp": "2026-11-18T17:47:52.067Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-2164448c",
+      "timestamp": "2026-11-18T17:47:53.117Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-ed72e929",
+      "timestamp": "2026-11-18T17:48:56.294Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-90680595",
+      "timestamp": "2026-11-18T17:48:58.389Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-3be2afb7",
+      "timestamp": "2026-11-18T17:49:01.562Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-25aff4ec",
+      "timestamp": "2026-11-18T17:49:06.906Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-92d31611",
+      "timestamp": "2026-11-18T17:50:30.985Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-5adf25d2",
+      "timestamp": "2026-11-18T17:50:33.785Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-ec278780",
+      "timestamp": "2026-11-18T17:50:33.787Z"
+    },
+    {
+      "type": "page_view",
+      "label": "Visita a Fundamentos de IA para el Trabajo",
+      "id": "ev-1d4306e2",
+      "timestamp": "2026-11-18T17:50:53.714Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 25%",
+      "id": "ev-4ed1a89d",
+      "timestamp": "2026-11-18T17:50:58.819Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 50%",
+      "id": "ev-6c754e03",
+      "timestamp": "2026-11-18T17:50:58.821Z"
+    },
+    {
+      "type": "scroll_depth",
+      "label": "Lectura de página al 75%",
+      "id": "ev-ab33c66f",
+      "timestamp": "2026-11-18T17:51:03.518Z"
+    }
+  ],
+  "inscriptions": [
+    {
+      "id": "ins-1",
+      "fullName": "Registro verificado #101",
+      "email": "registro101@squai.co",
+      "phone": "+57 300 000 0101",
+      "currency": "COP",
+      "amountDueNow": 399000,
+      "totalAmount": 399000,
+      "status": "paid",
+      "orderId": "SQUAI-BOLD-101",
+      "paymentMethod": "PSE",
+      "createdAt": "2026-11-18T13:23:05.416Z",
+      "paidAt": "2026-11-18T13:27:05.416Z"
+    },
+    {
+      "id": "ins-2",
+      "fullName": "Registro verificado #102",
+      "email": "registro102@squai.co",
+      "phone": "+1 305 000 0102",
+      "currency": "USD",
+      "amountDueNow": 129,
+      "totalAmount": 129,
+      "status": "paid",
+      "orderId": "SQUAI-BOLD-102",
+      "paymentMethod": "CARD",
+      "createdAt": "2026-11-18T14:38:05.416Z",
+      "paidAt": "2026-11-18T14:43:05.416Z"
+    },
+    {
+      "id": "ins-4b5a6e33",
+      "fullName": "Laura Gómez",
+      "email": "laura@empresa.co",
+      "phone": "+57 300 123 4567",
+      "currency": "COP",
+      "amountDueNow": 399000,
+      "totalAmount": 399000,
+      "status": "checkout_pending",
+      "createdAt": "2026-11-18T15:55:42.007Z",
+      "orderId": "SQUAI-BOLD-MWMAZ9E2"
+    },
+    {
+      "id": "ins-d5df30e5",
+      "fullName": "Carlos Méndez",
+      "email": "carlos@empresa.co",
+      "phone": "+57 310 555 0101",
+      "currency": "COP",
+      "amountDueNow": 399000,
+      "totalAmount": 399000,
+      "status": "checkout_pending",
+      "createdAt": "2026-11-18T16:28:49.792Z",
+      "orderId": "SQUAI-BOLD-MWMC5V6C"
+    },
+    {
+      "id": "ins-4eb829f9",
+      "fullName": "Laura Gómez",
+      "email": "laura@empresa.co",
+      "phone": "+57 311 555 0202",
+      "currency": "COP",
+      "amountDueNow": 399000,
+      "totalAmount": 399000,
+      "status": "checkout_pending",
+      "createdAt": "2026-11-18T16:31:02.124Z",
+      "orderId": "SQUAI-PAY-MWMC8PA1"
+    }
+  ]
+}
