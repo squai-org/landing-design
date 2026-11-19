@@ -5,6 +5,7 @@
   --font-sans: "Atkinson Hyperlegible Next", Arial, sans-serif;
   --font-human: "Gloria Hallelujah", cursive;
 
+  /* Brand Guideline v8.7 · paleta expandida (paso 9 = hex de marca). */
   --color-squai-canvas: #F4F6FF;
   --color-squai-midnight: #0A0C1A;
 
@@ -33,15 +34,152 @@
   --color-periwinkle-10: #777ae3;
   --color-periwinkle-11: #5a5bb6;
   --color-periwinkle-12: #303163;
+
+  --color-gold-1: #fcfaf5;
+  --color-gold-2: #fcf6ea;
+  --color-gold-3: #fcf0db;
+  --color-gold-4: #fdebc9;
+  --color-gold-5: #fde4b5;
+  --color-gold-6: #fedea0;
+  --color-gold-7: #ffd688;
+  --color-gold-8: #ffcf70;
+  --color-gold-9: #f9c24d;
+  --color-gold-10: #e8aa36;
+  --color-gold-11: #9a6000;
+  --color-gold-12: #593600;
+
+  /* Teal identifica a Squai Grow: se declara para completar la paleta,
+     pero esta landing de Squai One no lo usa. */
+  --color-teal-9: #44d4c8;
+  --color-teal-11: #007872;
 }
 
+/* ============================================================
+   Marco de color de la landing (60-30-10 sobre los roles por paso):
+   - 60% base: White, Canvas y Neutral 1-3.
+   - 30% servicio Squai One: Periwinkle (P9 hero, P2-P4 bandas suaves,
+     P12 banda oscura y footer, P11 notas manuscritas sobre claro).
+   - 10% acento: Gold, el segundo color del logo (banda de mentores,
+     franja, una pieza por sección, sellos y CTA sobre fondos oscuros).
+   Texto: Midnight sobre claro y sobre paso 9; Canvas sobre P12/Midnight.
+   ============================================================ */
+
+/* ============================================================
+   Escala de la referencia (aardvarkbookclub.com): 1 unidad = 1 px de su
+   diseño, que se ajusta al ancho de pantalla. Anchos de diseño: 402 px
+   (móvil), 834 px (desde 768) y 1920 px (desde 992). Los textos de
+   lectura nunca bajan de 16 px (14 en etiquetas) y lo tocable nunca
+   baja de 44 px en móvil.
+   ============================================================ */
 :root {
+  --u: calc(100vw / 402);
+
+  --fs-h1: calc(var(--u) * 52);
+  --fs-h2: calc(var(--u) * 40);
+  --fs-h3: calc(var(--u) * 30);
+  --fs-lead: max(16px, calc(var(--u) * 20));
+  --fs-medium: max(16px, calc(var(--u) * 20));
+  --fs-body: max(16px, calc(var(--u) * 18));
+  --fs-small: max(16px, calc(var(--u) * 16));
+  --fs-hand: max(16px, calc(var(--u) * 24));
+  --fs-badge: calc(var(--u) * 18);
+  --fs-tag: max(14px, calc(var(--u) * 16));
+
+  --btn-h: max(44px, calc(var(--u) * 48));
+  --btn-fs: max(16px, calc(var(--u) * 17));
+  --btn-px: calc(var(--u) * 14);
+  --btn-r: calc(var(--u) * 8);
+  --pill-h: max(44px, calc(var(--u) * 40));
+  --pill-fs: max(16px, calc(var(--u) * 17));
+  --pill-px: calc(var(--u) * 16);
+  --social: max(44px, calc(var(--u) * 24));
+
+  --tag-h: calc(var(--u) * 25);
+  --tag-py: calc(var(--u) * 5);
+  --tag-px: calc(var(--u) * 6);
+  --tag-r: calc(var(--u) * 24);
+
+  --card-r: calc(var(--u) * 32);
+  --media-r: calc(var(--u) * 20);
+  --band-r: calc(var(--u) * 32);
+  --edge-r: calc(var(--u) * 40);
+  --band-inset: calc(var(--u) * 16);
+  --gutter: calc(var(--u) * 16);
+  --section-py: calc(var(--u) * 70);
+
+  --faq-r: calc(var(--u) * 16);
+  --faq-py: calc(var(--u) * 23);
+  --faq-px: calc(var(--u) * 20);
+
+  --input-h: max(44px, calc(var(--u) * 51));
+  --input-r: calc(var(--u) * 13.5);
+  --input-fs: max(16px, calc(var(--u) * 18));
+  --input-px: calc(var(--u) * 13.5);
+
+  --frame-r: calc(var(--u) * 40);
+  --frame-b: calc(var(--u) * 8);
+
   --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-soft-overshoot: cubic-bezier(0.59, 1, 0.88, 1.01);
   --ease-bounce: cubic-bezier(0.34, 1.57, 0.64, 1);
   --button-ease-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
   --button-alt-ease-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
   --ease-click: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --u: calc(100vw / 834);
+    --fs-h1: calc(var(--u) * 96);
+    --fs-badge: calc(var(--u) * 32);
+    --input-h: calc(var(--u) * 58);
+    --input-px: calc(var(--u) * 19);
+    --gutter: calc(var(--u) * 24);
+  }
+}
+
+@media (min-width: 992px) {
+  :root {
+    --u: calc(100vw / 1920);
+    --fs-h1: calc(var(--u) * 160);
+    --fs-h2: calc(var(--u) * 104);
+    --fs-h3: calc(var(--u) * 40);
+    --fs-lead: max(16px, calc(var(--u) * 32));
+    --fs-medium: max(16px, calc(var(--u) * 28));
+    --fs-body: max(16px, calc(var(--u) * 24));
+    --fs-small: max(16px, calc(var(--u) * 20));
+    --fs-hand: max(16px, calc(var(--u) * 32));
+    --fs-badge: calc(var(--u) * 64);
+
+    --btn-h: calc(var(--u) * 56);
+    --btn-fs: max(16px, calc(var(--u) * 20));
+    --btn-px: calc(var(--u) * 20);
+    --pill-h: calc(var(--u) * 56);
+    --pill-fs: max(16px, calc(var(--u) * 24));
+    --social: calc(var(--u) * 48);
+
+    --tag-h: calc(var(--u) * 34);
+    --tag-py: calc(var(--u) * 7);
+    --tag-px: calc(var(--u) * 8);
+
+    --band-r: calc(var(--u) * 160);
+    --edge-r: calc(var(--u) * 160);
+    --band-inset: calc(var(--u) * 24);
+    --gutter: calc(var(--u) * 40);
+    --section-py: calc(var(--u) * 140);
+
+    --faq-r: calc(var(--u) * 24);
+    --faq-py: calc(var(--u) * 28.8);
+    --faq-px: calc(var(--u) * 32);
+
+    --input-h: calc(var(--u) * 80);
+    --input-r: calc(var(--u) * 25);
+    --input-fs: max(16px, calc(var(--u) * 25));
+    --input-px: calc(var(--u) * 26.5);
+
+    --frame-r: calc(var(--u) * 80);
+    --frame-b: calc(var(--u) * 16);
+  }
 }
 
 @layer base {
@@ -67,14 +205,16 @@
 }
 
 /* ============================================================
-   Aardvark Reference Fluid Typography Scale (Familjen Grotesk Heavy Optical Weight)
+   Tipografía: tamaños de la referencia; tracking y leading del brand
+   book (Familjen 700 hero -0.05em/0.95, títulos -0.04em/0.91;
+   Atkinson 1.48; Gloria 1.35).
    ============================================================ */
 .aardvark-h1 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(3.35rem, 8.4vw, 8rem);
-  line-height: 0.84;
-  letter-spacing: -0.032em;
+  font-size: var(--fs-h1);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
   -webkit-text-stroke: 0.018em currentColor;
   paint-order: stroke fill;
 }
@@ -82,19 +222,9 @@
 .aardvark-h2 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.6rem, 5.55vw, 5.4rem);
-  line-height: 0.86;
-  letter-spacing: -0.03em;
-  -webkit-text-stroke: 0.018em currentColor;
-  paint-order: stroke fill;
-}
-
-.aardvark-h2-giant {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(3.2rem, 8.8vw, 8.2rem);
-  line-height: 0.86;
-  letter-spacing: -0.035em;
+  font-size: var(--fs-h2);
+  line-height: 0.91;
+  letter-spacing: -0.04em;
   -webkit-text-stroke: 0.018em currentColor;
   paint-order: stroke fill;
 }
@@ -102,9 +232,9 @@
 .aardvark-h3 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.7rem, 2.15vw, 2.3rem);
+  font-size: var(--fs-h3);
   line-height: 0.98;
-  letter-spacing: -0.018em;
+  letter-spacing: -0.02em;
   -webkit-text-stroke: 0.012em currentColor;
   paint-order: stroke fill;
 }
@@ -112,8 +242,9 @@
 .aardvark-benefit-text {
   font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.02;
+  font-size: var(--fs-h2);
+  letter-spacing: -0.04em;
+  line-height: 0.91;
   -webkit-text-stroke: 0.02em currentColor;
   paint-order: stroke fill;
 }
@@ -121,29 +252,87 @@
 .aardvark-benefit-pill-text {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.15rem, 5.2vw, 4.875rem);
-  line-height: 1;
-  letter-spacing: -0.035em;
+  font-size: var(--fs-h2);
+  line-height: 0.91;
+  letter-spacing: -0.04em;
   -webkit-text-stroke: 0.02em currentColor;
   paint-order: stroke fill;
 }
 
 .aardvark-lead {
-  font-size: clamp(1.125rem, 1.48vw, 1.5rem);
-  line-height: 1.24;
-  letter-spacing: -0.015em;
+  font-size: var(--fs-lead);
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.aardvark-medium {
+  font-size: var(--fs-medium);
+  line-height: 1.3;
+  letter-spacing: 0;
 }
 
 .aardvark-body {
-  font-size: clamp(1.02rem, 1.18vw, 1.2rem);
-  line-height: 1.38;
-  letter-spacing: -0.01em;
+  font-size: var(--fs-body);
+  line-height: 1.48;
+  letter-spacing: 0;
+}
+
+.aardvark-small {
+  font-size: var(--fs-small);
+  line-height: 1.48;
+  letter-spacing: 0;
 }
 
 .aardvark-handwritten-lg {
   font-family: var(--font-human);
-  font-size: clamp(1.4rem, 2.15vw, 2.05rem);
-  line-height: 1.05;
+  font-size: var(--fs-hand);
+  line-height: 1.35;
+}
+
+.aardvark-badge-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-badge);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.aardvark-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tag-h);
+  padding: var(--tag-py) var(--tag-px);
+  border-radius: var(--tag-r);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-tag);
+  line-height: 1;
+}
+
+/* Texto curvo de Presentación (unidades del viewBox de 1920): da 48, 96
+   y 186 px de diseño en móvil, tablet y desktop sobre el ancho de la banda. */
+.aardvark-curve-text {
+  font-size: 249px;
+}
+
+@media (min-width: 768px) {
+  .aardvark-curve-text {
+    font-size: 230px;
+  }
+}
+
+@media (min-width: 992px) {
+  .aardvark-curve-text {
+    font-size: 191px;
+  }
+}
+
+/* Inputs del formulario y del newsletter (form__input de la referencia). */
+.aardvark-input {
+  height: var(--input-h);
+  padding: 0 var(--input-px);
+  border-radius: var(--input-r);
+  font-size: var(--input-fs);
 }
 
 /* Mentor cards: from sm up the whole composition is 30% larger
@@ -408,16 +597,16 @@
 }
 
 .aardvark-book-card__bg-bottom {
-  border-bottom-left-radius: 2rem;
-  border-bottom-right-radius: 2rem;
-  height: 4.5rem;
+  border-bottom-left-radius: var(--card-r);
+  border-bottom-right-radius: var(--card-r);
+  height: max(56px, calc(var(--u) * 88));
   width: 100%;
   transition: translate 0.3s var(--ease-smooth);
 }
 
 .aardvark-book-card__cta {
   position: absolute;
-  bottom: -1.65rem;
+  bottom: calc(var(--btn-h) * -0.6);
   left: 0;
   right: 0;
   display: flex;
@@ -442,7 +631,7 @@
   }
 
   .group\/card:hover .aardvark-book-card__bg-bottom {
-    translate: 0 1.45rem 0;
+    translate: 0 calc(var(--btn-h) * 0.55) 0;
     transition: translate 0.35s 0.1s var(--ease-bounce);
   }
 
@@ -478,7 +667,7 @@
    ============================================================ */
 @media (min-width: 1024px) {
   .aardvark-flow-item:not(:first-child) {
-    margin-left: -1.4rem;
+    margin-left: calc(var(--u) * -24);
   }
 }
 

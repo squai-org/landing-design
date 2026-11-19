@@ -167,9 +167,9 @@ function LandingContent() {
       <footer
         id="contacto"
         aria-label="Pie de página"
-        className="w-full relative z-0 bg-[#303163] text-[#F4F6FF] -mt-10 sm:-mt-16 lg:-mt-24 pt-24 sm:pt-36 lg:pt-44 pb-10 overflow-hidden"
+        className="w-full relative z-0 bg-[#303163] text-[#F4F6FF] -mt-[var(--edge-r)] pt-[calc(var(--edge-r)+var(--section-py))] pb-[calc(var(--u)*40)] overflow-hidden"
       >
-        <div className="max-w-[1680px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto px-[var(--gutter)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16">
             {/* Left Column: Lockup, Social (Instagram & LinkedIn), Links */}
             <div className="lg:col-span-6 space-y-8">
@@ -247,7 +247,7 @@ function LandingContent() {
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Tu correo electrónico"
-                  className="flex-none sm:flex-1 h-13 px-5 rounded-[13px] bg-[#F4F6FF] text-base text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-white transition-colors outline-none"
+                  className="aardvark-input flex-none sm:flex-1 bg-[#F4F6FF] text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-white transition-colors outline-none"
                 />
                 <AardvarkButtonAlt
                   type="submit"

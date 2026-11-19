@@ -40,17 +40,27 @@ describe('landing: orden y estructura', () => {
     expect(hero).toHaveTextContent(PROGRAM.priceCOP);
   });
 
-  it('lista las 8 sesiones del programa', () => {
+  it('lista las 8 sesiones del programa con fechas legibles por máquina', () => {
     renderApp();
     const sessions = document.getElementById('sesiones') as HTMLElement;
     expect(within(sessions).getAllByRole('listitem')).toHaveLength(8);
+    const times = sessions.querySelectorAll('time[datetime]');
+    expect(times).toHaveLength(8);
+    expect(times[0].getAttribute('datetime')).toBe('2027-02-02T19:00-05:00');
   });
 
-  it('muestra los testimonios como citas', () => {
+  it('muestra exactamente 3 testimonios como citas', () => {
     renderApp();
     const section = document.getElementById('testimonios') as HTMLElement;
-    const quotes = section.querySelectorAll('blockquote');
-    expect(quotes.length).toBeGreaterThanOrEqual(3);
+    expect(section.querySelectorAll('blockquote')).toHaveLength(3);
+  });
+
+  it('fija el texto curvo de Presentación mientras pasa la frase', () => {
+    renderApp();
+    const section = document.getElementById('presentacion') as HTMLElement;
+    const track = within(section).getByTestId('presentation-track');
+    expect(track.querySelector('.sticky')).not.toBeNull();
+    expect(track.querySelector('textPath')).not.toBeNull();
   });
 
   it('enlaza las políticas en el pie de página', () => {

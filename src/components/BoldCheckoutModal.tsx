@@ -123,7 +123,7 @@ export function BoldCheckoutModal() {
               />
             </div>
           ) : (
-            <div className="rounded-2xl bg-[#fff8e6] p-5 space-y-3 text-left">
+            <div className="rounded-2xl bg-[#fcf6ea] p-5 space-y-3 text-left">
               <p className="font-display font-bold text-base text-[#0A0C1A]">
                 Enlace de pago listo para activar
               </p>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
 import {
@@ -32,75 +32,175 @@ interface CurrencyCtaProps {
 
 /* ============================================================
    3. PRESENTACIÓN · ¿Quién me va a enseñar? (.gift parity)
-   Curved SVG <textPath> + story + video card + "Mentioned by" row.
+   The curved headline is pinned: the page holds while the whole phrase
+   travels along the curve, then the story and video scroll in.
    ============================================================ */
+const CURVE_PATH = 'M-165 410 C60 276 760 210 1304 210 C1848 210 2320 284 2820 393';
+const CURVE_VIEW_W = 1920;
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(
+    () => typeof window !== 'undefined' && Boolean(window.matchMedia?.(REDUCED_MOTION_QUERY).matches)
+  );
+  useEffect(() => {
+    const query = window.matchMedia?.(REDUCED_MOTION_QUERY);
+    if (!query) return;
+    const onChange = () => setReduced(query.matches);
+    query.addEventListener?.('change', onChange);
+    return () => query.removeEventListener?.('change', onChange);
+  }, []);
+  return reduced;
+}
+
+/** Arc length where the curve reaches `x` (the path only moves to the right). */
+function lengthAtX(path: SVGPathElement, total: number, x: number) {
+  let lo = 0;
+  let hi = total;
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (path.getPointAtLength(mid).x < x) lo = mid;
+    else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+interface CurveTravel {
+  /** startOffset (% of the path) when the pin starts: first word entering on the right. */
+  start: number;
+  /** startOffset when the pin ends: last word fully inside the right margin. */
+  end: number;
+  /** Extra scroll distance the section stays pinned. */
+  scrollPx: number;
+}
+
+const DEFAULT_TRAVEL: CurveTravel = { start: 60, end: -45, scrollPx: 1400 };
+
+/** Pinned track: only mounted when motion is allowed, so useScroll always
+ * has a hydrated target. */
+function PinnedCurve() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const textRef = useRef<SVGTextElement>(null);
+  const [travel, setTravel] = useState<CurveTravel>(DEFAULT_TRAVEL);
+
+  useEffect(() => {
+    const measure = () => {
+      const path = pathRef.current;
+      const text = textRef.current;
+      if (
+        !path ||
+        !text ||
+        typeof path.getTotalLength !== 'function' ||
+        typeof text.getComputedTextLength !== 'function'
+      ) {
+        return;
+      }
+      const total = path.getTotalLength();
+      const textLength = text.getComputedTextLength();
+      if (!total || !textLength) return;
+      // Start with the first word already entering from the right, so the
+      // pinned screen is never empty.
+      const start = lengthAtX(path, total, CURVE_VIEW_W * 0.72);
+      const end = lengthAtX(path, total, CURVE_VIEW_W * 0.94) - textLength;
+      const svgWidth = path.ownerSVGElement?.getBoundingClientRect().width ?? CURVE_VIEW_W;
+      const screenTravel = ((start - end) * svgWidth) / CURVE_VIEW_W;
+      setTravel({
+        start: (start / total) * 100,
+        end: (end / total) * 100,
+        scrollPx: Math.max(600, Math.round(screenTravel * 0.75)),
+      });
+    };
+    measure();
+    void document.fonts?.ready.then(measure).catch(() => undefined);
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] });
+  const startOffset = useTransform(scrollYProgress, [0, 1], [`${travel.start}%`, `${travel.end}%`]);
+
+  return (
+    <div
+      ref={trackRef}
+      data-testid="presentation-track"
+      className="relative"
+      style={{ height: `calc(100svh + ${travel.scrollPx}px)` }}
+    >
+      <div className="sticky top-0 h-[100svh] flex items-center" aria-hidden="true">
+        <svg viewBox={`0 0 ${CURVE_VIEW_W} 430`} className="w-full h-auto overflow-visible select-none">
+          <defs>
+            <path id="squai-gift-curve" ref={pathRef} d={CURVE_PATH} />
+          </defs>
+          <text
+            ref={textRef}
+            fill="#0A0C1A"
+            className="aardvark-curve-text font-display font-bold"
+            style={{ letterSpacing: '-0.03em' }}
+          >
+            <motion.textPath href="#squai-gift-curve" startOffset={startOffset}>
+              {PRESENTATION.curvedText}
+            </motion.textPath>
+          </text>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => void }) {
-  const giftSectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: giftProgress } = useScroll({
-    target: giftSectionRef,
-    offset: ['start end', 'end start'],
-  });
-  const curveOffset = useTransform(giftProgress, [0.05, 0.95], ['62%', '-22%']);
+  const reducedMotion = usePrefersReducedMotion();
   const { video } = PRESENTATION;
 
   return (
     <section
       id="presentacion"
-      ref={giftSectionRef}
-      className="w-full bg-white text-[#0A0C1A] pt-4 pb-6 px-3 sm:px-5 lg:px-6 scroll-mt-16"
+      className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)] scroll-mt-16"
       aria-labelledby="presentation-heading"
     >
-      <div className="w-full bg-[#eef0fd] rounded-[40px] md:rounded-[96px] lg:rounded-[120px] pt-10 sm:pt-14 pb-16 sm:pb-24 overflow-hidden">
+      {/* overflow-clip (not hidden) so the sticky curve can pin to the viewport. */}
+      <div className="w-full bg-[#eef0fd] rounded-[var(--band-r)] pb-[var(--section-py)] overflow-clip">
         <h2 id="presentation-heading" className="sr-only">
           {PRESENTATION.srTitle}
         </h2>
 
-        <div className="w-full mb-6 sm:mb-10 overflow-hidden" aria-hidden="true">
-          <svg viewBox="0 0 1920 430" className="w-[112%] -ml-[6%] h-auto select-none">
-            <defs>
-              <path id="squai-gift-curve" d="M-165 410 C60 276 760 210 1304 210 C1848 210 2320 284 2820 393" />
-            </defs>
-            <text
-              fill="#0A0C1A"
-              className="font-display font-bold"
-              style={{ fontSize: '169px', letterSpacing: '-0.03em' }}
-            >
-              <motion.textPath href="#squai-gift-curve" startOffset={curveOffset}>
-                {PRESENTATION.curvedText}
-              </motion.textPath>
-            </text>
-          </svg>
-        </div>
+        {reducedMotion ? (
+          <p className="aardvark-h1 text-center text-[#0A0C1A] px-[var(--gutter)] pt-[var(--section-py)] pb-[calc(var(--u)*56)]">
+            {PRESENTATION.curvedText}
+          </p>
+        ) : (
+          <PinnedCurve />
+        )}
 
-        <div className="max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="max-w-[calc(var(--u)*1760)] mx-auto px-[var(--gutter)] grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*56)] items-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.42, ease: [0.32, 0.72, 0, 1] }}
-            className="lg:col-span-6 space-y-7"
+            className="lg:col-span-6 space-y-[calc(var(--u)*28)]"
           >
             <span className="aardvark-handwritten-lg text-[#5a5bb6] inline-block -rotate-[1.5deg]">
               {PRESENTATION.handwritten}
             </span>
 
-            <p className="aardvark-lead text-[#0A0C1A] leading-[1.32] max-w-[540px]">{PRESENTATION.lead}</p>
+            <p className="aardvark-medium text-[#0A0C1A] max-w-[calc(var(--u)*720)]">{PRESENTATION.lead}</p>
 
-            <p className="aardvark-body text-[#525770] max-w-[500px]">{PRESENTATION.body}</p>
+            <p className="aardvark-small text-[#525770] max-w-[calc(var(--u)*660)]">{PRESENTATION.body}</p>
 
             <div className="pt-1">
-              <AardvarkButtonAlt label={PRESENTATION.cta} variant="dark" size="lg" onClick={onMeetMentors} />
+              <AardvarkButtonAlt label={PRESENTATION.cta} variant="dark" onClick={onMeetMentors} />
             </div>
 
-            <div className="pt-4 space-y-3">
-              <span className="font-human text-lg text-[#5a5bb6] inline-block -rotate-[4deg]">
+            <div className="pt-[calc(var(--u)*24)] space-y-[calc(var(--u)*12)]">
+              <span className="aardvark-handwritten-lg text-[#5a5bb6] inline-block -rotate-[4deg]">
                 {PRESENTATION.logosLabel}
               </span>
-              <ul className="flex flex-wrap gap-2.5" aria-label={PRESENTATION.logosLabel}>
+              <ul className="flex flex-wrap gap-[calc(var(--u)*12)]" aria-label={PRESENTATION.logosLabel}>
                 {PRESENTATION.logos.map((logo) => (
                   <li
                     key={logo}
-                    className="h-14 min-w-14 px-4 rounded-[16px] bg-[#F4F6FF] inline-flex items-center justify-center font-display font-bold text-base tracking-[-0.03em] text-[#303163]"
+                    className="h-[max(56px,calc(var(--u)*104))] min-w-[max(56px,calc(var(--u)*104))] px-[calc(var(--u)*16)] rounded-[calc(var(--u)*26)] bg-[#f2f3f6] inline-flex items-center justify-center font-display font-bold text-[max(14px,calc(var(--u)*20))] tracking-[-0.03em] text-[#303163]"
                   >
                     {logo}
                   </li>
@@ -116,9 +216,9 @@ export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => vo
               viewport={{ once: true, amount: 0.2 }}
               transition={{ type: 'spring', stiffness: 210, damping: 18 }}
               whileHover={{ rotate: 0, scale: 1.02 }}
-              className="w-full max-w-[560px] bg-white rounded-[36px] p-4 shadow-2xl"
+              className="w-full max-w-[calc(var(--u)*760)] bg-white rounded-[calc(var(--u)*48)] p-[calc(var(--u)*20)] shadow-2xl"
             >
-              <div className="aspect-[4/4.2] rounded-[26px] overflow-hidden bg-[#d2d7fc]">
+              <div className="aspect-[4/4.2] rounded-[var(--card-r)] overflow-hidden bg-[#d2d7fc]">
                 <PresentationMedia
                   src={video.src}
                   poster={pexelsUrl(video.imageId, 1000)}
@@ -128,9 +228,9 @@ export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => vo
                   title={video.title}
                 />
               </div>
-              <figcaption className="pt-4 pb-2 px-3 flex flex-wrap items-center justify-between gap-2">
-                <span className="font-display font-bold text-xl text-[#0A0C1A]">{PRESENTATION.mediaTitle}</span>
-                <span className="font-human text-base text-[#5a5bb6]">
+              <figcaption className="pt-[calc(var(--u)*20)] pb-[calc(var(--u)*8)] px-[calc(var(--u)*12)] flex flex-wrap items-center justify-between gap-2">
+                <span className="aardvark-h3 text-[#0A0C1A]">{PRESENTATION.mediaTitle}</span>
+                <span className="aardvark-handwritten-lg text-[#5a5bb6]">
                   {video.src ? PRESENTATION.mediaNoteReady : PRESENTATION.mediaNotePending}
                 </span>
               </figcaption>
@@ -166,12 +266,12 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
     <section
       id="para-ti"
       onMouseMove={handleMouseMove}
-      className="w-full bg-white py-4 sm:py-6 px-3 sm:px-5 lg:px-6"
+      className="w-full bg-white p-[var(--band-inset)]"
       aria-labelledby="audience-heading"
     >
-      <div className="w-full relative bg-[#303163] text-[#F4F6FF] rounded-[40px] md:rounded-[96px] lg:rounded-[120px] overflow-hidden py-20 sm:py-28 px-5 sm:px-8 lg:px-12">
-        <div className="max-w-[1680px] mx-auto">
-          <div className="text-center max-w-[820px] mx-auto mb-12 sm:mb-16 space-y-4">
+      <div className="w-full relative bg-[#303163] text-[#F4F6FF] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)] px-[var(--gutter)]">
+        <div className="mx-auto">
+          <div className="text-center max-w-[calc(var(--u)*1100)] mx-auto mb-[calc(var(--u)*64)] space-y-[calc(var(--u)*16)]">
             <h2 id="audience-heading" className="aardvark-h2 text-[#F4F6FF]">
               {AUDIENCE.title}
             </h2>
@@ -180,7 +280,7 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
             </p>
           </div>
 
-          <div className="relative max-w-[1320px] mx-auto">
+          <div className="relative max-w-[calc(var(--u)*1760)] mx-auto">
             <div className="hidden lg:block pointer-events-none" aria-hidden="true">
               <motion.div
                 animate={{
@@ -191,9 +291,9 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
                   y: rowVerticalY * 0.5 + pointerShift.y * -0.5,
                 }}
                 transition={{ type: 'spring', stiffness: 240, damping: 22 }}
-                className="absolute left-0 top-4 w-[250px] bg-white rounded-[28px] p-2.5 shadow-2xl z-20"
+                className="absolute left-0 top-4 w-[calc(var(--u)*333)] bg-white rounded-[calc(var(--u)*37)] p-[calc(var(--u)*13)] shadow-2xl z-20"
               >
-                <div className="aspect-[3/4] rounded-[20px] overflow-hidden bg-[#eef0fd]">
+                <div className="aspect-[3/4] rounded-[calc(var(--u)*26)] overflow-hidden bg-[#eef0fd]">
                   <img
                     src={pexelsUrl(preview.images[0].imageId, 700)}
                     alt=""
@@ -212,9 +312,9 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
                   y: rowVerticalY * 0.5 + 32 + pointerShift.y * 0.65,
                 }}
                 transition={{ type: 'spring', stiffness: 240, damping: 22 }}
-                className="absolute right-0 top-10 w-[250px] bg-[#F9C24D] rounded-[28px] p-2.5 shadow-2xl z-20"
+                className="absolute right-0 top-10 w-[calc(var(--u)*333)] bg-[#F9C24D] rounded-[calc(var(--u)*37)] p-[calc(var(--u)*13)] shadow-2xl z-20"
               >
-                <div className="aspect-[3/4] rounded-[20px] overflow-hidden bg-[#eef0fd]">
+                <div className="aspect-[3/4] rounded-[calc(var(--u)*26)] overflow-hidden bg-[#eef0fd]">
                   <img
                     src={pexelsUrl(preview.images[1].imageId, 700)}
                     alt=""
@@ -226,7 +326,7 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
             </div>
 
             <ul
-              className="relative z-10 max-w-[840px] mx-auto flex flex-col items-center text-center"
+              className="relative z-10 max-w-[calc(var(--u)*1120)] mx-auto flex flex-col items-center text-center"
               onMouseLeave={() => setHoveredId(null)}
             >
               {AUDIENCE.items.map((item) => {
@@ -235,7 +335,7 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
                   <li
                     key={item.id}
                     data-selected={isActive ? 'true' : 'false'}
-                    className="aardvark-genre-item w-full py-3 sm:py-3.5"
+                    className="aardvark-genre-item w-full py-[calc(var(--u)*10)]"
                   >
                     <button
                       type="button"
@@ -250,12 +350,12 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
                       aria-controls="audience-example"
                       className="aardvark-genre-btn relative w-full inline-flex items-center justify-center cursor-pointer py-1"
                     >
-                      <span className="aardvark-genre-link-default aardvark-benefit-text text-[clamp(2.45rem,6vw,5.4rem)] leading-[0.88] text-[#F4F6FF]">
+                      <span className="aardvark-genre-link-default aardvark-benefit-text text-[#F4F6FF]">
                         {item.label}
                       </span>
                       <span
                         aria-hidden="true"
-                        className="aardvark-genre-link-hover absolute inset-0 flex items-center justify-center font-human text-[clamp(2rem,4.9vw,4.25rem)] leading-none text-[#F9C24D]"
+                        className="aardvark-genre-link-hover absolute inset-0 flex items-center justify-center font-human text-[calc(var(--fs-h2)*0.8)] leading-none text-[#F9C24D]"
                       >
                         {item.label}
                       </span>
@@ -266,7 +366,7 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
             </ul>
           </div>
 
-          <div className="mt-12 text-center space-y-6 max-w-[640px] mx-auto relative z-20">
+          <div className="mt-[calc(var(--u)*64)] text-center space-y-[calc(var(--u)*24)] max-w-[calc(var(--u)*840)] mx-auto relative z-20">
             <div id="audience-example" aria-live="polite">
               <AnimatePresence mode="wait">
                 <motion.p
@@ -285,7 +385,6 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
             <div className="flex justify-center">
               <AardvarkButtonAlt
                 label={AUDIENCE.cta}
-                size="lg"
                 variant="marigold"
                 onClick={() => onSelectCta(currency, `CTA desde caso: ${preview.label}`)}
               />
@@ -301,39 +400,39 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
    5. QUÉ VAS A LOGRAR · ¿Qué gano? (.benefits Warm Cream Band)
    ============================================================ */
 const OUTCOME_PILL_STYLES = [
-  { bg: 'bg-white', tilt: '-rotate-[3deg]' },
-  { bg: 'bg-[#F9C24D]', tilt: 'rotate-[2.5deg]' },
-  { bg: 'bg-[#8A8EF9]', tilt: '-rotate-[2deg]' },
-  { bg: 'bg-[#eef0fd]', tilt: 'rotate-[2.8deg]' },
-  { bg: 'bg-[#d2d7fc]', tilt: '-rotate-[1.5deg]' },
+  { bg: 'bg-white', text: 'text-[#0A0C1A]', tilt: '-rotate-[3deg]' },
+  { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]', tilt: 'rotate-[2.5deg]' },
+  { bg: 'bg-[#8A8EF9]', text: 'text-[#0A0C1A]', tilt: '-rotate-[2deg]' },
+  { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]', tilt: 'rotate-[2.8deg]' },
+  { bg: 'bg-[#d2d7fc]', text: 'text-[#0A0C1A]', tilt: '-rotate-[1.5deg]' },
 ];
 
 export function OutcomesSection() {
   return (
     <section
       id="logros"
-      className="w-full bg-white text-[#0A0C1A] py-4 sm:py-6 px-3 sm:px-5 lg:px-6"
+      className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)]"
       aria-labelledby="outcomes-heading"
     >
-      <div className="w-full relative bg-[#FFF4CC] rounded-[40px] md:rounded-[96px] lg:rounded-[120px] overflow-hidden py-24 sm:py-32 px-5 sm:px-8 lg:px-12">
+      <div className="w-full relative bg-[#fcf6ea] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)] px-[var(--gutter)]">
         <div className="absolute inset-0 pointer-events-none select-none opacity-85" aria-hidden="true">
           <BenefitsRibbonSvg />
         </div>
 
-        <div className="max-w-[1680px] mx-auto relative z-10 text-center space-y-12 sm:space-y-16">
-          <div className="max-w-[820px] mx-auto space-y-5">
+        <div className="mx-auto relative z-10 text-center space-y-[calc(var(--u)*64)]">
+          <div className="max-w-[calc(var(--u)*1100)] mx-auto space-y-[calc(var(--u)*20)]">
             <div className="flex justify-center">
-              <span className="w-16 h-16 rounded-full bg-white inline-flex items-center justify-center shadow-sm">
-                <SquaiMark variant="color" className="w-8 h-8" />
+              <span className="w-[max(48px,calc(var(--u)*72))] h-[max(48px,calc(var(--u)*72))] rounded-full bg-white inline-flex items-center justify-center shadow-sm">
+                <SquaiMark variant="color" className="w-1/2 h-1/2" />
               </span>
             </div>
             <h2 id="outcomes-heading" className="aardvark-h2 text-[#0A0C1A]">
               {OUTCOMES.title}
             </h2>
-            <p className="aardvark-lead text-[#525770] max-w-[560px] mx-auto">{OUTCOMES.lead}</p>
+            <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*760)] mx-auto">{OUTCOMES.lead}</p>
           </div>
 
-          <ul className="max-w-[1520px] mx-auto flex flex-wrap items-center justify-center gap-6 sm:gap-9 py-4">
+          <ul className="max-w-[calc(var(--u)*1800)] mx-auto flex flex-wrap items-center justify-center gap-[calc(var(--u)*24)] py-4">
             {OUTCOMES.pills.map((text, idx) => {
               const style = OUTCOME_PILL_STYLES[idx % OUTCOME_PILL_STYLES.length];
               return (
@@ -344,9 +443,9 @@ export function OutcomesSection() {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ type: 'spring', stiffness: 230, damping: 16, delay: idx * 0.07 }}
                   whileHover={{ scale: 1.05, rotate: 0 }}
-                  className={`${style.bg} ${style.tilt} rounded-[36px] sm:rounded-[60px] px-7 sm:px-10 py-5 sm:py-6 shadow-xl max-w-full list-none`}
+                  className={`${style.bg} ${style.tilt} rounded-[calc(var(--u)*93)] px-[calc(var(--u)*42)] py-[calc(var(--u)*29)] shadow-xl max-w-full list-none`}
                 >
-                  <span className="aardvark-benefit-pill-text text-[#0A0C1A] sm:whitespace-nowrap text-center block">
+                  <span className={`aardvark-benefit-pill-text ${style.text} sm:whitespace-nowrap text-center block`}>
                     {text}
                   </span>
                 </motion.li>
@@ -379,23 +478,23 @@ function MarqueeItems({ items }: { items: readonly string[] }) {
 
 export function KeyFactsMarquee() {
   return (
-    <section className="w-full bg-white py-12 sm:py-20 select-none overflow-x-clip" aria-label="Fecha, horario y precio">
+    <section className="w-full bg-white py-[calc(var(--u)*96)] select-none overflow-x-clip" aria-label="Fecha, horario y precio">
       <p className="sr-only">{KEY_FACTS.summary}</p>
       <div className="space-y-4" aria-hidden="true">
-        <div className="relative -rotate-[1.8deg] scale-[1.03] bg-[#F9C24D] text-[#0A0C1A] py-5 sm:py-6 overflow-hidden">
+        <div className="relative -rotate-[1.8deg] scale-[1.03] bg-[#F9C24D] text-[#0A0C1A] py-[calc(var(--u)*60)] overflow-hidden">
           <div className="absolute inset-0 pointer-events-none opacity-65">
-            <BadgeRibbonSvg colorClass="text-[#ffe29a]" />
+            <BadgeRibbonSvg colorClass="text-[#fedea0]" />
           </div>
-          <div className="relative z-10 aardvark-marquee-track font-display font-bold text-2xl sm:text-3xl tracking-[-0.02em] gap-12">
+          <div className="relative z-10 aardvark-marquee-track aardvark-badge-text gap-[calc(var(--u)*64)]">
             <MarqueeItems items={KEY_FACTS.lineA} />
           </div>
         </div>
 
-        <div className="relative rotate-[1.4deg] scale-[1.03] bg-[#0A0C1A] text-[#F4F6FF] py-5 sm:py-6 overflow-hidden">
+        <div className="relative rotate-[1.4deg] scale-[1.03] bg-[#0A0C1A] text-[#F4F6FF] py-[calc(var(--u)*48)] overflow-hidden">
           <div className="absolute inset-0 pointer-events-none opacity-35">
             <BadgeRibbonSvg colorClass="text-[#303163]" />
           </div>
-          <div className="relative z-10 aardvark-marquee-track-reverse font-display font-bold text-xl sm:text-2xl tracking-[-0.015em] gap-12">
+          <div className="relative z-10 aardvark-marquee-track-reverse aardvark-badge-text gap-[calc(var(--u)*64)]">
             <MarqueeItems items={KEY_FACTS.lineB} />
           </div>
         </div>
@@ -445,7 +544,7 @@ const MENTOR_STYLES: Array<{
   cropTight: boolean;
 }> = [
   {
-    frameBg: 'bg-[#FFF4CC]',
+    frameBg: 'bg-[#fcf0db]',
     innerBg: 'bg-white',
     stampBg: 'bg-[#8A8EF9]',
     stampText: 'text-[#0A0C1A]',
@@ -470,21 +569,20 @@ export function MentorsSection({ currency, onSelectCta }: CurrencyCtaProps) {
   return (
     <section
       id="mentores"
-      className="w-full bg-[#F9C24D] text-[#0A0C1A] rounded-t-[40px] md:rounded-t-[96px] lg:rounded-t-[120px] pt-20 sm:pt-28 pb-32 sm:pb-44 px-5 sm:px-8 lg:px-12 relative z-10 overflow-hidden scroll-mt-10"
+      className="w-full bg-[#F9C24D] text-[#0A0C1A] rounded-t-[var(--edge-r)] pt-[var(--section-py)] pb-[calc(var(--section-py)*1.6)] px-[var(--gutter)] relative z-10 overflow-hidden scroll-mt-10"
       aria-labelledby="mentors-heading"
     >
-      <div className="max-w-[1680px] mx-auto space-y-14 sm:space-y-16">
-        <div className="max-w-[820px] mx-auto text-center space-y-5 flex flex-col items-center">
+      <div className="mx-auto space-y-[calc(var(--u)*72)]">
+        <div className="max-w-[calc(var(--u)*1100)] mx-auto text-center space-y-[calc(var(--u)*20)] flex flex-col items-center">
           <AardvarkButtonAlt
             label={MENTORS.ctaTop}
             variant="dark"
-            size="lg"
             onClick={() => onSelectCta(currency, 'Sección Mentores CTA')}
           />
           <h2 id="mentors-heading" className="aardvark-h2 text-[#0A0C1A]">
             {MENTORS.title}
           </h2>
-          <p className="aardvark-lead text-[#0A0C1A]/85 max-w-[600px]">{MENTORS.lead}</p>
+          <p className="aardvark-lead text-[#1c1e2e] max-w-[calc(var(--u)*800)]">{MENTORS.lead}</p>
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 md:gap-20 max-w-[760px] xl:max-w-[1100px] mx-auto pt-8 pb-6 justify-items-center items-stretch">
@@ -543,7 +641,7 @@ export function MentorsSection({ currency, onSelectCta }: CurrencyCtaProps) {
                         ))}
                       </ul>
 
-                      <p className="aardvark-body text-[#0A0C1A]/85 leading-snug">{mentor.bio}</p>
+                      <p className="aardvark-body text-[#1c1e2e] leading-snug">{mentor.bio}</p>
                     </div>
                   </div>
                 </div>
@@ -590,21 +688,21 @@ export function FaqSection() {
   return (
     <section
       id="preguntas"
-      className="w-full relative z-20 bg-white text-[#0A0C1A] overflow-hidden rounded-b-[40px] md:rounded-b-[96px] lg:rounded-b-[120px] py-24 sm:py-32 px-5 sm:px-8 lg:px-12 scroll-mt-10"
+      className="w-full relative z-20 bg-white text-[#0A0C1A] overflow-hidden rounded-b-[var(--edge-r)] py-[var(--section-py)] px-[var(--gutter)] scroll-mt-10"
       aria-labelledby="faq-heading"
     >
       <div className="absolute inset-0 pointer-events-none select-none opacity-80" aria-hidden="true">
         <FaqRibbonSvg />
       </div>
 
-      <div className="max-w-[1680px] mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-        <div className="lg:col-span-5 space-y-6">
+      <div className="mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*64)]">
+        <div className="lg:col-span-5 space-y-[calc(var(--u)*24)]">
           <h2 id="faq-heading" className="aardvark-h2 text-[#0A0C1A]">
             {FAQ.title}
           </h2>
-          <p className="aardvark-lead text-[#525770] max-w-[440px]">{FAQ.lead}</p>
+          <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*590)]">{FAQ.lead}</p>
 
-          <div className="flex flex-wrap gap-4 pt-6" role="group" aria-label="Filtrar preguntas">
+          <div className="flex flex-wrap gap-[calc(var(--u)*16)] pt-[calc(var(--u)*24)]" role="group" aria-label="Filtrar preguntas">
             {FAQ.categories.map((cat, idx) => {
               const isActive = activeCategory === cat;
               return (
@@ -614,7 +712,7 @@ export function FaqSection() {
                     active={isActive}
                     withBlocks
                     blockPreset={FAQ_PILL_PRESETS[idx % FAQ_PILL_PRESETS.length]}
-                    blockBackColor="#ffd966"
+                    blockBackColor="#ffd688"
                     ariaPressed={isActive}
                     bgClass={isActive ? 'bg-[#F9C24D]' : 'bg-[#eef0fd]'}
                     textClass="text-[#0A0C1A]"
@@ -631,14 +729,14 @@ export function FaqSection() {
           </div>
         </div>
 
-        <div className="lg:col-span-7 space-y-3.5">
+        <div className="lg:col-span-7 w-full max-w-[calc(var(--u)*936)] lg:ml-auto space-y-[calc(var(--u)*14)]">
           {filteredFaqs.map((item) => {
             const isOpen = openFaqId === item.id;
             const panelId = `${item.id}-panel`;
             return (
               <div
                 key={item.id}
-                className={`rounded-[26px] transition-colors duration-200 ${
+                className={`rounded-[var(--faq-r)] transition-colors duration-200 ${
                   isOpen ? 'bg-[#eef0fd]' : 'bg-[#f2f3f6] hover:bg-[#eef0fd]'
                 }`}
               >
@@ -648,18 +746,18 @@ export function FaqSection() {
                     onClick={() => setOpenFaqId(isOpen ? '' : item.id)}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    className="w-full p-6 sm:p-7 flex items-center justify-between gap-4 text-left cursor-pointer group"
+                    className="w-full min-h-[max(56px,calc(var(--u)*96))] py-[var(--faq-py)] px-[var(--faq-px)] flex items-center justify-between gap-4 text-left cursor-pointer group"
                   >
-                    <span className="aardvark-h3 text-[#0A0C1A] group-hover:text-[#303163] transition-colors">
+                    <span className="font-display font-bold text-[length:var(--fs-lead)] leading-[1.2] tracking-[-0.02em] text-[#0A0C1A] group-hover:text-[#303163] transition-colors">
                       {item.q}
                     </span>
                     <span
-                      className={`w-10 h-10 rounded-full inline-flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                      className={`w-[max(32px,calc(var(--u)*38))] h-[max(32px,calc(var(--u)*38))] rounded-full inline-flex items-center justify-center shrink-0 transition-transform duration-300 ${
                         isOpen ? 'bg-[#0A0C1A] text-[#F4F6FF] rotate-45' : 'bg-white text-[#0A0C1A]'
                       }`}
                       aria-hidden="true"
                     >
-                      <Plus className="w-5 h-5" />
+                      <Plus className="w-1/2 h-1/2" />
                     </span>
                   </button>
                 </h3>
@@ -674,7 +772,7 @@ export function FaqSection() {
                       transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 sm:px-7 pb-6 sm:pb-7 pr-12 aardvark-body text-[#525770]">{item.a}</p>
+                      <p className="px-[var(--faq-px)] pb-[var(--faq-py)] pr-[calc(var(--u)*96)] aardvark-body text-[#525770]">{item.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

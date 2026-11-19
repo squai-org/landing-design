@@ -68,9 +68,9 @@ export function AardvarkTopBar() {
     <>
       <header
         data-scrolling-started={scrollingStarted ? 'true' : 'false'}
-        className="fixed top-0 left-0 right-0 z-40 pointer-events-none pt-5 sm:pt-7 px-5 sm:px-8 lg:px-12"
+        className="fixed top-0 left-0 right-0 z-40 pointer-events-none pt-[max(20px,calc(var(--u)*32))] px-[var(--gutter)]"
       >
-        <div className="max-w-[1680px] mx-auto flex items-center justify-between gap-4">
+        <div className="mx-auto flex items-center justify-between gap-4">
           {/* Left slot (.header__title): 38px logo matching Aardvark's 38px mark beside 42-48px nav pills */}
           <div
             className={`pointer-events-auto lg:w-[240px] shrink-0 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] ${
@@ -87,7 +87,7 @@ export function AardvarkTopBar() {
               }}
               className={`inline-flex items-center whitespace-nowrap shrink-0 rounded-full transition-colors focus-visible:outline-offset-4 ${
                 scrollingStarted
-                  ? 'bg-[#F4F6FF]/95 backdrop-blur-md px-4 py-2 text-[#0A0C1A]'
+                  ? 'bg-[#F4F6FF] px-4 py-2 text-[#0A0C1A]'
                   : 'py-1 text-[#0A0C1A]'
               }`}
               aria-label="Squai, volver al inicio"
