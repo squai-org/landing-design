@@ -105,11 +105,11 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
               className="relative block w-full h-full select-none"
             />
 
-            {/* Bloques de datos en Midnight: texto Canvas (18:1) y texto Gold (11,9:1) */}
-            <p className="absolute right-[80%] top-[20%] sm:top-[40%] lg:right-auto lg:left-[-10%] lg:top-[56%] w-max max-w-[calc(var(--u)*150)] sm:max-w-none -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[18px] sm:rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*16)] sm:py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
+            {/* Bloques de datos: fondo Midnight, texto Canvas (18:1), fuente Gloria */}
+            <p className="absolute right-[80%] top-[20%] sm:top-[40%] lg:right-auto lg:left-[-10%] lg:top-[56%] w-max max-w-[calc(var(--u)*150)] sm:max-w-none -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[18px] sm:rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*16)] sm:py-[calc(var(--u)*10)] font-human text-[length:max(15px,var(--fs-tag))] lg:text-[length:calc(var(--u)*28)] leading-snug sm:whitespace-nowrap shadow-xl">
               {HERO.note}
             </p>
-            <p className="absolute right-[76%] top-[46%] sm:top-[64%] lg:right-auto lg:left-[59%] lg:top-[70%] w-max max-w-[calc(var(--u)*150)] sm:max-w-none rotate-[3deg] bg-[#0A0C1A] text-[#F9C24D] rounded-[18px] sm:rounded-full px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*22)] sm:py-[calc(var(--u)*12)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
+            <p className="absolute right-[76%] top-[46%] sm:top-[64%] lg:right-auto lg:left-[59%] lg:top-[70%] w-max max-w-[calc(var(--u)*150)] sm:max-w-none rotate-[3deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[18px] sm:rounded-full px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*22)] sm:py-[calc(var(--u)*12)] font-human text-[length:max(15px,var(--fs-tag))] lg:text-[length:calc(var(--u)*28)] leading-snug sm:whitespace-nowrap shadow-xl">
               {HERO.stickerNoCode}
             </p>
           </motion.div>
