@@ -67,6 +67,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
               {HERO.ctaSecondary}
             </button>
           </div>
+          <p className="aardvark-small font-bold text-[#0A0C1A] mt-[calc(var(--u)*14)]">{HERO.schedule}</p>
         </div>
 
         {/* Nota manuscrita (.hero__text): fija en su sitio, como en la referencia */}
@@ -80,7 +81,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             referencia): un arco detrás, el bloque del logo asomando por
             encima del hombro y la cabeza rompiendo el borde del arco. La foto
             se corta contra el borde inferior del encabezado. */}
-        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*260)] lg:w-[calc(var(--u)*640)]">
+        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*190)] lg:w-[calc(var(--u)*640)]">
           <div
             aria-hidden="true"
             className="absolute bottom-0 right-[6%] w-[64%] h-[72%] lg:right-[6%] lg:w-[88%] lg:h-[62%] rounded-t-full bg-[#777ae3]"
@@ -88,7 +89,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
           <motion.div
             style={{ y: blockY }}
             aria-hidden="true"
-            className="absolute right-[2%] bottom-[48%] w-[34%] lg:right-[-4%] lg:bottom-[52%] lg:w-[30%]"
+            className="absolute right-[2%] bottom-[48%] w-[34%] lg:right-[-2%] lg:bottom-[60%] lg:w-[26%]"
           >
             <SquaiSingleBlock color="#F9C24D" className="w-full h-auto rotate-[14deg]" />
           </motion.div>
@@ -104,10 +105,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*170)] w-auto max-w-none select-none"
           />
 
-          {/* Stickers: horario (dato clave) y un mensaje corto */}
-          <p className="absolute left-0 top-[30%] lg:left-[-12%] lg:top-[66%] -rotate-[5deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*22)] leading-tight max-w-[46%] lg:max-w-[calc(var(--u)*300)] shadow-xl">
-            {HERO.stickerSchedule}
-          </p>
+          {/* Sticker: mensaje corto */}
           <p className="hidden sm:flex absolute right-0 top-[38%] lg:right-[-8%] lg:top-[70%] w-[calc(var(--u)*150)] h-[calc(var(--u)*150)] lg:w-[calc(var(--u)*190)] lg:h-[calc(var(--u)*190)] rounded-full bg-white text-[#0A0C1A] items-center justify-center text-center rotate-[10deg] font-human text-[length:var(--fs-hand)] leading-none p-[calc(var(--u)*18)] shadow-xl">
             {HERO.stickerNoCode}
           </p>
