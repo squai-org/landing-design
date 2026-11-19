@@ -14,7 +14,8 @@ interface AardvarkHeroProps {
    Mismas medidas que la referencia en unidades de diseño: el bloque de
    texto arranca en x 20 / y 240 (desktop), el título mide 160 con
    ancho máximo 1232, el párrafo 24 con ancho 421 y el botón queda 16
-   debajo. En desktop la sección mide 1400 de alto; en móvil y tablet,
+   debajo. En desktop la sección mide 1100 de alto (sin franja vacía bajo
+   el botón) y la persona arranca a la altura del título; en móvil y tablet,
    al menos una pantalla, con las tarjetas recortadas contra el borde
    inferior como el libro de la referencia.
    ============================================================ */
@@ -35,7 +36,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
         id="inicio"
         ref={heroRef}
         aria-labelledby="hero-heading"
-        className="w-full relative bg-[#8A8EF9] text-[#0A0C1A] rounded-b-[var(--edge-r)] overflow-hidden h-[100svh] min-h-[640px] flex flex-col lg:block lg:min-h-0 lg:h-[calc(var(--u)*1400)]"
+        className="w-full relative bg-[#8A8EF9] text-[#0A0C1A] rounded-b-[var(--edge-r)] overflow-hidden h-[100svh] min-h-[640px] flex flex-col lg:block lg:min-h-0 lg:h-[calc(var(--u)*1100)]"
       >
         {/* El marco extra arriba y abajo cubre el recorrido del parallax. */}
         <SectionBackdrop
@@ -79,15 +80,15 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             referencia): un arco detrás, el bloque del logo asomando por
             encima del hombro y la cabeza rompiendo el borde del arco. La foto
             se corta contra el borde inferior del encabezado. */}
-        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*300)] lg:w-[calc(var(--u)*700)]">
+        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*240)] lg:w-[calc(var(--u)*640)]">
           <div
             aria-hidden="true"
-            className="absolute bottom-0 right-[6%] w-[64%] h-[72%] lg:right-[10%] lg:w-[76%] lg:h-[46%] rounded-t-full bg-[#777ae3]"
+            className="absolute bottom-0 right-[6%] w-[64%] h-[72%] lg:right-[6%] lg:w-[88%] lg:h-[62%] rounded-t-full bg-[#777ae3]"
           />
           <motion.div
             style={{ y: blockY }}
             aria-hidden="true"
-            className="absolute right-[2%] bottom-[48%] w-[34%] lg:right-[0%] lg:bottom-[38%] lg:w-[32%]"
+            className="absolute right-[2%] bottom-[48%] w-[34%] lg:right-[-4%] lg:bottom-[52%] lg:w-[30%]"
           >
             <SquaiSingleBlock color="#F9C24D" className="w-full h-auto rotate-[14deg]" />
           </motion.div>
@@ -100,14 +101,14 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             height={HERO.person.height}
             fetchPriority="high"
             draggable={false}
-            className="absolute bottom-0 right-[12%] h-[96%] lg:right-[20%] lg:h-[62%] w-auto max-w-none select-none"
+            className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*200)] w-auto max-w-none select-none"
           />
 
           {/* Stickers: horario (dato clave) y un mensaje corto */}
-          <p className="absolute left-0 top-[30%] lg:left-[-14%] lg:top-[70%] -rotate-[5deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*22)] leading-tight max-w-[46%] lg:max-w-[calc(var(--u)*300)] shadow-xl">
+          <p className="absolute left-0 top-[30%] lg:left-[-12%] lg:top-[66%] -rotate-[5deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*22)] leading-tight max-w-[46%] lg:max-w-[calc(var(--u)*300)] shadow-xl">
             {HERO.stickerSchedule}
           </p>
-          <p className="hidden sm:flex absolute right-0 top-[38%] lg:right-[-4%] lg:top-[58%] w-[calc(var(--u)*150)] h-[calc(var(--u)*150)] lg:w-[calc(var(--u)*190)] lg:h-[calc(var(--u)*190)] rounded-full bg-white text-[#0A0C1A] items-center justify-center text-center rotate-[10deg] font-human text-[length:var(--fs-hand)] leading-none p-[calc(var(--u)*18)] shadow-xl">
+          <p className="hidden sm:flex absolute right-0 top-[38%] lg:right-[-8%] lg:top-[70%] w-[calc(var(--u)*150)] h-[calc(var(--u)*150)] lg:w-[calc(var(--u)*190)] lg:h-[calc(var(--u)*190)] rounded-full bg-white text-[#0A0C1A] items-center justify-center text-center rotate-[10deg] font-human text-[length:var(--fs-hand)] leading-none p-[calc(var(--u)*18)] shadow-xl">
             {HERO.stickerNoCode}
           </p>
         </div>
