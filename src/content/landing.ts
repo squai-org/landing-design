@@ -67,18 +67,17 @@ export const HERO = {
   ctaSecondary: 'Ver las 8 sesiones',
   // Nota manuscrita del largo de la de referencia ("Shipping to the USA & Canada").
   note: `${PROGRAM.priceCOP} o ${PROGRAM.priceUSD}`,
-  cardLive: {
-    title: 'Programa en vivo',
-    note: `${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,
-    imageId: 3184291,
-    alt: 'Equipo conversa alrededor de una mesa con portátiles durante una sesión práctica',
+  // Persona recortada (Pexels, licencia libre sin atribución; fondo quitado
+  // con un modelo local). Alternativa lista: /assets/hero/persona-7318930.webp
+  // (1103 × 1400), mujer que muestra la pantalla de su portátil.
+  person: {
+    src: '/assets/hero/persona-8555639.webp',
+    width: 874,
+    height: 1400,
+    alt: 'Mujer sonriente abraza su portátil y mira hacia el texto',
   },
-  cardNoCode: {
-    title: 'Sin saber programar',
-    note: 'Empiezas desde lo que ya haces',
-    imageId: 3182812,
-    alt: 'Grupo de colegas sonríe mientras revisa algo en un portátil',
-  },
+  stickerSchedule: `En vivo · ${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,
+  stickerNoCode: 'Sin saber programar',
 };
 
 /* 2. Datos clave: ¿qué incluye? */
