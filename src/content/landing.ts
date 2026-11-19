@@ -58,16 +58,18 @@ export const NAV = {
 
 /* 1. Encabezado: ¿qué es y es para mí? */
 export const HERO = {
-  // Mismo largo que el título de la referencia (33 caracteres) para que el
-  // encabezado completo quepa en la primera pantalla.
-  title: 'IA para tu trabajo, sin vueltas.',
+  // Con nuestra tipografía (más angosta que la de la referencia) este largo
+  // ocupa el mismo cajón: 3 líneas de ~1100 unidades, igual que "Unbox
+  // stories / worth talking / about".
+  title: 'Aprende a usar la IA en tu trabajo sin vueltas.',
   lead: 'Ocho sesiones en vivo para entender cómo funciona la IA, pedirle bien las cosas y cuidar tu información, pensadas para quienes ya la usan en su trabajo.',
-  ctaPrimary: 'Inscribirme al programa',
+  ctaPrimary: 'Quiero inscribirme',
   ctaSecondary: 'Ver las 8 sesiones',
-  note: `Desde el ${PROGRAM.startDateShort} · ${PROGRAM.priceCOP} o ${PROGRAM.priceUSD}`,
+  // Nota manuscrita del largo de la de referencia ("Shipping to the USA & Canada").
+  note: `${PROGRAM.priceCOP} o ${PROGRAM.priceUSD}`,
   cardLive: {
     title: 'Programa en vivo',
-    note: PROGRAM.scheduleShort,
+    note: `${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,
     imageId: 3184291,
     alt: 'Equipo conversa alrededor de una mesa con portátiles durante una sesión práctica',
   },
@@ -244,21 +246,25 @@ export const FLOW = {
   steps: [
     {
       step: 'Paso #1',
+      illustration: { src: '/illustrations/pasos/paso-1.svg', alt: 'Persona en su portátil junto a un formulario de inscripción con el botón marcado' },
       title: 'Te inscribes en línea',
       copy: 'Dejas tu nombre, correo y WhatsApp, y pagas en la pasarela segura con el medio que prefieras.',
     },
     {
       step: 'Paso #2',
+      illustration: { src: '/illustrations/pasos/paso-2.svg', alt: 'Persona toma café junto a un sobre abierto con una llave de acceso' },
       title: 'Recibes tu acceso',
       copy: 'Te llega por correo el enlace de las clases y la guía de la primera sesión.',
     },
     {
       step: 'Paso #3',
+      illustration: { src: '/illustrations/pasos/paso-3.svg', alt: 'Persona explica algo junto a una videollamada con dos participantes' },
       title: 'Practicas en vivo',
       copy: 'En cada clase explicamos un tema y lo pruebas con un caso de tu trabajo, con nosotros al lado.',
     },
     {
       step: 'Paso #4',
+      illustration: { src: '/illustrations/pasos/paso-4.svg', alt: 'Persona revisa su celular junto a la grabación de una clase y un globo con una pregunta' },
       title: 'Repasas y preguntas',
       copy: 'Entre clases ves la grabación, usas las plantillas y nos escribes por WhatsApp si algo no te sale.',
     },

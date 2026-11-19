@@ -119,8 +119,17 @@
   --frame-r: calc(var(--u) * 40);
   --frame-b: calc(var(--u) * 8);
 
-  --hero-pt: max(92px, calc(var(--u) * 100));
-  --hero-gap: calc(var(--u) * 18);
+  /* Encabezado: medidas de .hero de la referencia (móvil, 402). */
+  --hero-x: calc(var(--u) * 16);
+  --hero-title-top: calc(var(--u) * 196);
+  --hero-title-w: 100%;
+  --hero-gap-title: calc(var(--u) * 16);
+  --hero-gap-cta: calc(var(--u) * 16);
+  --hero-p-fs: max(16px, calc(var(--u) * 18));
+  --hero-p-w: 100%;
+  --hero-note-x: calc(var(--u) * 229);
+  --hero-note-y: calc(var(--u) * 114);
+  --hero-note-w: calc(var(--u) * 137);
 
   /* Carrusel de sesiones (.books de la referencia, 1 em = 16 unidades). */
   --books-header-pt: calc(var(--u) * 72);
@@ -153,6 +162,11 @@
   :root {
     --u: calc(100vw / 834);
     --fs-label: calc(var(--u) * 52);
+    --hero-title-w: calc(var(--u) * 740);
+    --hero-p-w: calc(var(--u) * 315);
+    --hero-note-x: calc(var(--u) * 629);
+    --hero-note-y: calc(var(--u) * 123);
+    --hero-note-w: calc(var(--u) * 138);
     --label-r: calc(var(--u) * 40);
     --label-px: calc(var(--u) * 20);
     --label-py: calc(var(--u) * 12);
@@ -206,8 +220,16 @@
     --frame-r: calc(var(--u) * 80);
     --frame-b: calc(var(--u) * 16);
 
-    --hero-pt: max(104px, calc(var(--u) * 150));
-    --hero-gap: calc(var(--u) * 32);
+    --hero-x: calc(var(--u) * 20);
+    --hero-title-top: calc(var(--u) * 240);
+    --hero-title-w: calc(var(--u) * 1232);
+    --hero-gap-title: calc(var(--u) * 32);
+    --hero-gap-cta: calc(var(--u) * 16);
+    --hero-p-fs: max(16px, calc(var(--u) * 24));
+    --hero-p-w: calc(var(--u) * 421);
+    --hero-note-x: calc(var(--u) * 1693);
+    --hero-note-y: calc(var(--u) * 518);
+    --hero-note-w: calc(var(--u) * 153);
 
     --books-header-pt: calc(var(--u) * 220);
     --books-header-pb: calc(var(--u) * 80);
@@ -267,10 +289,17 @@
   paint-order: stroke fill;
 }
 
-/* El título del encabezado escala con el alto disponible para que todo el
-   encabezado quepa en la primera pantalla (laptops de 768 px incluidas). */
+/* Encabezado con las proporciones de .hero de la referencia: título de
+   160/96/52 unidades con interlineado 0,8, párrafo de 24/18 con 1,2 y
+   alto de 1400 unidades en desktop (en móvil, al menos una pantalla). */
 .aardvark-hero-title {
-  font-size: max(36px, min(var(--fs-h1), calc((100svh - var(--hero-pt)) * 0.15)));
+  line-height: 0.8;
+}
+
+.aardvark-hero-lead {
+  font-size: var(--hero-p-fs);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .aardvark-h2 {

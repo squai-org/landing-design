@@ -11,10 +11,12 @@ interface AardvarkHeroProps {
 
 /* ============================================================
    1. ENCABEZADO (.hero de la referencia)
-   El encabezado completo cabe en la primera pantalla en cualquier
-   dispositivo: la sección mide 100svh, el título escala con el alto
-   disponible y, en móvil, las tarjetas ocupan el espacio que sobra y se
-   recortan contra el borde inferior (como el libro de la referencia).
+   Mismas medidas que la referencia en unidades de diseño: el bloque de
+   texto arranca en x 20 / y 240 (desktop), el título mide 160 con
+   ancho máximo 1232, el párrafo 24 con ancho 421 y el botón queda 16
+   debajo. En desktop la sección mide 1400 de alto; en móvil y tablet,
+   al menos una pantalla, con las tarjetas recortadas contra el borde
+   inferior como el libro de la referencia.
    ============================================================ */
 export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroProps) {
   const heroRef = useRef<HTMLElement>(null);
@@ -33,7 +35,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
         id="inicio"
         ref={heroRef}
         aria-labelledby="hero-heading"
-        className="aardvark-hero w-full relative bg-[#8A8EF9] text-[#0A0C1A] rounded-b-[var(--edge-r)] overflow-hidden h-[100svh] min-h-[540px] pt-[var(--hero-pt)] px-[var(--gutter)] flex flex-col lg:flex-row lg:items-center lg:gap-[calc(var(--u)*40)] lg:pb-[calc(var(--u)*48)]"
+        className="w-full relative bg-[#8A8EF9] text-[#0A0C1A] rounded-b-[var(--edge-r)] overflow-hidden h-[100svh] min-h-[640px] flex flex-col lg:block lg:min-h-0 lg:h-[calc(var(--u)*1400)]"
       >
         {/* El marco extra arriba y abajo cubre el recorrido del parallax. */}
         <SectionBackdrop
@@ -46,33 +48,36 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
           y={ribbonY}
         />
 
-        {/* Texto: título, bajada, CTA y nota manuscrita */}
-        <div className="relative z-10 flex flex-col gap-[var(--hero-gap)] lg:w-[58%] shrink-0 lg:self-center">
-          <p className="order-first self-end lg:self-start aardvark-handwritten-lg text-[#0A0C1A] max-w-[22ch] lg:max-w-none text-right lg:text-left rotate-[3deg] lg:-rotate-1 lg:order-last">
-            {HERO.note}
-          </p>
-
-          <h1 id="hero-heading" className="aardvark-h1 aardvark-hero-title text-[#0A0C1A] max-w-[11ch]">
+        {/* Bloque de texto (.hero__content) */}
+        <div className="relative z-20 flex flex-col pl-[var(--hero-x)] pr-[var(--gutter)] pt-[var(--hero-title-top)]">
+          <h1 id="hero-heading" className="aardvark-h1 aardvark-hero-title text-[#0A0C1A] max-w-[var(--hero-title-w)]">
             {HERO.title}
           </h1>
 
-          <p className="aardvark-body text-[#0A0C1A] max-w-[calc(var(--u)*640)] lg:max-w-[30ch]">{HERO.lead}</p>
+          <p className="aardvark-hero-lead text-[#0A0C1A] max-w-[var(--hero-p-w)] mt-[var(--hero-gap-title)]">{HERO.lead}</p>
 
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <div className="flex items-center gap-x-5 mt-[var(--hero-gap-cta)]">
             <AardvarkButtonAlt label={HERO.ctaPrimary} variant="dark" onClick={onPrimaryCta} />
             <button
               type="button"
               onClick={onExploreSessions}
-              className="font-display font-bold text-[length:var(--btn-fs)] text-[#0A0C1A] underline decoration-2 underline-offset-4 hover:text-[#303163] transition-colors min-h-[44px] cursor-pointer whitespace-nowrap"
+              className="hidden lg:inline-flex items-center font-display font-bold text-[length:var(--btn-fs)] text-[#0A0C1A] underline decoration-2 underline-offset-4 hover:text-[#303163] transition-colors min-h-[44px] cursor-pointer whitespace-nowrap"
             >
               {HERO.ctaSecondary}
             </button>
           </div>
         </div>
 
-        {/* Tarjetas: ocupan el alto restante y nunca empujan el contenido fuera de la pantalla */}
-        <div className="relative z-10 flex-1 min-h-0 w-full mt-[calc(var(--u)*28)] lg:mt-0 lg:h-full flex justify-center lg:items-center lg:justify-end">
-          <div className="relative w-full max-w-[420px] h-[380px] sm:max-w-[600px] sm:h-[560px] lg:max-w-none lg:w-auto lg:h-[min(100%,calc(var(--u)*920))] lg:aspect-[740/920]">
+        {/* Nota manuscrita (.hero__text): fija en su sitio, como en la referencia */}
+        <p className="absolute z-20 left-[var(--hero-note-x)] top-[var(--hero-note-y)] w-[var(--hero-note-w)] aardvark-handwritten-lg text-center text-[#0A0C1A] rotate-[4deg]"
+          style={{ lineHeight: 1 }}
+        >
+          {HERO.note}
+        </p>
+
+        {/* Tarjetas: en móvil ocupan el alto restante y se recortan abajo; en desktop van a la derecha */}
+        <div className="relative z-10 flex-1 min-h-[220px] w-full mt-[calc(var(--u)*40)] px-[var(--gutter)] flex justify-center lg:absolute lg:mt-0 lg:px-0 lg:w-auto lg:min-h-0 lg:right-[calc(var(--u)*230)] lg:top-[calc(var(--u)*500)] lg:h-[calc(var(--u)*720)] lg:aspect-[740/920]">
+          <div className="relative w-full max-w-[420px] h-[380px] sm:max-w-[600px] sm:h-[560px] lg:max-w-none lg:h-full">
             <motion.div
               style={{ y: secondaryCardY }}
               className="group/hero1 absolute left-[2%] top-[6%] w-[53%] lg:left-0 lg:top-0 lg:w-[58%] -rotate-[3.5deg] z-10 hover:rotate-0 hover:-translate-y-2 transition-transform duration-300"
