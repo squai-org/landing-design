@@ -460,13 +460,13 @@ export function SquaiSocialLinks({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Ir a Instagram de Squai"
-          className={`aardvark-squash-btn w-11 h-11 rounded-full ${iconColorClass} cursor-pointer focus-visible:outline-offset-2`}
+          className={`aardvark-squash-btn w-[var(--social)] h-[var(--social)] rounded-full ${iconColorClass} cursor-pointer focus-visible:outline-offset-2`}
         >
           <span className={`aardvark-squash-btn__bg ${bgClass}`} aria-hidden="true" />
           <svg
             viewBox="0 0 24 24"
             fill="none"
-            className="w-5 h-5 relative z-10"
+            className="w-[45%] h-[45%] relative z-10"
             aria-hidden="true"
           >
             <path
@@ -482,13 +482,13 @@ export function SquaiSocialLinks({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Ir a LinkedIn de Squai"
-          className={`aardvark-squash-btn w-11 h-11 rounded-full ${iconColorClass} cursor-pointer focus-visible:outline-offset-2`}
+          className={`aardvark-squash-btn w-[var(--social)] h-[var(--social)] rounded-full ${iconColorClass} cursor-pointer focus-visible:outline-offset-2`}
         >
           <span className={`aardvark-squash-btn__bg ${bgClass}`} aria-hidden="true" />
           <svg
             viewBox="0 0 24 24"
             fill="none"
-            className="w-5 h-5 relative z-10"
+            className="w-[45%] h-[45%] relative z-10"
             aria-hidden="true"
           >
             <path
@@ -546,31 +546,20 @@ const ALT_VARIANTS: Record<
   },
 };
 
-const ALT_SIZES: Record<
-  NonNullable<AardvarkButtonAltProps['size']>,
-  { height: string; textPad: string; textSize: string; radius: string; iconSize: string }
-> = {
-  sm: {
-    height: 'h-12',
-    textPad: 'px-5',
-    textSize: 'text-[16px]',
-    radius: 'rounded-[11px]',
-    iconSize: 'w-4 h-4',
-  },
-  md: {
-    height: 'h-13',
-    textPad: 'px-6',
-    textSize: 'text-[17px]',
-    radius: 'rounded-[12px]',
-    iconSize: 'w-4 h-4',
-  },
-  lg: {
-    height: 'h-15',
-    textPad: 'px-7',
-    textSize: 'text-[19px]',
-    radius: 'rounded-[13px]',
-    iconSize: 'w-5 h-5',
-  },
+/** One size, copied from the reference `.button-alt` (56/48 design px tall,
+ * 20/17 px bold text, 8 px radius). `size` stays for API compatibility. */
+const REFERENCE_BUTTON = {
+  height: 'h-[var(--btn-h)]',
+  textPad: 'px-[var(--btn-px)]',
+  textSize: 'text-[length:var(--btn-fs)]',
+  radius: 'rounded-[var(--btn-r)]',
+  iconSize: 'w-[max(16px,calc(var(--u)*20))] h-[max(16px,calc(var(--u)*20))]',
+};
+
+const ALT_SIZES: Record<NonNullable<AardvarkButtonAltProps['size']>, typeof REFERENCE_BUTTON> = {
+  sm: REFERENCE_BUTTON,
+  md: REFERENCE_BUTTON,
+  lg: REFERENCE_BUTTON,
 };
 
 export function AardvarkButtonAlt({
@@ -603,7 +592,7 @@ export function AardvarkButtonAlt({
         </span>
       </span>
 
-      <span className={`aardvark-btn-alt__icon-wrap ${dims.height} w-12 sm:w-auto`}>
+      <span className={`aardvark-btn-alt__icon-wrap ${dims.height} w-auto`}>
         <span
           className={`aardvark-btn-alt__bg ${colors.iconBg} ${dims.radius}`}
           aria-hidden="true"
@@ -681,14 +670,14 @@ export function AardvarkPillButton({
       )}
       <span className={`aardvark-nav-pill__bg ${bgClass} relative z-1`} aria-hidden="true" />
       <span
-        className={`aardvark-nav-pill__inner px-5 sm:px-6 py-2.5 font-display font-bold text-base sm:text-[17px] tracking-[-0.015em] ${textClass}`}
+        className={`aardvark-nav-pill__inner px-[var(--pill-px)] font-display font-bold text-[length:var(--pill-fs)] tracking-[-0.015em] ${textClass}`}
       >
         <SplitBounceText text={label} />
       </span>
     </>
   );
 
-  const shared = `aardvark-nav-pill h-12 whitespace-nowrap shrink-0 cursor-pointer ${className}`;
+  const shared = `aardvark-nav-pill h-[var(--pill-h)] whitespace-nowrap shrink-0 cursor-pointer ${className}`;
 
   if (href) {
     return (
@@ -772,7 +761,7 @@ export function BenefitsRibbonSvg() {
     >
       <path
         d="M622.956 92.984c69.68-13.332 124.091 11.33 166.146 66.451 37.834 49.612 52.094 108.845 68.023 167.531 17.015 62.708 33.544 125.678 54.097 187.256 15.213 45.582 44.491 82.912 84.258 111.302 37.83 27.001 78.65 36.435 124.32 25.002 50.27-12.591 92.73-39.978 135.02-68.255 37.81-25.261 75.44-51.01 114.93-73.391 33.31-18.877 69.78-31.477 109.2-29.686 71.66 3.254 118.64 57.683 133.6 122.222 13.54 58.421.94 113.436-22.27 167.116-24.77 57.338-61.83 107.317-94.92 159.675-31.66 50.112-60.42 101.453-69.5 161.203-4.62 30.42-4.55 60.61 9.84 89 14.94 29.48 39.11 48.49 69.45 55.47-81.24 30.12-208.99 79.29-324.5 122.86-38.79-25.16-64.29-60.23-63.06-111.3.7-28.55 5.79-58.25 15.52-85.01 18.34-50.44 42.58-98.69 62.16-148.71 9.86-25.18 18.08-51.846 21.44-78.548 6.57-52.461-26.55-89.231-79.28-93.381-32.8-2.591-64.81 1.965-96.82 8.372-47.599 9.543-95.035 20.489-143.067 26.944-27.486 3.684-56.451 2.571-83.964-1.568-43.559-6.563-69.693-35.655-83.846-76.364-13.828-39.799-12.733-81.006-12.31-122.239.259-25.129-.162-50.268-.701-75.384-.135-6.434-1.493-12.93-2.997-19.229-9.605-40.368-36.568-55.459-73.901-36.683-31.54 15.866-60.163 37.506-90.168 56.437-36.968 23.326-72.964 48.481-111.324 69.293-64.323 34.899-134.904 41.246-206.21 34.284-65.083-6.353-129.663-17.582-194.586-25.645-45.808-5.696-91.896-5.797-137.238 3.474-43.882 8.982-83.289 27.227-110.731 64.886-18.082 24.823-23.594 52.639-18.247 82.666 10.129 56.81 45.402 96.993 87.647 132.721C-94.353 1001.24-40.827 1030 11.69 1060.35c52.987 30.63 105.833 61.47 150.046 104.54 27.508 26.8 51.194 56.57 65.086 92.97 24.309 63.69 10.075 119.77-33.697 170.09a258 258 0 0 1-4.983 5.57l-241.336-31.48c5.88-39.47-6.454-79.83-36.872-115.17-37.549-43.63-85.539-72.6-134.789-100.38-56.973-32.14-114.712-63.18-169.726-98.45-69.469-44.54-116.549-108.116-141.485-187.068-20.043-63.453-14.519-126.396 10.628-187.033 46.63-112.453 128.778-184.025 249.305-208.106 61.535-12.29 122.605-4.466 183.068 9.317 56.605 12.908 112.898 27.297 169.758 38.935 83.258 17.039 151.197-11.223 201.213-78.079 33.656-44.99 63.206-93.172 92.831-141.018 37.24-60.153 73.756-120.717 124.837-170.592 35.975-35.14 76.904-61.747 127.382-71.412"
-        fill="#e1e4fd"
+        fill="#fdebc9"
         opacity="0.7"
       />
       <path
@@ -802,7 +791,7 @@ export function FaqRibbonSvg() {
   );
 }
 
-export function BadgeRibbonSvg({ colorClass = 'text-[#ffe6a4]' }: { colorClass?: string }) {
+export function BadgeRibbonSvg({ colorClass = 'text-[#fedea0]' }: { colorClass?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

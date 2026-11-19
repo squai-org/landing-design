@@ -70,9 +70,23 @@ describe('estructura de la guía', () => {
     });
   });
 
-  it('incluye de 3 a 5 testimonios con nombre y contexto', () => {
-    expect(content.TESTIMONIALS.quotes.length).toBeGreaterThanOrEqual(3);
-    expect(content.TESTIMONIALS.quotes.length).toBeLessThanOrEqual(5);
+  it('cada sesión tiene una fecha ISO que coincide con su día y va en orden', () => {
+    const WEEKDAYS = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+    let previous = 0;
+    for (const session of content.SESSIONS.items) {
+      expect(session.isoDate).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}-05:00$/);
+      const when = new Date(session.isoDate);
+      expect(Number.isNaN(when.getTime())).toBe(false);
+      expect(when.getTime()).toBeGreaterThan(previous);
+      previous = when.getTime();
+      const weekday = WEEKDAYS[new Date(session.isoDate.slice(0, 10) + 'T12:00:00Z').getUTCDay()];
+      expect(session.date.startsWith(weekday)).toBe(true);
+      expect(session.date).toContain(String(Number(session.isoDate.slice(8, 10))));
+    }
+  });
+
+  it('incluye exactamente 3 testimonios con nombre y contexto', () => {
+    expect(content.TESTIMONIALS.quotes).toHaveLength(3);
     for (const quote of content.TESTIMONIALS.quotes) {
       expect(quote.text.length).toBeGreaterThan(20);
       expect(quote.author.length).toBeGreaterThan(2);

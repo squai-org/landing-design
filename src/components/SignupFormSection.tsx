@@ -107,26 +107,26 @@ export function SignupFormSection() {
   return (
     <section
       id="inscripcion"
-      className="w-full relative z-20 bg-white pt-12 sm:pt-16 pb-12 sm:pb-16 px-5 sm:px-8 lg:px-12 scroll-mt-24"
+      className="w-full relative z-20 bg-white py-[calc(var(--section-py)*0.6)] px-[var(--gutter)] scroll-mt-24"
       aria-labelledby="signup-heading"
     >
-      <div className="max-w-[1680px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="mx-auto grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*64)] items-start">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-5 space-y-6"
+          className="lg:col-span-5 space-y-[calc(var(--u)*24)]"
         >
           <h2 id="signup-heading" className="aardvark-h2 text-[#0A0C1A]">
             {SIGNUP.title}
           </h2>
-          <p className="aardvark-lead text-[#525770] max-w-[460px]">{SIGNUP.lead}</p>
+          <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*620)]">{SIGNUP.lead}</p>
 
-          <div className="bg-[#eef0fd] rounded-[28px] p-7 space-y-4">
+          <div className="bg-[#eef0fd] rounded-[var(--card-r)] p-[calc(var(--u)*32)] space-y-[calc(var(--u)*16)]">
             <div className="flex items-baseline justify-between gap-4">
-              <span className="text-base font-medium text-[#525770]">{SIGNUP.priceLabel}</span>
-              <span className="font-display font-bold text-3xl text-[#0A0C1A] tabular-nums">
+              <span className="aardvark-small font-medium text-[#525770]">{SIGNUP.priceLabel}</span>
+              <span className="aardvark-h3 text-[#0A0C1A] tabular-nums">
                 {breakdown.formattedTotal}
               </span>
             </div>
@@ -158,11 +158,11 @@ export function SignupFormSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.4, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 bg-[#eef0fd] rounded-[36px] p-7 sm:p-10 shadow-xl"
+            className="relative z-10 bg-[#eef0fd] rounded-[calc(var(--u)*48)] p-[max(24px,calc(var(--u)*40))] shadow-xl"
           >
             <form onSubmit={handleSubmit(onSubmit)} onFocus={handleFormFocus} noValidate className="space-y-6">
               <div>
-                <span className="block text-base font-display font-bold text-[#0A0C1A] mb-2.5">
+                <span className="block text-[length:var(--fs-small)] font-display font-bold text-[#0A0C1A] mb-[calc(var(--u)*10)]">
                   Moneda de pago
                 </span>
                 <div
@@ -198,7 +198,7 @@ export function SignupFormSection() {
               </div>
 
               <div>
-                <label htmlFor="fullName" className="block text-base font-display font-bold text-[#0A0C1A] mb-2">
+                <label htmlFor="fullName" className="block text-[length:var(--fs-small)] font-display font-bold text-[#0A0C1A] mb-[calc(var(--u)*10)]">
                   Nombre completo
                 </label>
                 <input
@@ -209,7 +209,7 @@ export function SignupFormSection() {
                   aria-invalid={Boolean(errors.fullName)}
                   aria-describedby={errors.fullName ? 'fullName-error' : undefined}
                   {...register('fullName')}
-                  className="w-full px-4 py-3.5 rounded-2xl bg-white text-base sm:text-lg text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-[#f9faff] transition-colors outline-none"
+                  className="aardvark-input w-full bg-white text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-[#f9faff] transition-colors outline-none"
                 />
                 {errors.fullName && (
                   <p id="fullName-error" className="mt-1.5 text-sm text-[#9b1c1c]" role="alert">
@@ -220,7 +220,7 @@ export function SignupFormSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="email" className="block text-base font-display font-bold text-[#0A0C1A] mb-2">
+                  <label htmlFor="email" className="block text-[length:var(--fs-small)] font-display font-bold text-[#0A0C1A] mb-[calc(var(--u)*10)]">
                     Correo electrónico
                   </label>
                   <input
@@ -231,7 +231,7 @@ export function SignupFormSection() {
                     aria-invalid={Boolean(errors.email)}
                     aria-describedby={errors.email ? 'email-error' : undefined}
                     {...register('email')}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-white text-base sm:text-lg text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-[#f9faff] transition-colors outline-none"
+                    className="aardvark-input w-full bg-white text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-[#f9faff] transition-colors outline-none"
                   />
                   {errors.email && (
                     <p id="email-error" className="mt-1.5 text-sm text-[#9b1c1c]" role="alert">
@@ -241,7 +241,7 @@ export function SignupFormSection() {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-base font-display font-bold text-[#0A0C1A] mb-2">
+                  <label htmlFor="phone" className="block text-[length:var(--fs-small)] font-display font-bold text-[#0A0C1A] mb-[calc(var(--u)*10)]">
                     WhatsApp
                   </label>
                   <input
@@ -252,7 +252,7 @@ export function SignupFormSection() {
                     aria-invalid={Boolean(errors.phone)}
                     aria-describedby={errors.phone ? 'phone-error' : undefined}
                     {...register('phone')}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-white text-base sm:text-lg text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-[#f9faff] transition-colors outline-none"
+                    className="aardvark-input w-full bg-white text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-[#f9faff] transition-colors outline-none"
                   />
                   {errors.phone && (
                     <p id="phone-error" className="mt-1.5 text-sm text-[#9b1c1c]" role="alert">

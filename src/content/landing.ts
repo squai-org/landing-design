@@ -271,15 +271,16 @@ export const SESSIONS = {
   note: PROGRAM.scheduleLong,
   tagline: `Empezamos el ${PROGRAM.startDateShort}`,
   cta: 'Reservar mi cupo de febrero',
+  time: '7:00 p. m.',
   items: [
-    { number: 1, date: 'mar 2 feb', topic: 'Cómo funciona la IA por dentro' },
-    { number: 2, date: 'jue 4 feb', topic: 'Qué hace bien y dónde se equivoca' },
-    { number: 3, date: 'mar 9 feb', topic: 'Cómo pedirle las cosas (prompts)' },
-    { number: 4, date: 'jue 11 feb', topic: 'Darle contexto, ejemplos y formato' },
-    { number: 5, date: 'mar 16 feb', topic: 'Revisar y corregir lo que responde' },
-    { number: 6, date: 'jue 18 feb', topic: 'Cuidar tu información y la de tus clientes' },
-    { number: 7, date: 'mar 23 feb', topic: 'Rutinas para correos, resúmenes y reportes' },
-    { number: 8, date: 'jue 25 feb', topic: 'Tu plan para usarla en tu trabajo' },
+    { number: 1, date: 'mar 2 feb', isoDate: '2027-02-02T19:00-05:00', topic: 'Cómo funciona la IA por dentro' },
+    { number: 2, date: 'jue 4 feb', isoDate: '2027-02-04T19:00-05:00', topic: 'Qué hace bien y dónde se equivoca' },
+    { number: 3, date: 'mar 9 feb', isoDate: '2027-02-09T19:00-05:00', topic: 'Cómo pedirle las cosas (prompts)' },
+    { number: 4, date: 'jue 11 feb', isoDate: '2027-02-11T19:00-05:00', topic: 'Darle contexto, ejemplos y formato' },
+    { number: 5, date: 'mar 16 feb', isoDate: '2027-02-16T19:00-05:00', topic: 'Revisar y corregir lo que responde' },
+    { number: 6, date: 'jue 18 feb', isoDate: '2027-02-18T19:00-05:00', topic: 'Cuidar tu información y la de tus clientes' },
+    { number: 7, date: 'mar 23 feb', isoDate: '2027-02-23T19:00-05:00', topic: 'Rutinas para correos, resúmenes y reportes' },
+    { number: 8, date: 'jue 25 feb', isoDate: '2027-02-25T19:00-05:00', topic: 'Tu plan para usarla en tu trabajo' },
   ],
 };
 
@@ -367,12 +368,8 @@ export const TESTIMONIALS = {
       author: 'Marcela R.',
       context: 'Docente de secundaria',
     },
-    {
-      text: 'Ahora sé qué información de mis clientes no debo pegar en un chat.',
-      author: 'Julián T.',
-      context: 'Asesor comercial',
-    },
   ],
+  badge: { value: MENTORS.stats[1].value, label: 'charlas' },
 };
 
 /* 10. Inscripción: ¿cuánto y cómo pago? */
