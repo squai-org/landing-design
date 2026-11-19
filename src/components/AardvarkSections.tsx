@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import {
   AardvarkButtonAlt,
-  FlowRibbonSvg,
   FlowStepIllustration,
   type SquaiBlockPreset,
   SquaiCornerBlocks,
-  SquaiSingleBlock,
 } from './AardvarkPrimitives';
+import { SectionBackdrop } from './Backdrops';
 import { SquaiMark } from './SquaiBrand';
 import { CertificateMockup, GuideMockup } from './IncludesMockups';
 import { FLOW, INCLUDES, SESSIONS, pexelsUrl } from '../content/landing';
@@ -205,9 +205,7 @@ export function FlowSection({ onSelectCta }: SectionCtaProps) {
       aria-labelledby="flow-heading"
     >
       <div className="w-full relative bg-[#eef0fd] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)] px-[var(--gutter)] lg:px-[calc(var(--u)*112)]">
-        <div className="absolute inset-x-0 top-0 pointer-events-none select-none opacity-80" aria-hidden="true">
-          <FlowRibbonSvg />
-        </div>
+        <SectionBackdrop shape="flow" colors={['#d2d7fc']} opacities={[0.65]} align="xMidYMax" />
 
         <div className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 mb-[calc(var(--u)*80)]">
@@ -286,86 +284,305 @@ export function FlowSection({ onSelectCta }: SectionCtaProps) {
 }
 
 /* ============================================================
-   7. PROGRAMA · ¿Qué voy a ver y cuándo? (.box Centered Inset Showcase)
-   Sessions use the reference app-store badges: straight Midnight boxes,
-   radius 16, icon left and two lines of text.
+   7. PROGRAMA · ¿Qué voy a ver y cuándo? (.books "Our Nov books")
+   Carrusel horizontal con flechas como el de la referencia: tarjetas
+   de 416 × ~720 px de diseño con una ilustración por sesión (Open Peeps
+   de Pablo Stanley, CC0, en public/illustrations/sesiones), inclinación y desplazamiento que cambian
+   según la distancia al centro, arrastre con mouse en desktop y swipe
+   con imán en móvil. Al pasar el cursor, la tarjeta se endereza y asoma
+   el botón para reservar.
    ============================================================ */
+interface SessionSlideStyle {
+  cardBg: string;
+  blockColor: string;
+  blockPreset: SquaiBlockPreset;
+  tags: Array<{ bg: string; text: string }>;
+}
+
+/* Tarjetas claras: la ilustración de línea (tinta Midnight, relleno
+   blanco) va directo sobre el color de la tarjeta, sin marco interno. */
+const SESSION_SLIDE_STYLES: SessionSlideStyle[] = [
+  {
+    cardBg: 'bg-[#8A8EF9]',
+    blockColor: '#303163',
+    blockPreset: 'mod-1',
+    tags: [
+      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
+      { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]' },
+    ],
+  },
+  {
+    cardBg: 'bg-[#F9C24D]',
+    blockColor: '#8A8EF9',
+    blockPreset: 'mod-2',
+    tags: [
+      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
+      { bg: 'bg-white', text: 'text-[#0A0C1A]' },
+    ],
+  },
+  {
+    cardBg: 'bg-[#d2d7fc]',
+    blockColor: '#F9C24D',
+    blockPreset: 'mod-3',
+    tags: [
+      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
+      { bg: 'bg-[#8A8EF9]', text: 'text-[#0A0C1A]' },
+    ],
+  },
+  {
+    cardBg: 'bg-[#fcf0db]',
+    blockColor: '#8A8EF9',
+    blockPreset: 'mod-4',
+    tags: [
+      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
+      { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]' },
+    ],
+  },
+];
+
+/** Inclinación (°) y desplazamiento vertical (%) de cada tarjeta. Fijos (no
+ * aleatorios) para que la composición sea estable entre visitas. */
+const SESSION_SLIDE_MOTION = [
+  { rotate: -2.2, y: -6.5 },
+  { rotate: 2.6, y: 4.2 },
+  { rotate: -1.7, y: -8.1 },
+  { rotate: 2.9, y: 5.6 },
+  { rotate: -2.5, y: -3.4 },
+  { rotate: 1.9, y: 7.8 },
+  { rotate: -2.8, y: -5.2 },
+  { rotate: 1.6, y: 3.9 },
+];
+
+function prefersReducedMotion() {
+  return typeof window !== 'undefined' && Boolean(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+}
+
 export function SessionsSection({ onSelectCta }: SectionCtaProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const frameRef = useRef(0);
+  const dragRef = useRef({ active: false, moved: false, startX: 0, startScroll: 0 });
+  const [edges, setEdges] = useState({ atStart: true, atEnd: false });
+
+  const update = useCallback(() => {
+    frameRef.current = 0;
+    const track = trackRef.current;
+    if (!track) return;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const atStart = track.scrollLeft <= 4;
+    const atEnd = track.scrollLeft >= maxScroll - 4;
+    setEdges((prev) => (prev.atStart === atStart && prev.atEnd === atEnd ? prev : { atStart, atEnd }));
+
+    if (prefersReducedMotion()) return;
+    // Mismo cálculo que el ParallaxSlider de la referencia.
+    const wrap = track.getBoundingClientRect();
+    const center = wrap.left + wrap.width / 2;
+    const maxDistance = wrap.width / 2 || 1;
+    itemRefs.current.forEach((el, idx) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const norm = Math.max(-2, Math.min(2, (rect.left + rect.width / 2 - center) / maxDistance));
+      const strength = Math.sin(norm * 1.2);
+      const { rotate, y } = SESSION_SLIDE_MOTION[idx % SESSION_SLIDE_MOTION.length];
+      el.style.transform = `translateY(${(strength * y).toFixed(2)}%) rotate(${(strength * rotate).toFixed(2)}deg)`;
+    });
+  }, []);
+
+  const scheduleUpdate = useCallback(() => {
+    if (!frameRef.current) frameRef.current = requestAnimationFrame(update);
+  }, [update]);
+
+  useEffect(() => {
+    update();
+    window.addEventListener('resize', scheduleUpdate);
+    return () => {
+      window.removeEventListener('resize', scheduleUpdate);
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
+  }, [update, scheduleUpdate]);
+
+  const step = (direction: 1 | -1) => {
+    const track = trackRef.current;
+    const first = itemRefs.current[0];
+    if (!track || !first) return;
+    track.scrollBy({ left: direction * first.offsetWidth, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  };
+
+  /* Arrastre con mouse (en táctil el carrusel usa el scroll nativo). */
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0 || !trackRef.current) return;
+    dragRef.current = { active: true, moved: false, startX: e.clientX, startScroll: trackRef.current.scrollLeft };
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    const track = trackRef.current;
+    if (!drag.active || !track) return;
+    const delta = e.clientX - drag.startX;
+    if (!drag.moved && Math.abs(delta) > 5) {
+      drag.moved = true;
+      track.setPointerCapture(e.pointerId);
+      track.dataset.dragging = 'true';
+    }
+    if (drag.moved) track.scrollLeft = drag.startScroll - delta;
+  };
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    dragRef.current.active = false;
+    if (track?.hasPointerCapture(e.pointerId)) track.releasePointerCapture(e.pointerId);
+    if (track) delete track.dataset.dragging;
+  };
+  const onClickCapture = (e: React.MouseEvent) => {
+    // Un arrastre no debe abrir la inscripción al soltar sobre una tarjeta.
+    if (dragRef.current.moved) {
+      e.preventDefault();
+      e.stopPropagation();
+      dragRef.current.moved = false;
+    }
+  };
+
   return (
     <section
       id="sesiones"
-      className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)] scroll-mt-10"
+      className="w-full relative bg-white text-[#0A0C1A] overflow-clip scroll-mt-10 pb-[var(--books-pb)]"
       aria-labelledby="sessions-heading"
     >
-      <div className="w-full relative bg-[#d2d7fc] rounded-[var(--band-r)] overflow-hidden py-[calc(var(--section-py)*1.3)] px-[var(--gutter)]">
-        <div className="relative flex flex-col items-center text-center">
-          <motion.p
-            initial={{ opacity: 0, rotate: -6, y: 12 }}
-            whileInView={{ opacity: 1, rotate: -2.5, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-            className="lg:absolute lg:-top-[calc(var(--u)*40)] lg:right-[calc(var(--u)*80)] aardvark-handwritten-lg text-[#303163] max-w-[calc(var(--u)*360)] mb-8 lg:mb-0"
-          >
+      <SectionBackdrop shape="flow" colors={['#eef0fd']} flip="x" align="xMidYMax" />
+
+      <div className="relative z-10">
+        <header className="relative text-center px-[var(--gutter)] pt-[var(--books-header-pt)] pb-[var(--books-header-pb)]">
+          <p className="hidden lg:block absolute top-[calc(var(--u)*150)] left-[calc(var(--u)*116)] -rotate-[10deg] aardvark-handwritten-lg text-[#5a5bb6] max-w-[18ch] text-left">
             {SESSIONS.note}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-          >
-            <h2 id="sessions-heading" className="aardvark-h1 text-[#0A0C1A]">
-              <span className="block">{SESSIONS.titleTop}</span>
-              <span className="inline-flex items-center justify-center gap-[calc(var(--u)*20)] bg-[#0A0C1A] text-[#F4F6FF] px-[calc(var(--u)*40)] py-[calc(var(--u)*12)] rounded-[calc(var(--u)*30)] mt-[calc(var(--u)*12)] shadow-2xl -rotate-[1.2deg]">
-                <span>{SESSIONS.titleBox}</span>
-                <SquaiMark variant="color" className="w-[0.7em] h-[0.7em] shrink-0" />
-              </span>
+          </p>
+          <div className="flex flex-col items-center gap-[var(--books-header-gap)]">
+            <h2 id="sessions-heading" className="aardvark-h2 text-[#0A0C1A] max-w-[18ch]">
+              {SESSIONS.title}
             </h2>
-          </motion.div>
-
-          <div className="w-full max-w-[calc(var(--u)*900)] flex justify-center lg:justify-end pt-[calc(var(--u)*24)] pb-[calc(var(--u)*48)]">
-            <span className="aardvark-handwritten-lg text-[#303163] rotate-[3deg] inline-block">
-              {SESSIONS.tagline}
-            </span>
+            <p className="aardvark-lead text-[#0A0C1A] max-w-[34ch]">{SESSIONS.lead}</p>
+            <p className="lg:hidden aardvark-handwritten-lg text-[#5a5bb6] -rotate-2">{SESSIONS.note}</p>
           </div>
+        </header>
 
-          <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[calc(var(--u)*16)] w-full max-w-[calc(var(--u)*1680)] pb-[calc(var(--u)*56)]">
-            {SESSIONS.items.map((session, idx) => (
-              <motion.li
-                key={session.number}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.35, delay: idx * 0.04, ease: [0.32, 0.72, 0, 1] }}
-                className="list-none bg-[#0A0C1A] text-[#F4F6FF] rounded-[calc(var(--u)*16)] min-h-[max(72px,calc(var(--u)*96))] px-[calc(var(--u)*20)] py-[calc(var(--u)*14)] flex items-center gap-[calc(var(--u)*16)] text-left"
-              >
-                <span className="relative inline-flex items-center justify-center shrink-0 w-[max(40px,calc(var(--u)*52))] h-[max(40px,calc(var(--u)*52))]" aria-hidden="true">
-                  <SquaiSingleBlock color="#F9C24D" className="absolute inset-0 w-full h-full" />
-                  <span className="relative font-display font-bold text-[max(16px,calc(var(--u)*22))] text-[#0A0C1A] tabular-nums">
-                    {session.number}
-                  </span>
-                </span>
-                <span className="flex flex-col gap-[calc(var(--u)*4)] min-w-0">
-                  <span className="text-[max(14px,calc(var(--u)*16))] leading-tight text-[#c3c9fc]">
-                    <span className="sr-only">Sesión {session.number}, </span>
-                    <time dateTime={session.isoDate}>
-                      {session.date} · {SESSIONS.time}
-                    </time>
-                  </span>
-                  <span className="font-display font-bold text-[max(16px,calc(var(--u)*24))] leading-[1.1] tracking-[-0.02em]">
-                    {session.topic}
-                  </span>
-                </span>
-              </motion.li>
-            ))}
+        <div className="flex justify-end items-center gap-[calc(var(--u)*8)] px-[var(--gutter)] lg:pr-[calc(var(--u)*40)]">
+          <SliderArrow direction="prev" label={SESSIONS.prevLabel} disabled={edges.atStart} onClick={() => step(-1)} />
+          <SliderArrow direction="next" label={SESSIONS.nextLabel} disabled={edges.atEnd} onClick={() => step(1)} />
+        </div>
+
+        <div
+          ref={trackRef}
+          role="region"
+          aria-roledescription="carrusel"
+          aria-label="Las 8 sesiones del programa"
+          tabIndex={0}
+          onScroll={scheduleUpdate}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onClickCapture={onClickCapture}
+          className="sessions-track overflow-x-auto overscroll-x-contain snap-x snap-mandatory lg:snap-none focus-visible:outline-offset-[-6px]"
+        >
+          <ol className="flex items-center w-max px-[var(--books-list-px)] py-[var(--books-list-py)]">
+            {SESSIONS.items.map((session, idx) => {
+              const style = SESSION_SLIDE_STYLES[idx % SESSION_SLIDE_STYLES.length];
+              const motionPreset = SESSION_SLIDE_MOTION[idx % SESSION_SLIDE_MOTION.length];
+              return (
+                <li
+                  key={session.number}
+                  ref={(el) => {
+                    itemRefs.current[idx] = el;
+                  }}
+                  className="session-slide list-none shrink-0 snap-start w-[var(--books-item-w)] px-[var(--books-item-px)] will-change-transform"
+                  style={{ '--session-rot': `${-motionPreset.rotate}deg` } as React.CSSProperties}
+                >
+                  <article
+                    className="session-slide__inner relative"
+                    aria-labelledby={`session-${session.number}-title`}
+                  >
+                    <SquaiCornerBlocks size="card" preset={style.blockPreset} hoverOnly backColor={style.blockColor} />
+
+                    <div className={`session-slide__bg relative z-[1] ${style.cardBg} rounded-[var(--card-r)] flex items-end`} aria-hidden="true">
+                      <div className={`session-slide__bg-bottom ${style.cardBg}`} />
+                    </div>
+
+                    <div className="relative z-[1] flex flex-col gap-[var(--books-item-gap)] p-[var(--books-item-pad)] pb-[calc(var(--books-item-pad)*1.5)] text-[#0A0C1A]">
+                      <img
+                        src={session.illustration.src}
+                        alt={session.illustration.alt}
+                        width={1400}
+                        height={1210}
+                        loading="lazy"
+                        draggable={false}
+                        className="block w-full h-auto aspect-[1400/1210] select-none"
+                      />
+
+                      <div className="flex flex-col gap-[calc(var(--u)*10)] px-[calc(var(--u)*2)]">
+                        <div className="flex flex-wrap gap-[calc(var(--u)*4)]">
+                          <span className={`aardvark-tag ${style.tags[0].bg} ${style.tags[0].text}`}>
+                            <span className="sr-only">Sesión {session.number}, </span>
+                            <time dateTime={session.isoDate}>
+                              {session.date} · {SESSIONS.time}
+                            </time>
+                          </span>
+                          {session.tags.map((tag, tagIdx) => {
+                            const tagStyle = style.tags[(tagIdx + 1) % style.tags.length];
+                            return (
+                              <span key={tag} className={`aardvark-tag ${tagStyle.bg} ${tagStyle.text}`}>
+                                {tag}
+                              </span>
+                            );
+                          })}
+                        </div>
+                        <h3 id={`session-${session.number}-title`} className="aardvark-h3">
+                          {session.topic}
+                        </h3>
+                        <p className="aardvark-small session-slide__copy text-[#1c1e2e]">{session.copy}</p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={onSelectCta}
+                      className="session-slide__link absolute inset-0 z-[2] cursor-pointer rounded-[var(--card-r)] focus-visible:outline-offset-4"
+                      aria-label={`${SESSIONS.cta}: sesión ${session.number}, ${session.topic}`}
+                    />
+
+                    <div className="session-slide__cta" aria-hidden="true">
+                      <AardvarkButtonAlt label={SESSIONS.cta} variant="dark" tabIndex={-1} />
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
           </ol>
-
-          <div>
-            <AardvarkButtonAlt label={SESSIONS.cta} variant="dark" onClick={onSelectCta} />
-          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function SliderArrow({
+  direction,
+  label,
+  disabled,
+  onClick,
+}: {
+  direction: 'prev' | 'next';
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className={`slider-arrow ${direction === 'prev' ? 'rotate-180' : ''}`}
+    >
+      <span className="slider-arrow__bg" aria-hidden="true" />
+      <span className="slider-arrow__icon" aria-hidden="true">
+        <ArrowRight className="w-[max(16px,calc(var(--u)*18))] h-[max(16px,calc(var(--u)*18))]" strokeWidth={2.75} />
+      </span>
+    </button>
   );
 }

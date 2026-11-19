@@ -3,7 +3,7 @@ import { render, screen, within } from '@testing-library/react';
 import axe from 'axe-core';
 import App from './App';
 import * as primitives from './components/AardvarkPrimitives';
-import { SECTION_ORDER, PROGRAM } from './content/landing';
+import { OUTCOMES, PRESENTATION, PROGRAM, SECTION_ORDER, SESSIONS } from './content/landing';
 
 function renderApp() {
   return render(<App />);
@@ -55,12 +55,43 @@ describe('landing: orden y estructura', () => {
     expect(section.querySelectorAll('blockquote')).toHaveLength(3);
   });
 
-  it('fija el texto curvo de Presentación mientras pasa la frase', () => {
+  it('muestra el título de Presentación estático, sin fijar el scroll', () => {
     renderApp();
     const section = document.getElementById('presentacion') as HTMLElement;
-    const track = within(section).getByTestId('presentation-track');
-    expect(track.querySelector('.sticky')).not.toBeNull();
-    expect(track.querySelector('textPath')).not.toBeNull();
+    const heading = within(section).getByRole('heading', { level: 2, name: PRESENTATION.title });
+    expect(heading).toHaveClass('aardvark-h2');
+    expect(section.querySelector('.sticky')).toBeNull();
+    expect(section.querySelector('textPath')).toBeNull();
+  });
+
+  it('presenta las sesiones como carrusel con flechas de navegación', () => {
+    renderApp();
+    const section = document.getElementById('sesiones') as HTMLElement;
+    const prev = within(section).getByRole('button', { name: SESSIONS.prevLabel });
+    const next = within(section).getByRole('button', { name: SESSIONS.nextLabel });
+    // Al cargar está en la primera sesión (jsdom no mide el ancho, así que
+    // el estado de "siguiente" se verifica en el navegador).
+    expect(prev).toBeDisabled();
+    expect(next).toHaveClass('slider-arrow');
+    expect(within(section).getByRole('region', { name: /8 sesiones/ })).toBeInTheDocument();
+  });
+
+  it('la sección de logros no usa el logo', () => {
+    renderApp();
+    const section = document.getElementById('logros') as HTMLElement;
+    // SquaiMark usa este viewBox: ni arriba del título ni detrás de las etiquetas.
+    expect(section.querySelector('svg[viewBox="292 298 424 428"]')).toBeNull();
+    expect(within(section).getAllByTestId('outcome-label')).toHaveLength(OUTCOMES.pills.length);
+  });
+
+  it('los fondos de formas cubren toda la sección (nunca se cortan)', () => {
+    renderApp();
+    const backdrops = screen.getAllByTestId('section-backdrop');
+    expect(backdrops.length).toBeGreaterThanOrEqual(8);
+    for (const backdrop of backdrops) {
+      expect(backdrop).toHaveClass('absolute', 'inset-0');
+      expect(backdrop.querySelector('svg')?.getAttribute('preserveAspectRatio')).toMatch(/slice$/);
+    }
   });
 
   it('enlaza las políticas en el pie de página', () => {

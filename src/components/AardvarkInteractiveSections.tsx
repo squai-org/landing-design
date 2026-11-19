@@ -1,16 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Plus } from 'lucide-react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
 import {
   AardvarkButtonAlt,
   AardvarkPillButton,
   BadgeRibbonSvg,
-  BenefitsRibbonSvg,
-  FaqRibbonSvg,
   type SquaiBlockPreset,
   SquaiCornerBlocks,
 } from './AardvarkPrimitives';
-import { SquaiMark } from './SquaiBrand';
+import { SectionBackdrop } from './Backdrops';
 import { PresentationMedia } from './PresentationMedia';
 import { trackConversionEvent } from '../utils/analyticsClient';
 import {
@@ -31,125 +29,11 @@ interface CurrencyCtaProps {
 }
 
 /* ============================================================
-   3. PRESENTACIÓN · ¿Quién me va a enseñar? (.gift parity)
-   The curved headline is pinned: the page holds while the whole phrase
-   travels along the curve, then the story and video scroll in.
+   3. PRESENTACIÓN · ¿Quién me va a enseñar? (.gift)
+   Título estático, sin animación ni scroll fijado, con el mismo
+   espacio arriba y abajo que los títulos de las demás secciones.
    ============================================================ */
-const CURVE_PATH = 'M-165 410 C60 276 760 210 1304 210 C1848 210 2320 284 2820 393';
-const CURVE_VIEW_W = 1920;
-const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(
-    () => typeof window !== 'undefined' && Boolean(window.matchMedia?.(REDUCED_MOTION_QUERY).matches)
-  );
-  useEffect(() => {
-    const query = window.matchMedia?.(REDUCED_MOTION_QUERY);
-    if (!query) return;
-    const onChange = () => setReduced(query.matches);
-    query.addEventListener?.('change', onChange);
-    return () => query.removeEventListener?.('change', onChange);
-  }, []);
-  return reduced;
-}
-
-/** Arc length where the curve reaches `x` (the path only moves to the right). */
-function lengthAtX(path: SVGPathElement, total: number, x: number) {
-  let lo = 0;
-  let hi = total;
-  for (let i = 0; i < 24; i++) {
-    const mid = (lo + hi) / 2;
-    if (path.getPointAtLength(mid).x < x) lo = mid;
-    else hi = mid;
-  }
-  return (lo + hi) / 2;
-}
-
-interface CurveTravel {
-  /** startOffset (% of the path) when the pin starts: first word entering on the right. */
-  start: number;
-  /** startOffset when the pin ends: last word fully inside the right margin. */
-  end: number;
-  /** Extra scroll distance the section stays pinned. */
-  scrollPx: number;
-}
-
-const DEFAULT_TRAVEL: CurveTravel = { start: 60, end: -45, scrollPx: 1400 };
-
-/** Pinned track: only mounted when motion is allowed, so useScroll always
- * has a hydrated target. */
-function PinnedCurve() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const textRef = useRef<SVGTextElement>(null);
-  const [travel, setTravel] = useState<CurveTravel>(DEFAULT_TRAVEL);
-
-  useEffect(() => {
-    const measure = () => {
-      const path = pathRef.current;
-      const text = textRef.current;
-      if (
-        !path ||
-        !text ||
-        typeof path.getTotalLength !== 'function' ||
-        typeof text.getComputedTextLength !== 'function'
-      ) {
-        return;
-      }
-      const total = path.getTotalLength();
-      const textLength = text.getComputedTextLength();
-      if (!total || !textLength) return;
-      // Start with the first word already entering from the right, so the
-      // pinned screen is never empty.
-      const start = lengthAtX(path, total, CURVE_VIEW_W * 0.72);
-      const end = lengthAtX(path, total, CURVE_VIEW_W * 0.94) - textLength;
-      const svgWidth = path.ownerSVGElement?.getBoundingClientRect().width ?? CURVE_VIEW_W;
-      const screenTravel = ((start - end) * svgWidth) / CURVE_VIEW_W;
-      setTravel({
-        start: (start / total) * 100,
-        end: (end / total) * 100,
-        scrollPx: Math.max(600, Math.round(screenTravel * 0.75)),
-      });
-    };
-    measure();
-    void document.fonts?.ready.then(measure).catch(() => undefined);
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] });
-  const startOffset = useTransform(scrollYProgress, [0, 1], [`${travel.start}%`, `${travel.end}%`]);
-
-  return (
-    <div
-      ref={trackRef}
-      data-testid="presentation-track"
-      className="relative"
-      style={{ height: `calc(100svh + ${travel.scrollPx}px)` }}
-    >
-      <div className="sticky top-0 h-[100svh] flex items-center" aria-hidden="true">
-        <svg viewBox={`0 0 ${CURVE_VIEW_W} 430`} className="w-full h-auto overflow-visible select-none">
-          <defs>
-            <path id="squai-gift-curve" ref={pathRef} d={CURVE_PATH} />
-          </defs>
-          <text
-            ref={textRef}
-            fill="#0A0C1A"
-            className="aardvark-curve-text font-display font-bold"
-            style={{ letterSpacing: '-0.03em' }}
-          >
-            <motion.textPath href="#squai-gift-curve" startOffset={startOffset}>
-              {PRESENTATION.curvedText}
-            </motion.textPath>
-          </text>
-        </svg>
-      </div>
-    </div>
-  );
-}
-
 export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => void }) {
-  const reducedMotion = usePrefersReducedMotion();
   const { video } = PRESENTATION;
 
   return (
@@ -158,21 +42,16 @@ export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => vo
       className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)] scroll-mt-16"
       aria-labelledby="presentation-heading"
     >
-      {/* overflow-clip (not hidden) so the sticky curve can pin to the viewport. */}
-      <div className="w-full bg-[#eef0fd] rounded-[var(--band-r)] pb-[var(--section-py)] overflow-clip">
-        <h2 id="presentation-heading" className="sr-only">
-          {PRESENTATION.srTitle}
-        </h2>
+      <div className="w-full relative bg-[#eef0fd] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)]">
+        <SectionBackdrop shape="faq" colors={['#FFFFFF']} opacities={[0.7]} flip="x" align="xMaxYMin" />
 
-        {reducedMotion ? (
-          <p className="aardvark-h1 text-center text-[#0A0C1A] px-[var(--gutter)] pt-[var(--section-py)] pb-[calc(var(--u)*56)]">
-            {PRESENTATION.curvedText}
-          </p>
-        ) : (
-          <PinnedCurve />
-        )}
+        <div className="relative z-10 text-center max-w-[calc(var(--u)*1280)] mx-auto px-[var(--gutter)] mb-[calc(var(--u)*56)]">
+          <h2 id="presentation-heading" className="aardvark-h2 text-[#0A0C1A]">
+            {PRESENTATION.title}
+          </h2>
+        </div>
 
-        <div className="max-w-[calc(var(--u)*1760)] mx-auto px-[var(--gutter)] grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*56)] items-center">
+        <div className="relative z-10 max-w-[calc(var(--u)*1760)] mx-auto px-[var(--gutter)] grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*56)] items-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -270,7 +149,8 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
       aria-labelledby="audience-heading"
     >
       <div className="w-full relative bg-[#303163] text-[#F4F6FF] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)] px-[var(--gutter)]">
-        <div className="mx-auto">
+        <SectionBackdrop shape="benefits" colors={['#5a5bb6', '#777ae3']} opacities={[0.35, 0.18]} flip="x" small />
+        <div className="relative z-10 mx-auto">
           <div className="text-center max-w-[calc(var(--u)*1100)] mx-auto mb-[calc(var(--u)*64)] space-y-[calc(var(--u)*16)]">
             <h2 id="audience-heading" className="aardvark-h2 text-[#F4F6FF]">
               {AUDIENCE.title}
@@ -397,61 +277,169 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
 }
 
 /* ============================================================
-   5. QUÉ VAS A LOGRAR · ¿Qué gano? (.benefits Warm Cream Band)
+   5. QUÉ VAS A LOGRAR · ¿Qué gano? (.benefits)
+   Sin logo: título arriba y las etiquetas repartidas en el escenario
+   como en la referencia. Entrada igual a la referencia: cuando la
+   sección llega al 25% superior de la pantalla, cada etiqueta crece
+   desde 0 con un giro (mismo ángulo para todas, entre -33° y 33°) y
+   rebota elástica hasta 0°, una tras otra cada 72 ms. Al pasar el
+   cursor, la etiqueta recibe el empuje y el giro del movimiento del
+   mouse y vuelve a su sitio (momentum hover).
    ============================================================ */
-const OUTCOME_PILL_STYLES = [
-  { bg: 'bg-white', text: 'text-[#0A0C1A]', tilt: '-rotate-[3deg]' },
-  { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]', tilt: 'rotate-[2.5deg]' },
-  { bg: 'bg-[#8A8EF9]', text: 'text-[#0A0C1A]', tilt: '-rotate-[2deg]' },
-  { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]', tilt: 'rotate-[2.8deg]' },
-  { bg: 'bg-[#d2d7fc]', text: 'text-[#0A0C1A]', tilt: '-rotate-[1.5deg]' },
+/* Posiciones en el escenario (móvil / desktop): se tocan por los bordes
+   como en la referencia, pero ninguna tapa el texto de otra. */
+const OUTCOME_LABELS: Array<{ pos: string; bg: string; text: string }> = [
+  {
+    pos: 'top-[0%] left-[0%] -rotate-[6deg] lg:top-[0%] lg:left-[4%] lg:-rotate-[5deg]',
+    bg: 'bg-[#0A0C1A]',
+    text: 'text-[#F4F6FF]',
+  },
+  {
+    pos: 'top-[19%] right-[0%] rotate-[4deg] lg:top-[19%] lg:right-[3%] lg:-rotate-[1.8deg]',
+    bg: 'bg-[#F9C24D]',
+    text: 'text-[#0A0C1A]',
+  },
+  {
+    pos: 'top-[39%] left-[3%] -rotate-[2.5deg] lg:top-[46%] lg:left-[5%] lg:rotate-[2.5deg]',
+    bg: 'bg-[#8A8EF9]',
+    text: 'text-[#0A0C1A]',
+  },
+  {
+    pos: 'top-[53%] right-[2%] rotate-[5deg] lg:top-[42%] lg:right-[2%] lg:rotate-[5.8deg]',
+    bg: 'bg-white',
+    text: 'text-[#303163]',
+  },
+  {
+    pos: 'top-[75%] left-[6%] -rotate-[4deg] lg:top-[76%] lg:left-[28%] lg:-rotate-[5.3deg]',
+    bg: 'bg-[#303163]',
+    text: 'text-[#F4F6FF]',
+  },
 ];
 
+const MOMENTUM = { xy: 25, rotation: 15, clampXY: 1080, clampRot: 60, stiffness: 170, damping: 13 };
+
+/** Momentum hover de la referencia (GSAP Inertia) con un resorte propio:
+ * la velocidad del puntero empuja la etiqueta y un resorte la regresa. */
+function useMomentumHover(count: number) {
+  const targets = useRef<Array<HTMLDivElement | null>>([]);
+  const pointer = useRef({ x: 0, y: 0, vx: 0, vy: 0 });
+  const states = useRef(Array.from({ length: count }, () => ({ x: 0, y: 0, r: 0, vx: 0, vy: 0, vr: 0, raf: 0, last: 0 })));
+  const enabled = useRef(false);
+
+  useEffect(() => {
+    enabled.current =
+      Boolean(window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) &&
+      !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const all = states.current;
+    return () => all.forEach((st) => st.raf && cancelAnimationFrame(st.raf));
+  }, []);
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    const p = pointer.current;
+    p.vx = e.clientX - p.x;
+    p.vy = e.clientY - p.y;
+    p.x = e.clientX;
+    p.y = e.clientY;
+  }, []);
+
+  const onEnter = useCallback((idx: number, e: React.MouseEvent) => {
+    const el = targets.current[idx];
+    if (!enabled.current || !el) return;
+    const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+    const rect = el.getBoundingClientRect();
+    const offsetX = e.clientX - (rect.left + rect.width / 2);
+    const offsetY = e.clientY - (rect.top + rect.height / 2);
+    const { vx, vy } = pointer.current;
+    const torque = (offsetX * vy - offsetY * vx) / (Math.hypot(offsetX, offsetY) || 1);
+    const st = states.current[idx];
+    st.vx += clamp(vx * MOMENTUM.xy, MOMENTUM.clampXY);
+    st.vy += clamp(vy * MOMENTUM.xy, MOMENTUM.clampXY);
+    st.vr += clamp(torque * MOMENTUM.rotation, MOMENTUM.clampRot);
+    if (st.raf) return;
+    st.last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(0.032, (now - st.last) / 1000);
+      st.last = now;
+      for (const [pos, vel] of [['x', 'vx'], ['y', 'vy'], ['r', 'vr']] as const) {
+        const acc = -MOMENTUM.stiffness * st[pos] - MOMENTUM.damping * st[vel];
+        st[vel] += acc * dt;
+        st[pos] += st[vel] * dt;
+      }
+      el.style.transform = `translate3d(${st.x.toFixed(2)}px, ${st.y.toFixed(2)}px, 0) rotate(${st.r.toFixed(2)}deg)`;
+      const settled = [st.x, st.y, st.r, st.vx / 10, st.vy / 10, st.vr / 10].every((v) => Math.abs(v) < 0.05);
+      if (settled) {
+        Object.assign(st, { x: 0, y: 0, r: 0, vx: 0, vy: 0, vr: 0, raf: 0 });
+        el.style.transform = '';
+        return;
+      }
+      st.raf = requestAnimationFrame(tick);
+    };
+    st.raf = requestAnimationFrame(tick);
+  }, []);
+
+  return { targets, onMouseMove, onEnter };
+}
+
 export function OutcomesSection() {
+  const stageRef = useRef<HTMLDivElement>(null);
+  // Igual que ScrollTrigger "top 25%": se dispara cuando el escenario llega al 25% superior.
+  const started = useInView(stageRef, { once: true, margin: '0px 0px -75% 0px' });
+  const [entryRotate] = useState(() => Math.round(Math.random() * 66 - 33));
+  const { targets, onMouseMove, onEnter } = useMomentumHover(OUTCOMES.pills.length);
+
   return (
     <section
       id="logros"
       className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)]"
       aria-labelledby="outcomes-heading"
     >
-      <div className="w-full relative bg-[#fcf6ea] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)] px-[var(--gutter)]">
-        <div className="absolute inset-0 pointer-events-none select-none opacity-85" aria-hidden="true">
-          <BenefitsRibbonSvg />
-        </div>
+      <div className="w-full relative bg-[#fcf6ea] rounded-[var(--band-r)] overflow-hidden pt-[var(--section-py)] pb-[calc(var(--section-py)*0.6)] px-[var(--gutter)]">
+        <SectionBackdrop shape="benefits" colors={['#fdebc9', '#FFFFFF']} opacities={[0.7, 0.85]} />
 
-        <div className="mx-auto relative z-10 text-center space-y-[calc(var(--u)*64)]">
-          <div className="max-w-[calc(var(--u)*1100)] mx-auto space-y-[calc(var(--u)*20)]">
-            <div className="flex justify-center">
-              <span className="w-[max(48px,calc(var(--u)*72))] h-[max(48px,calc(var(--u)*72))] rounded-full bg-white inline-flex items-center justify-center shadow-sm">
-                <SquaiMark variant="color" className="w-1/2 h-1/2" />
-              </span>
-            </div>
+        <div className="relative z-10">
+          <div className="text-center max-w-[calc(var(--u)*1280)] mx-auto mb-[calc(var(--u)*24)] space-y-[calc(var(--u)*24)]">
             <h2 id="outcomes-heading" className="aardvark-h2 text-[#0A0C1A]">
               {OUTCOMES.title}
             </h2>
-            <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*760)] mx-auto">{OUTCOMES.lead}</p>
+            <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*640)] mx-auto">{OUTCOMES.lead}</p>
           </div>
 
-          <ul className="max-w-[calc(var(--u)*1800)] mx-auto flex flex-wrap items-center justify-center gap-[calc(var(--u)*24)] py-4">
-            {OUTCOMES.pills.map((text, idx) => {
-              const style = OUTCOME_PILL_STYLES[idx % OUTCOME_PILL_STYLES.length];
-              return (
-                <motion.li
-                  key={text}
-                  initial={{ opacity: 0, scale: 0.72, y: 28 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ type: 'spring', stiffness: 230, damping: 16, delay: idx * 0.07 }}
-                  whileHover={{ scale: 1.05, rotate: 0 }}
-                  className={`${style.bg} ${style.tilt} rounded-[calc(var(--u)*93)] px-[calc(var(--u)*42)] py-[calc(var(--u)*29)] shadow-xl max-w-full list-none`}
-                >
-                  <span className={`aardvark-benefit-pill-text ${style.text} sm:whitespace-nowrap text-center block`}>
-                    {text}
-                  </span>
-                </motion.li>
-              );
-            })}
-          </ul>
+          <div
+            ref={stageRef}
+            onMouseMove={onMouseMove}
+            className="relative w-full mt-[calc(var(--u)*24)] lg:mt-[calc(var(--u)*56)] aspect-[402/570] md:aspect-[834/560] lg:aspect-[1840/760] mx-auto"
+          >
+            <ul className="absolute inset-0">
+              {OUTCOMES.pills.map((text, idx) => {
+                const label = OUTCOME_LABELS[idx % OUTCOME_LABELS.length];
+                return (
+                  <li
+                    key={text}
+                    data-testid="outcome-label"
+                    className={`absolute list-none select-none ${label.pos}`}
+                    onMouseEnter={(e) => onEnter(idx, e)}
+                  >
+                    <div
+                      ref={(el) => {
+                        targets.current[idx] = el;
+                      }}
+                    >
+                      <motion.div
+                        initial={{ scale: 0, rotate: entryRotate }}
+                        animate={started ? { scale: 1, rotate: 0 } : { scale: 0, rotate: entryRotate }}
+                        transition={{ type: 'spring', duration: 0.85, bounce: 0.45, delay: idx * 0.072 }}
+                        className={`${label.bg} ${label.text} rounded-[var(--label-r)] px-[var(--label-px)] py-[var(--label-py)] flex items-center justify-center`}
+                      >
+                        <span className="aardvark-benefit-pill-text text-[length:var(--fs-label)] text-center [text-wrap:balance] max-w-[12ch] lg:max-w-none lg:whitespace-nowrap">
+                          {text}
+                        </span>
+                      </motion.div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -572,7 +560,9 @@ export function MentorsSection({ currency, onSelectCta }: CurrencyCtaProps) {
       className="w-full bg-[#F9C24D] text-[#0A0C1A] rounded-t-[var(--edge-r)] pt-[var(--section-py)] pb-[calc(var(--section-py)*1.6)] px-[var(--gutter)] relative z-10 overflow-hidden scroll-mt-10"
       aria-labelledby="mentors-heading"
     >
-      <div className="mx-auto space-y-[calc(var(--u)*72)]">
+      <SectionBackdrop shape="hero" colors={['#ffd688', '#fedea0']} opacities={[0.7, 0.8]} flip="x" small />
+
+      <div className="relative z-10 mx-auto space-y-[calc(var(--u)*72)]">
         <div className="max-w-[calc(var(--u)*1100)] mx-auto text-center space-y-[calc(var(--u)*20)] flex flex-col items-center">
           <AardvarkButtonAlt
             label={MENTORS.ctaTop}
@@ -691,9 +681,7 @@ export function FaqSection() {
       className="w-full relative z-20 bg-white text-[#0A0C1A] overflow-hidden rounded-b-[var(--edge-r)] py-[var(--section-py)] px-[var(--gutter)] scroll-mt-10"
       aria-labelledby="faq-heading"
     >
-      <div className="absolute inset-0 pointer-events-none select-none opacity-80" aria-hidden="true">
-        <FaqRibbonSvg />
-      </div>
+      <SectionBackdrop shape="faq" colors={['#eef0fd']} opacities={[0.9]} align="xMinYMin" />
 
       <div className="mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*64)]">
         <div className="lg:col-span-5 space-y-[calc(var(--u)*24)]">
