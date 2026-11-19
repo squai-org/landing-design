@@ -23,7 +23,7 @@ export const PROGRAM = {
   startDateShort: '2 de febrero',
   startDateLong: 'martes 2 de febrero de 2027',
   scheduleShort: 'Martes y jueves, 7:00 p. m.',
-  scheduleLong: 'Martes y jueves de 7:00 a 8:30 p. m., hora de Colombia',
+  scheduleLong: 'Martes y jueves de 7:00 a 8:30\u00a0p.\u00a0m., hora de Colombia',
   sessions: 8,
   seats: 25,
   priceCOP: formatMoney(PROGRAM_PRICES.COP, 'COP'),
@@ -58,7 +58,9 @@ export const NAV = {
 
 /* 1. Encabezado: ¿qué es y es para mí? */
 export const HERO = {
-  title: 'Aprende a usar la IA en tu trabajo sin vueltas.',
+  // Mismo largo que el título de la referencia (33 caracteres) para que el
+  // encabezado completo quepa en la primera pantalla.
+  title: 'IA para tu trabajo, sin vueltas.',
   lead: 'Ocho sesiones en vivo para entender cómo funciona la IA, pedirle bien las cosas y cuidar tu información, pensadas para quienes ya la usan en su trabajo.',
   ctaPrimary: 'Inscribirme al programa',
   ctaSecondary: 'Ver las 8 sesiones',
@@ -79,8 +81,8 @@ export const HERO = {
 
 /* 2. Datos clave: ¿qué incluye? */
 export const INCLUDES = {
-  title: 'Lo que incluye el programa.',
-  lead: 'Clases en vivo para aprender con nosotros y materiales para repasar a tu ritmo.',
+  title: 'Lo que incluye.',
+  lead: 'Clases en vivo para aprender juntos y material para repasar a tu ritmo.',
   handwritten: 'Un mes, dos clases por semana',
   ctaCard: 'Inscribirme',
   cards: [
@@ -135,8 +137,7 @@ export const INCLUDES = {
 
 /* 3. Presentación: ¿quién me va a enseñar? */
 export const PRESENTATION = {
-  curvedText: 'Aprende IA, potencia tus habilidades',
-  srTitle: 'Te presentamos el programa',
+  title: 'Aprende IA, potencia tus habilidades.',
   handwritten: 'Laura y Sebastián te lo cuentan',
   lead: 'En este video de tres minutos te contamos para quién es el programa, cómo son las clases y qué te llevas al terminar.',
   body: 'Lo grabamos con subtítulos en español para que lo veas donde estés, incluso sin sonido.',
@@ -224,8 +225,8 @@ export const AUDIENCE = {
 
 /* 5. Qué vas a lograr: ¿qué gano? */
 export const OUTCOMES = {
-  title: 'Lo que sabes hacer al terminar.',
-  lead: 'Cinco cosas que vas a poder hacer en tu trabajo, con la herramienta de IA que ya uses.',
+  title: 'Lo que vas a lograr.',
+  lead: 'Cinco cosas que harás en tu trabajo con la IA que ya usas.',
   pills: [
     'Pedirle bien a la IA',
     'Revisar lo que responde',
@@ -237,7 +238,7 @@ export const OUTCOMES = {
 
 /* 6. Cómo es el programa: ¿cómo funciona? */
 export const FLOW = {
-  title: 'Así funciona el programa.',
+  title: 'Cómo funciona.',
   handwritten: 'Cuatro pasos y ninguna letra pequeña',
   cta: 'Empezar mi inscripción',
   steps: [
@@ -264,23 +265,90 @@ export const FLOW = {
   ],
 };
 
-/* 7. Programa: ¿qué voy a ver y cuándo? MUESTRA: temario y fechas. */
+/* 7. Programa: ¿qué voy a ver y cuándo? MUESTRA: temario y fechas.
+   Se presenta como el carrusel "Our Nov books" de la referencia: una
+   tarjeta por sesión con portada, etiquetas, título y resumen. */
 export const SESSIONS = {
-  titleTop: 'Ocho sesiones,',
-  titleBox: 'en un mes.',
+  title: 'Ocho sesiones, en un mes.',
+  lead: `Empezamos el ${PROGRAM.startDateShort}. Dos clases por semana, de 90 minutos cada una.`,
   note: PROGRAM.scheduleLong,
-  tagline: `Empezamos el ${PROGRAM.startDateShort}`,
-  cta: 'Reservar mi cupo de febrero',
+  cta: 'Reservar mi cupo',
+  prevLabel: 'Ver sesiones anteriores',
+  nextLabel: 'Ver sesiones siguientes',
   time: '7:00 p. m.',
   items: [
-    { number: 1, date: 'mar 2 feb', isoDate: '2027-02-02T19:00-05:00', topic: 'Cómo funciona la IA por dentro' },
-    { number: 2, date: 'jue 4 feb', isoDate: '2027-02-04T19:00-05:00', topic: 'Qué hace bien y dónde se equivoca' },
-    { number: 3, date: 'mar 9 feb', isoDate: '2027-02-09T19:00-05:00', topic: 'Cómo pedirle las cosas (prompts)' },
-    { number: 4, date: 'jue 11 feb', isoDate: '2027-02-11T19:00-05:00', topic: 'Darle contexto, ejemplos y formato' },
-    { number: 5, date: 'mar 16 feb', isoDate: '2027-02-16T19:00-05:00', topic: 'Revisar y corregir lo que responde' },
-    { number: 6, date: 'jue 18 feb', isoDate: '2027-02-18T19:00-05:00', topic: 'Cuidar tu información y la de tus clientes' },
-    { number: 7, date: 'mar 23 feb', isoDate: '2027-02-23T19:00-05:00', topic: 'Rutinas para correos, resúmenes y reportes' },
-    { number: 8, date: 'jue 25 feb', isoDate: '2027-02-25T19:00-05:00', topic: 'Tu plan para usarla en tu trabajo' },
+    {
+      number: 1,
+      date: 'mar 2 feb',
+      isoDate: '2027-02-02T19:00-05:00',
+      topic: 'Cómo funciona la IA por dentro',
+      copy: 'Qué pasa cuando le escribes y por qué a veces responde con seguridad algo que no es cierto.',
+      tags: ['Fundamentos', 'En vivo'],
+      illustration: { src: '/illustrations/sesiones/sesion-1.svg', alt: 'Persona señala hacia arriba junto a un chip con una chispa: cómo funciona la IA por dentro' },
+    },
+    {
+      number: 2,
+      date: 'jue 4 feb',
+      isoDate: '2027-02-04T19:00-05:00',
+      topic: 'Qué hace bien y dónde se equivoca',
+      copy: 'Las tareas donde te ahorra horas y las señales que indican que no deberías confiarle algo.',
+      tags: ['Criterio', 'En vivo'],
+      illustration: { src: '/illustrations/sesiones/sesion-2.svg', alt: 'Persona encoge los hombros entre un globo con un error y otro con un acierto' },
+    },
+    {
+      number: 3,
+      date: 'mar 9 feb',
+      isoDate: '2027-02-09T19:00-05:00',
+      topic: 'Cómo pedirle las cosas (prompts)',
+      copy: 'Una estructura sencilla para escribir instrucciones claras y obtener respuestas útiles.',
+      tags: ['Prompts', 'Práctica'],
+      illustration: { src: '/illustrations/sesiones/sesion-3.svg', alt: 'Persona escribe en su celular junto a un globo de mensaje con un texto a medio escribir' },
+    },
+    {
+      number: 4,
+      date: 'jue 11 feb',
+      isoDate: '2027-02-11T19:00-05:00',
+      topic: 'Darle contexto, ejemplos y formato',
+      copy: 'Cómo compartir lo que sabes de tu caso para que la respuesta suene a ti y no a un robot.',
+      tags: ['Prompts', 'Práctica'],
+      illustration: { src: '/illustrations/sesiones/sesion-4.svg', alt: 'Persona lee una hoja junto a documentos con una lista y un bloque de formato' },
+    },
+    {
+      number: 5,
+      date: 'mar 16 feb',
+      isoDate: '2027-02-16T19:00-05:00',
+      topic: 'Revisar y corregir lo que responde',
+      copy: 'Una lista de chequeo para detectar errores, datos inventados y tonos que no van.',
+      tags: ['Criterio', 'Práctica'],
+      illustration: { src: '/illustrations/sesiones/sesion-5.svg', alt: 'Persona con gafas trabaja en su portátil junto a un documento y una lupa' },
+    },
+    {
+      number: 6,
+      date: 'jue 18 feb',
+      isoDate: '2027-02-18T19:00-05:00',
+      topic: 'Cuidar tu información y la de tus clientes',
+      copy: 'Qué datos nunca compartir, cómo anonimizarlos y qué ajustes revisar en cada herramienta.',
+      tags: ['Seguridad', 'En vivo'],
+      illustration: { src: '/illustrations/sesiones/sesion-6.svg', alt: 'Persona de brazos cruzados junto a un escudo con candado' },
+    },
+    {
+      number: 7,
+      date: 'mar 23 feb',
+      isoDate: '2027-02-23T19:00-05:00',
+      topic: 'Rutinas para correos, resúmenes y reportes',
+      copy: 'Armamos plantillas para las tareas que repites cada semana y las dejamos listas para usar.',
+      tags: ['Rutinas', 'Plantillas'],
+      illustration: { src: '/illustrations/sesiones/sesion-7.svg', alt: 'Persona toma café junto a un sobre de correo y un reloj' },
+    },
+    {
+      number: 8,
+      date: 'jue 25 feb',
+      isoDate: '2027-02-25T19:00-05:00',
+      topic: 'Tu plan para usarla en tu trabajo',
+      copy: 'Sales con un plan de 30 días para aplicar lo aprendido en tu rol, con nuestra revisión.',
+      tags: ['Plan', 'Cierre'],
+      illustration: { src: '/illustrations/sesiones/sesion-8.svg', alt: 'Persona señala un camino con pasos completados que termina en una bandera' },
+    },
   ],
 };
 
