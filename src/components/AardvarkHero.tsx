@@ -6,7 +6,6 @@ import { HERO } from '../content/landing';
 
 interface AardvarkHeroProps {
   onPrimaryCta: () => void;
-  onExploreSessions: () => void;
 }
 
 /* ============================================================
@@ -19,7 +18,7 @@ interface AardvarkHeroProps {
    al menos una pantalla, con las tarjetas recortadas contra el borde
    inferior como el libro de la referencia.
    ============================================================ */
-export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroProps) {
+export function AardvarkHero({ onPrimaryCta }: AardvarkHeroProps) {
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -59,13 +58,6 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
 
           <div className="flex items-center gap-x-5 mt-[var(--hero-gap-cta)]">
             <AardvarkButtonAlt label={HERO.ctaPrimary} variant="dark" onClick={onPrimaryCta} />
-            <button
-              type="button"
-              onClick={onExploreSessions}
-              className="hidden lg:inline-flex items-center font-display font-bold text-[length:var(--btn-fs)] text-[#0A0C1A] underline decoration-2 underline-offset-4 hover:text-[#303163] transition-colors min-h-[44px] cursor-pointer whitespace-nowrap"
-            >
-              {HERO.ctaSecondary}
-            </button>
           </div>
           <p className="aardvark-small font-bold text-[#0A0C1A] mt-[calc(var(--u)*14)]">{HERO.schedule}</p>
         </div>
