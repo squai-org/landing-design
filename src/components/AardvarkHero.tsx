@@ -79,32 +79,40 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             aria-hidden="true"
             className="absolute bottom-0 right-[6%] w-[64%] h-[72%] lg:right-[6%] lg:w-[88%] lg:h-[62%] rounded-t-full bg-[#777ae3]"
           />
+          {/* La foto, el bloque dorado y los dos bloques de datos comparten un
+              mismo marco con la proporción de la foto: todo se posiciona y
+              escala en % de la persona, así la composición es la misma en
+              móvil, tablet y desktop. */}
           <motion.div
-            style={{ y: blockY }}
-            aria-hidden="true"
-            className="absolute right-[0%] bottom-[46%] w-[44%] sm:w-[26%] lg:right-[-6%] lg:bottom-[58%] lg:w-[34%]"
-          >
-            <SquaiSingleBlock color="#F9C24D" className="w-full h-auto rotate-[14deg]" />
-          </motion.div>
-
-          <motion.img
             style={{ y: personY }}
-            src={HERO.person.src}
-            alt={HERO.person.alt}
-            width={HERO.person.width}
-            height={HERO.person.height}
-            fetchPriority="high"
-            draggable={false}
-            className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*170)] w-auto max-w-none select-none"
-          />
+            className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*170)] aspect-[768/1050]"
+          >
+            <motion.div
+              style={{ y: blockY }}
+              aria-hidden="true"
+              className="absolute left-[62%] top-[6%] w-[42%]"
+            >
+              <SquaiSingleBlock color="#F9C24D" className="w-full h-auto rotate-[14deg]" />
+            </motion.div>
 
-          {/* Bloques de datos en Midnight: texto Canvas (18:1) y texto Gold (11,9:1) */}
-          <p className="absolute left-[var(--gutter)] top-[18%] max-w-[36%] sm:max-w-none sm:top-[22%] lg:left-[-14%] lg:top-[64%] -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[18px] sm:rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*16)] sm:py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
-            {HERO.note}
-          </p>
-          <p className="absolute left-[var(--gutter)] top-[48%] max-w-[36%] sm:max-w-none sm:top-[34%] lg:left-auto lg:right-[-10%] lg:top-[76%] rotate-[3deg] bg-[#0A0C1A] text-[#F9C24D] rounded-[18px] sm:rounded-full px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*22)] sm:py-[calc(var(--u)*12)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
-            {HERO.stickerNoCode}
-          </p>
+            <img
+              src={HERO.person.src}
+              alt={HERO.person.alt}
+              width={HERO.person.width}
+              height={HERO.person.height}
+              fetchPriority="high"
+              draggable={false}
+              className="relative block w-full h-full select-none"
+            />
+
+            {/* Bloques de datos en Midnight: texto Canvas (18:1) y texto Gold (11,9:1) */}
+            <p className="absolute right-[80%] top-[20%] sm:top-[40%] lg:right-auto lg:left-[-10%] lg:top-[56%] w-max max-w-[calc(var(--u)*150)] sm:max-w-none -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[18px] sm:rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*16)] sm:py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
+              {HERO.note}
+            </p>
+            <p className="absolute right-[76%] top-[46%] sm:top-[64%] lg:right-auto lg:left-[59%] lg:top-[70%] w-max max-w-[calc(var(--u)*150)] sm:max-w-none rotate-[3deg] bg-[#0A0C1A] text-[#F9C24D] rounded-[18px] sm:rounded-full px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*22)] sm:py-[calc(var(--u)*12)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
+              {HERO.stickerNoCode}
+            </p>
+          </motion.div>
         </div>
       </section>
     </div>
