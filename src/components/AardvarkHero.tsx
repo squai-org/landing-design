@@ -70,13 +70,6 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
           <p className="aardvark-small font-bold text-[#0A0C1A] mt-[calc(var(--u)*14)]">{HERO.schedule}</p>
         </div>
 
-        {/* Nota manuscrita (.hero__text): fija en su sitio, como en la referencia */}
-        <p className="absolute z-20 left-[var(--hero-note-x)] top-[var(--hero-note-y)] w-[var(--hero-note-w)] aardvark-handwritten-lg text-center text-[#0A0C1A] rotate-[4deg]"
-          style={{ lineHeight: 1 }}
-        >
-          {HERO.note}
-        </p>
-
         {/* Persona recortada sobre las formas de la marca (como los heros de
             referencia): un arco detrás, el bloque del logo asomando por
             encima del hombro y la cabeza rompiendo el borde del arco. La foto
@@ -105,8 +98,12 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*170)] w-auto max-w-none select-none"
           />
 
-          {/* Sticker: mensaje corto */}
-          <p className="hidden sm:flex absolute right-0 top-[38%] lg:right-[-8%] lg:top-[70%] w-[calc(var(--u)*150)] h-[calc(var(--u)*150)] lg:w-[calc(var(--u)*190)] lg:h-[calc(var(--u)*190)] rounded-full bg-white text-[#0A0C1A] items-center justify-center text-center rotate-[10deg] font-human text-[length:var(--fs-hand)] leading-none p-[calc(var(--u)*18)] shadow-xl">
+          {/* Bloques de datos con contraste de marca (Brand Guideline v8.7):
+              Midnight + Canvas (18:1) y Gold + Midnight (11,9:1) */}
+          <p className="absolute left-0 top-[26%] lg:left-[-14%] lg:top-[64%] -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[var(--tag-r)] px-[calc(var(--u)*16)] py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight whitespace-nowrap shadow-xl">
+            {HERO.note}
+          </p>
+          <p className="hidden sm:block absolute right-[4%] top-[80%] lg:right-[-10%] lg:top-[76%] rotate-[4deg] bg-[#F9C24D] text-[#0A0C1A] rounded-full px-[calc(var(--u)*22)] py-[calc(var(--u)*12)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight whitespace-nowrap shadow-xl">
             {HERO.stickerNoCode}
           </p>
         </div>
