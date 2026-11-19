@@ -76,7 +76,7 @@ export const HERO = {
     height: 1050,
     alt: 'Mujer sonriente sostiene su portátil y mira hacia el título',
   },
-  stickerSchedule: `En vivo · ${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,
+  schedule: `${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,
   stickerNoCode: 'Sin saber programar',
 };
 
