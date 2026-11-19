@@ -67,14 +67,13 @@ export const HERO = {
   ctaSecondary: 'Ver las 8 sesiones',
   // Nota manuscrita del largo de la de referencia ("Shipping to the USA & Canada").
   note: `${PROGRAM.priceCOP} o ${PROGRAM.priceUSD}`,
-  // Persona recortada (Pexels, licencia libre sin atribución; fondo quitado
-  // con un modelo local). Alternativa lista: /assets/hero/persona-7318930.webp
-  // (1103 × 1400), mujer que muestra la pantalla de su portátil.
+  // Persona recortada: imagen aportada por el equipo, volteada para que mire
+  // hacia el título, con el fondo quitado por un modelo local.
   person: {
-    src: '/assets/hero/persona-8555639.webp',
-    width: 874,
-    height: 1400,
-    alt: 'Mujer sonriente abraza su portátil y mira hacia el texto',
+    src: '/assets/hero/persona-laptop.webp',
+    width: 550,
+    height: 889,
+    alt: 'Mujer sonriente sostiene su portátil y mira hacia el título',
   },
   stickerSchedule: `En vivo · ${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,
   stickerNoCode: 'Sin saber programar',
