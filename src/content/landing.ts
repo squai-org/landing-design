@@ -68,11 +68,12 @@ export const HERO = {
   // Nota manuscrita del largo de la de referencia ("Shipping to the USA & Canada").
   note: `${PROGRAM.priceCOP} o ${PROGRAM.priceUSD}`,
   // Persona recortada: imagen aportada por el equipo, volteada para que mire
-  // hacia el título, con el fondo quitado por un modelo local.
+  // hacia el título, con el fondo quitado por un modelo local, la manga
+  // desenfocada rellenada con el tono del suéter y cortada bajo las manos.
   person: {
     src: '/assets/hero/persona-laptop.webp',
     width: 550,
-    height: 889,
+    height: 765,
     alt: 'Mujer sonriente sostiene su portátil y mira hacia el título',
   },
   stickerSchedule: `En vivo · ${PROGRAM.scheduleShort} · desde el ${PROGRAM.startDateShort}`,

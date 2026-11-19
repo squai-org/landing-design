@@ -80,7 +80,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             referencia): un arco detrás, el bloque del logo asomando por
             encima del hombro y la cabeza rompiendo el borde del arco. La foto
             se corta contra el borde inferior del encabezado. */}
-        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*240)] lg:w-[calc(var(--u)*640)]">
+        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*260)] lg:w-[calc(var(--u)*640)]">
           <div
             aria-hidden="true"
             className="absolute bottom-0 right-[6%] w-[64%] h-[72%] lg:right-[6%] lg:w-[88%] lg:h-[62%] rounded-t-full bg-[#777ae3]"
@@ -101,7 +101,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             height={HERO.person.height}
             fetchPriority="high"
             draggable={false}
-            className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*200)] w-auto max-w-none select-none"
+            className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*170)] w-auto max-w-none select-none"
           />
 
           {/* Stickers: horario (dato clave) y un mensaje corto */}
