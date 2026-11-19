@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { AardvarkButtonAlt, SquaiCornerBlocks } from './AardvarkPrimitives';
+import { AardvarkButtonAlt, SquaiSingleBlock } from './AardvarkPrimitives';
 import { SectionBackdrop } from './Backdrops';
-import { HERO, pexelsUrl } from '../content/landing';
+import { HERO } from '../content/landing';
 
 interface AardvarkHeroProps {
   onPrimaryCta: () => void;
@@ -25,8 +25,8 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
     offset: ['start start', 'end start'],
   });
 
-  const visualDeckY = useTransform(scrollYProgress, [0, 1], [0, -72]);
-  const secondaryCardY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const personY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const blockY = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const ribbonY = useTransform(scrollYProgress, [0, 1], [0, 84]);
 
   return (
@@ -75,51 +75,41 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
           {HERO.note}
         </p>
 
-        {/* Tarjetas: en móvil ocupan el alto restante y se recortan abajo; en desktop van a la derecha */}
-        <div className="relative z-10 flex-1 min-h-[220px] w-full mt-[calc(var(--u)*40)] px-[var(--gutter)] flex justify-center lg:absolute lg:mt-0 lg:px-0 lg:w-auto lg:min-h-0 lg:right-[calc(var(--u)*230)] lg:top-[calc(var(--u)*500)] lg:h-[calc(var(--u)*720)] lg:aspect-[740/920]">
-          <div className="relative w-full max-w-[420px] h-[380px] sm:max-w-[600px] sm:h-[560px] lg:max-w-none lg:h-full">
-            <motion.div
-              style={{ y: secondaryCardY }}
-              className="group/hero1 absolute left-[2%] top-[6%] w-[53%] lg:left-0 lg:top-0 lg:w-[58%] -rotate-[3.5deg] z-10 hover:rotate-0 hover:-translate-y-2 transition-transform duration-300"
-            >
-              <SquaiCornerBlocks size="card" preset="hero-left" backColor="#d2d7fc" />
-              <div className="relative z-10 bg-white rounded-[28px] sm:rounded-[38px] lg:rounded-[calc(var(--u)*48)] p-2.5 sm:p-4 lg:p-[calc(var(--u)*20)] shadow-2xl">
-                <div className="pb-2 sm:pb-3 pt-1 px-1.5 sm:px-2 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
-                  <span className="aardvark-h3 text-[#0A0C1A]">{HERO.cardLive.title}</span>
-                  <span className="font-human text-sm sm:text-lg lg:text-[length:calc(var(--fs-hand)*0.8)] text-[#5a5bb6]">{HERO.cardLive.note}</span>
-                </div>
-                <div className="aspect-[4/4.7] rounded-[20px] sm:rounded-[28px] lg:rounded-[calc(var(--u)*36)] overflow-hidden bg-[#eef0fd]">
-                  <img
-                    src={pexelsUrl(HERO.cardLive.imageId, 1000)}
-                    alt={HERO.cardLive.alt}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </motion.div>
+        {/* Persona recortada sobre las formas de la marca (como los heros de
+            referencia): un arco detrás, el bloque del logo asomando por
+            encima del hombro y la cabeza rompiendo el borde del arco. La foto
+            se corta contra el borde inferior del encabezado. */}
+        <div className="relative z-10 flex-1 min-h-[280px] w-full mt-[calc(var(--u)*24)] lg:absolute lg:mt-0 lg:min-h-0 lg:inset-y-0 lg:right-[calc(var(--u)*300)] lg:w-[calc(var(--u)*700)]">
+          <div
+            aria-hidden="true"
+            className="absolute bottom-0 right-[6%] w-[64%] h-[72%] lg:right-[10%] lg:w-[76%] lg:h-[46%] rounded-t-full bg-[#777ae3]"
+          />
+          <motion.div
+            style={{ y: blockY }}
+            aria-hidden="true"
+            className="absolute right-[2%] bottom-[48%] w-[34%] lg:right-[0%] lg:bottom-[38%] lg:w-[32%]"
+          >
+            <SquaiSingleBlock color="#F9C24D" className="w-full h-auto rotate-[14deg]" />
+          </motion.div>
 
-            <motion.div
-              style={{ y: visualDeckY }}
-              className="group/hero2 absolute right-[2%] top-[16%] w-[53%] lg:right-0 lg:top-[11%] lg:w-[60%] rotate-[3deg] z-20 hover:rotate-0 hover:-translate-y-2 transition-transform duration-300"
-            >
-              <SquaiCornerBlocks size="card" preset="hero-right" backColor="#fedea0" />
-              <div className="relative z-10 bg-[#F9C24D] rounded-[28px] sm:rounded-[38px] lg:rounded-[calc(var(--u)*48)] p-2.5 sm:p-4 lg:p-[calc(var(--u)*20)] shadow-2xl">
-                <div className="aspect-[4/4.7] rounded-[20px] sm:rounded-[28px] lg:rounded-[calc(var(--u)*36)] overflow-hidden bg-[#eef0fd]">
-                  <img
-                    src={pexelsUrl(HERO.cardNoCode.imageId, 1000)}
-                    alt={HERO.cardNoCode.alt}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="pt-3 sm:pt-4 pb-1 px-1.5 sm:px-2">
-                  <p className="aardvark-h3 text-[#0A0C1A]">{HERO.cardNoCode.title}</p>
-                  <p className="font-human text-sm sm:text-lg lg:text-[length:calc(var(--fs-hand)*0.8)] text-[#0A0C1A] mt-0.5">{HERO.cardNoCode.note}</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          <motion.img
+            style={{ y: personY }}
+            src={HERO.person.src}
+            alt={HERO.person.alt}
+            width={HERO.person.width}
+            height={HERO.person.height}
+            fetchPriority="high"
+            draggable={false}
+            className="absolute bottom-0 right-[12%] h-[96%] lg:right-[20%] lg:h-[62%] w-auto max-w-none select-none"
+          />
+
+          {/* Stickers: horario (dato clave) y un mensaje corto */}
+          <p className="absolute left-0 top-[30%] lg:left-[-14%] lg:top-[70%] -rotate-[5deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*22)] leading-tight max-w-[46%] lg:max-w-[calc(var(--u)*300)] shadow-xl">
+            {HERO.stickerSchedule}
+          </p>
+          <p className="hidden sm:flex absolute right-0 top-[38%] lg:right-[-4%] lg:top-[58%] w-[calc(var(--u)*150)] h-[calc(var(--u)*150)] lg:w-[calc(var(--u)*190)] lg:h-[calc(var(--u)*190)] rounded-full bg-white text-[#0A0C1A] items-center justify-center text-center rotate-[10deg] font-human text-[length:var(--fs-hand)] leading-none p-[calc(var(--u)*18)] shadow-xl">
+            {HERO.stickerNoCode}
+          </p>
         </div>
       </section>
     </div>
