@@ -136,7 +136,6 @@ function LandingContent() {
         {/* Orden de la guía: 1 Encabezado */}
         <AardvarkHero
           onPrimaryCta={() => goToSignup(currency, 'Hero CTA: Inscribirme al programa')}
-          onExploreSessions={() => scrollToSection('sesiones', 'Hero CTA: Ver las 8 sesiones')}
         />
         {/* 2 Datos clave */}
         <IncludesSection onSelectCta={() => goToSignup(currency, 'Datos clave CTA: Inscribirme')} />

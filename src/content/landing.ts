@@ -64,7 +64,6 @@ export const HERO = {
   title: 'Aprende a usar la IA en tu trabajo sin vueltas.',
   lead: 'Ocho sesiones en vivo para entender cómo funciona la IA, pedirle bien las cosas y cuidar tu información, pensadas para quienes ya la usan en su trabajo.',
   ctaPrimary: 'Quiero inscribirme',
-  ctaSecondary: 'Ver las 8 sesiones',
   // Nota manuscrita del largo de la de referencia ("Shipping to the USA & Canada").
   note: `${PROGRAM.priceCOP} o ${PROGRAM.priceUSD}`,
   // Persona recortada: imagen aportada por el equipo, volteada para que mire
