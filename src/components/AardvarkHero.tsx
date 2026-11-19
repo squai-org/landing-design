@@ -82,7 +82,7 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
           <motion.div
             style={{ y: blockY }}
             aria-hidden="true"
-            className="absolute right-[2%] bottom-[48%] w-[34%] lg:right-[-2%] lg:bottom-[60%] lg:w-[26%]"
+            className="absolute right-[0%] bottom-[46%] w-[44%] sm:w-[26%] lg:right-[-6%] lg:bottom-[58%] lg:w-[34%]"
           >
             <SquaiSingleBlock color="#F9C24D" className="w-full h-auto rotate-[14deg]" />
           </motion.div>
@@ -98,12 +98,11 @@ export function AardvarkHero({ onPrimaryCta, onExploreSessions }: AardvarkHeroPr
             className="absolute bottom-0 right-[12%] h-[96%] lg:right-auto lg:left-1/2 lg:-translate-x-1/2 lg:h-[calc(100%-var(--u)*170)] w-auto max-w-none select-none"
           />
 
-          {/* Bloques de datos con contraste de marca (Brand Guideline v8.7):
-              Midnight + Canvas (18:1) y Gold + Midnight (11,9:1) */}
-          <p className="absolute left-0 top-[26%] lg:left-[-14%] lg:top-[64%] -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[var(--tag-r)] px-[calc(var(--u)*16)] py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight whitespace-nowrap shadow-xl">
+          {/* Bloques de datos en Midnight: texto Canvas (18:1) y texto Gold (11,9:1) */}
+          <p className="absolute left-[var(--gutter)] top-[18%] max-w-[36%] sm:max-w-none sm:top-[22%] lg:left-[-14%] lg:top-[64%] -rotate-[4deg] bg-[#0A0C1A] text-[#F4F6FF] rounded-[18px] sm:rounded-[var(--tag-r)] px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*16)] sm:py-[calc(var(--u)*10)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
             {HERO.note}
           </p>
-          <p className="hidden sm:block absolute right-[4%] top-[80%] lg:right-[-10%] lg:top-[76%] rotate-[4deg] bg-[#F9C24D] text-[#0A0C1A] rounded-full px-[calc(var(--u)*22)] py-[calc(var(--u)*12)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight whitespace-nowrap shadow-xl">
+          <p className="absolute left-[var(--gutter)] top-[48%] max-w-[36%] sm:max-w-none sm:top-[34%] lg:left-auto lg:right-[-10%] lg:top-[76%] rotate-[3deg] bg-[#0A0C1A] text-[#F9C24D] rounded-[18px] sm:rounded-full px-[calc(var(--u)*14)] py-[calc(var(--u)*9)] sm:px-[calc(var(--u)*22)] sm:py-[calc(var(--u)*12)] font-display font-bold text-[length:var(--fs-tag)] lg:text-[length:calc(var(--u)*30)] leading-tight sm:whitespace-nowrap shadow-xl">
             {HERO.stickerNoCode}
           </p>
         </div>
