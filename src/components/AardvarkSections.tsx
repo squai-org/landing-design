@@ -3,7 +3,6 @@ import { ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import {
   AardvarkButtonAlt,
-  FlowStepIllustration,
   type SquaiBlockPreset,
   SquaiCornerBlocks,
 } from './AardvarkPrimitives';
@@ -264,8 +263,16 @@ export function FlowSection({ onSelectCta }: SectionCtaProps) {
                       <span className="aardvark-handwritten-lg text-[#0A0C1A]">{item.step}</span>
                     </div>
 
-                    <div className="flex-1 flex items-center justify-center py-2">
-                      <FlowStepIllustration stepIndex={idx} />
+                    <div className="flex-1 flex items-end justify-center">
+                      <img
+                        src={item.illustration.src}
+                        alt={item.illustration.alt}
+                        width={1400}
+                        height={1210}
+                        loading="lazy"
+                        draggable={false}
+                        className="block w-full h-auto select-none"
+                      />
                     </div>
 
                     <div className="space-y-[calc(var(--u)*12)]">
