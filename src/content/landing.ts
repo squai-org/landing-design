@@ -15,6 +15,7 @@ export function pexelsUrl(imageId: number, width = 900): string {
 export interface PhotoContent {
   imageId: number;
   alt: string;
+  objectPositionClass?: string;
 }
 
 // MUESTRA: fecha, horario y cupos por confirmar.
@@ -90,49 +91,39 @@ export const INCLUDES = {
       id: 'en-vivo',
       title: '8 sesiones en vivo',
       note: 'Clases de 90 minutos en línea, con tiempo para resolver tus dudas en cada una.',
-      tags: ['En línea', '90 min'],
-      photo: {
-        imageId: 4226140,
-        alt: 'Mujer en una videollamada con su grupo de clase mientras toma notas',
+      illustration: {
+        src: '/illustrations/incluye/incluye-1.svg',
+        alt: 'Persona en una videollamada en vivo con dos compañeros de clase',
       },
     },
     {
       id: 'grabaciones',
       title: 'Grabación de cada clase',
       note: 'Si un día no puedes conectarte, la ves después y nos escribes tus preguntas.',
-      tags: ['6 meses de acceso', 'A tu ritmo'],
-      photo: {
-        imageId: 4458554,
-        alt: 'Mujer con audífonos mira una clase en su portátil desde el sofá',
+      illustration: {
+        src: '/illustrations/incluye/incluye-2.svg',
+        alt: 'Persona mirando la grabación de una clase con botón de reproducción',
       },
     },
     {
       id: 'guia',
       title: 'Guía y plantillas',
       note: 'Una guía por sesión con instrucciones listas para copiar, ajustar y usar en tu trabajo.',
-      tags: ['PDF', 'Editables'],
-      mockup: 'guide' as const,
+      illustration: {
+        src: '/illustrations/incluye/incluye-3.svg',
+        alt: 'Persona sosteniendo una guía y plantillas editables para el trabajo',
+      },
     },
     {
       id: 'certificado',
       title: 'Certificado',
       note: 'Lo recibes al asistir al menos a 6 de las 8 sesiones.',
-      tags: ['Digital', 'Con tu nombre'],
-      mockup: 'certificate' as const,
+      illustration: {
+        src: '/illustrations/incluye/incluye-4.svg',
+        alt: 'Persona junto a un certificado digital de participación en el programa',
+      },
     },
   ],
-  // MUESTRA: textos de la portada de la guía y del certificado.
-  guideMockup: {
-    label: 'Guía de la sesión 3',
-    title: 'Pedirle las cosas a la IA',
-    steps: ['Di para quién es', 'Explica el objetivo', 'Pide un formato'],
-  },
-  certificateMockup: {
-    label: 'Certificado de participación',
-    program: PROGRAM.name,
-    awardedTo: 'Tu nombre aquí',
-    detail: '8 sesiones en vivo · 12 horas',
-  },
 };
 
 /* 3. Presentación: ¿quién me va a enseñar? */
@@ -160,6 +151,13 @@ export const PRESENTATION = {
 };
 
 /* 4. ¿Es para ti? ¿Entienden mi caso? */
+export interface AudienceItem {
+  id: string;
+  label: string;
+  example: string;
+  images: readonly [PhotoContent, PhotoContent];
+}
+
 export const AUDIENCE = {
   title: '¿Te ves en alguno de estos casos?',
   handwritten: 'Pasa el cursor o toca tu caso',
@@ -171,8 +169,8 @@ export const AUDIENCE = {
       label: 'Usas IA a diario',
       example: 'Le pides cosas todos los días y las respuestas te salen genéricas, así que terminas reescribiéndolas.',
       images: [
-        { imageId: 5940721, alt: 'Manos escriben en un portátil sobre un escritorio blanco' },
-        { imageId: 3769021, alt: 'Mujer sonriente junto a su portátil' },
+        { imageId: 5940721, alt: 'Manos escriben en un portátil sobre un escritorio blanco', objectPositionClass: 'object-center' },
+        { imageId: 3769021, alt: 'Mujer sonriente junto a su portátil', objectPositionClass: 'object-top' },
       ],
     },
     {
@@ -180,8 +178,8 @@ export const AUDIENCE = {
       label: 'Lideras un equipo',
       example: 'Tu equipo ya usa IA, pero cada quien le pregunta a su manera y nadie sabe qué datos se pueden compartir.',
       images: [
-        { imageId: 3184325, alt: 'Equipo reunido alrededor de una mesa con portátiles' },
-        { imageId: 3184405, alt: 'Líder de equipo sonríe con su grupo trabajando detrás' },
+        { imageId: 3184325, alt: 'Equipo reunido alrededor de una mesa con portátiles', objectPositionClass: 'object-center' },
+        { imageId: 3184405, alt: 'Líder de equipo sonríe con su grupo trabajando detrás', objectPositionClass: 'object-right-top' },
       ],
     },
     {
@@ -189,8 +187,8 @@ export const AUDIENCE = {
       label: 'Tienes tu negocio',
       example: 'Haces de todo en tu empresa y quieres que la IA te ayude con correos, cotizaciones y redes sin pagar diez herramientas.',
       images: [
-        { imageId: 3184292, alt: 'Manos revisan gráficas impresas sobre una mesa' },
-        { imageId: 3182765, alt: 'Dos personas conversan de pie en una oficina' },
+        { imageId: 3184292, alt: 'Manos revisan gráficas impresas sobre una mesa', objectPositionClass: 'object-center' },
+        { imageId: 3182765, alt: 'Dos personas conversan de pie en una oficina', objectPositionClass: 'object-top' },
       ],
     },
     {
@@ -198,8 +196,8 @@ export const AUDIENCE = {
       label: 'Enseñas o formas',
       example: 'Tus estudiantes ya la usan para sus tareas y quieres entenderla para guiarlos con criterio.',
       images: [
-        { imageId: 5212345, alt: 'Profesor frente al tablero mientras sus estudiantes levantan la mano' },
-        { imageId: 5212317, alt: 'Profesora sonriente frente a un tablero con fórmulas' },
+        { imageId: 5212345, alt: 'Profesor frente al tablero mientras sus estudiantes levantan la mano', objectPositionClass: 'object-top' },
+        { imageId: 5212317, alt: 'Profesora sonriente frente a un tablero con fórmulas', objectPositionClass: 'object-top' },
       ],
     },
     {
@@ -207,8 +205,8 @@ export const AUDIENCE = {
       label: 'Vendes y propones',
       example: 'Armas cotizaciones y propuestas, y quieres que cada una suene a ti y le hable a ese cliente.',
       images: [
-        { imageId: 3184418, alt: 'Varias manos juntas sobre una mesa de trabajo' },
-        { imageId: 3184416, alt: 'Dos personas se dan la mano al cerrar un acuerdo' },
+        { imageId: 3184418, alt: 'Varias manos juntas sobre una mesa de trabajo', objectPositionClass: 'object-center' },
+        { imageId: 3184416, alt: 'Dos personas se dan la mano al cerrar un acuerdo', objectPositionClass: 'object-top' },
       ],
     },
     {
@@ -216,11 +214,11 @@ export const AUDIENCE = {
       label: 'Estás empezando',
       example: 'Te da curiosidad, pero no sabes por dónde empezar ni en qué herramienta confiar.',
       images: [
-        { imageId: 4050315, alt: 'Persona trabaja en su portátil desde una mesa blanca, vista desde arriba' },
-        { imageId: 3153198, alt: 'Grupo de colegas se ríe frente a un portátil' },
+        { imageId: 4050315, alt: 'Persona trabaja en su portátil desde una mesa blanca, vista desde arriba', objectPositionClass: 'object-center' },
+        { imageId: 3153198, alt: 'Grupo de colegas se ríe frente a un portátil', objectPositionClass: 'object-top' },
       ],
     },
-  ],
+  ] as readonly AudienceItem[],
 };
 
 /* 5. Qué vas a lograr: ¿qué gano? */
@@ -390,8 +388,8 @@ export const MENTORS = {
       name: 'Laura Villada',
       role: 'Estratega de adopción de IA y cofundadora',
       badge: 'Cofundadora',
+      quote: 'Cuando entiendes por qué falla una respuesta, dejas de improvisar y empiezas a ahorrar tiempo cada día.',
       bio: 'Diseña cada sesión para que primero entiendas y después practiques, con ejemplos de tu día a día.',
-      tags: ['Diseño de programas', 'Adopción en equipos'],
       avatarUrl: '/assets/aistudio/1_65be7eef.jpg',
       avatarAlt: 'Retrato de Laura Villada',
     },
@@ -400,8 +398,8 @@ export const MENTORS = {
       name: 'Sebastián Rico',
       role: 'Ingeniero de IA y cofundador',
       badge: 'Cofundador',
+      quote: 'Las herramientas cambian rápido, pero el criterio para pedir bien y verificar datos se queda contigo.',
       bio: 'Revisa cada ejemplo técnico y te explica por qué funciona, sin promesas que nadie puede cumplir.',
-      tags: ['Modelos de lenguaje', 'Seguridad de datos'],
       avatarUrl: '/assets/aistudio/perfil_61ac2c28.png',
       avatarAlt: 'Retrato de Sebastián Rico',
     },
@@ -412,14 +410,6 @@ export const MENTORS = {
 export const TESTIMONIALS = {
   title: 'Lo que dicen después de una charla.',
   lead: 'Frases de personas que asistieron a nuestras charlas, publicadas con su permiso.',
-  card: {
-    tags: ['Charla', '2026'],
-    title: 'IA para tu trabajo diario',
-    copy: 'Charla de 90 minutos para equipos administrativos, docentes y personas que emprenden.',
-    imageId: 7648047,
-    alt: 'Público sonriente sentado durante una charla',
-  },
-  cta: 'Reservar mi cupo',
   note: {
     title: 'Quiénes asistieron',
     items: ['Equipos administrativos', 'Docentes de colegio', 'Áreas comerciales', 'Personas que emprenden'],
@@ -441,7 +431,6 @@ export const TESTIMONIALS = {
       context: 'Docente de secundaria',
     },
   ],
-  badge: { value: MENTORS.stats[1].value, label: 'charlas' },
 };
 
 /* 10. Inscripción: ¿cuánto y cómo pago? */

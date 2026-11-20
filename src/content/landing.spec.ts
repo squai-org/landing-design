@@ -123,7 +123,7 @@ describe('imágenes de Pexels', () => {
   it('no repite ninguna foto en toda la página', () => {
     const ids = JSON.stringify(content).match(/"imageId":\s*(\d+)/g) ?? [];
     const numbers = ids.map((m) => m.replace(/\D/g, ''));
-    expect(numbers.length).toBeGreaterThanOrEqual(15);
+    expect(numbers.length).toBeGreaterThanOrEqual(13);
     const dupes = numbers.filter((id, idx) => numbers.indexOf(id) !== idx);
     expect(dupes).toEqual([]);
   });

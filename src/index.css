@@ -138,10 +138,10 @@
   --books-pb: calc(var(--u) * 40);
   --books-list-px: calc(var(--u) * 8);
   --books-list-py: calc(var(--u) * 40);
-  --books-item-w: calc(var(--u) * 258);
+  --books-item-w: calc(var(--u) * 380);
   --books-item-px: calc(var(--u) * 12);
-  --books-item-pad: calc(var(--u) * 12);
-  --books-item-gap: calc(var(--u) * 12);
+  --books-item-pad: calc(var(--u) * 28);
+  --books-item-gap: calc(var(--u) * 20);
   --slider-btn: max(44px, calc(var(--u) * 56));
 
   /* Etiquetas de logros (.benefits__label-inner). */
@@ -175,6 +175,8 @@
     --input-h: calc(var(--u) * 58);
     --input-px: calc(var(--u) * 19);
     --gutter: calc(var(--u) * 24);
+    --books-item-w: calc(var(--u) * 401);
+    --books-item-px: calc(var(--u) * 16);
   }
 }
 
@@ -237,10 +239,10 @@
     --books-pb: calc(var(--u) * 125);
     --books-list-px: calc(var(--u) * 16);
     --books-list-py: calc(var(--u) * 56);
-    --books-item-w: calc(var(--u) * 416);
-    --books-item-px: calc(var(--u) * 32);
-    --books-item-pad: calc(var(--u) * 16);
-    --books-item-gap: calc(var(--u) * 16);
+    --books-item-w: calc(var(--u) * 420);
+    --books-item-px: calc(var(--u) * 24);
+    --books-item-pad: calc(var(--u) * 32);
+    --books-item-gap: calc(var(--u) * 20);
     --slider-btn: calc(var(--u) * 72);
 
     /* 104 en la referencia (etiquetas en inglés, más cortas); las nuestras
@@ -398,6 +400,8 @@
   padding: 0 var(--input-px);
   border-radius: var(--input-r);
   font-size: var(--input-fs);
+  border: 0;
+  box-shadow: none;
 }
 
 /* Mentor cards: from sm up the whole composition is 30% larger
@@ -731,6 +735,7 @@
    Carrusel de sesiones (.books-slider de la referencia)
    ============================================================ */
 .sessions-track {
+  overflow-y: hidden;
   scrollbar-width: none;
   cursor: grab;
 }
@@ -773,17 +778,10 @@
 
 .session-slide__bg-bottom {
   width: 100%;
-  height: calc(var(--u) * 80);
+  height: max(56px, calc(var(--u) * 88));
   border-bottom-left-radius: var(--card-r);
   border-bottom-right-radius: var(--card-r);
   transition: translate 0.4s var(--ease-smooth);
-}
-
-.session-slide__copy {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
 }
 
 .session-slide__cta {

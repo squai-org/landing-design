@@ -5,8 +5,6 @@ import {
   AardvarkButtonAlt,
   AardvarkPillButton,
   BadgeRibbonSvg,
-  type SquaiBlockPreset,
-  SquaiCornerBlocks,
 } from './AardvarkPrimitives';
 import { SectionBackdrop } from './Backdrops';
 import { PresentationMedia } from './PresentationMedia';
@@ -39,11 +37,10 @@ export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => vo
   return (
     <section
       id="presentacion"
-      className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)] scroll-mt-16"
+      className="w-full relative bg-[#eef0fd] text-[#0A0C1A] rounded-t-[var(--edge-r)] overflow-hidden pt-[var(--section-py)] pb-[calc(var(--section-py)+var(--edge-r))] scroll-mt-16"
       aria-labelledby="presentation-heading"
     >
-      <div className="w-full relative bg-[#eef0fd] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)]">
-        <SectionBackdrop shape="faq" colors={['#FFFFFF']} opacities={[0.7]} flip="x" align="xMaxYMin" />
+      <SectionBackdrop shape="faq" colors={['#FFFFFF']} opacities={[0.7]} flip="x" align="xMaxYMin" />
 
         <div className="relative z-10 text-center max-w-[calc(var(--u)*1280)] mx-auto px-[var(--gutter)] mb-[calc(var(--u)*56)]">
           <h2 id="presentation-heading" className="aardvark-h2 text-[#0A0C1A]">
@@ -116,7 +113,6 @@ export function PresentationSection({ onMeetMentors }: { onMeetMentors: () => vo
             </motion.figure>
           </div>
         </div>
-      </div>
     </section>
   );
 }
@@ -145,12 +141,11 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
     <section
       id="para-ti"
       onMouseMove={handleMouseMove}
-      className="w-full bg-white p-[var(--band-inset)]"
+      className="w-full relative z-10 bg-[#303163] text-[#F4F6FF] rounded-t-[var(--edge-r)] -mt-[var(--edge-r)] overflow-hidden pt-[var(--section-py)] pb-[calc(var(--section-py)+var(--edge-r))] px-[var(--gutter)]"
       aria-labelledby="audience-heading"
     >
-      <div className="w-full relative bg-[#303163] text-[#F4F6FF] rounded-[var(--band-r)] overflow-hidden py-[var(--section-py)] px-[var(--gutter)]">
-        <SectionBackdrop shape="benefits" colors={['#5a5bb6', '#777ae3']} opacities={[0.35, 0.18]} flip="x" small />
-        <div className="relative z-10 mx-auto">
+      <SectionBackdrop shape="benefits" colors={['#5a5bb6', '#777ae3']} opacities={[0.35, 0.18]} flip="x" small />
+      <div className="relative z-10 mx-auto">
           <div className="text-center max-w-[calc(var(--u)*1100)] mx-auto mb-[calc(var(--u)*64)] space-y-[calc(var(--u)*16)]">
             <h2 id="audience-heading" className="aardvark-h2 text-[#F4F6FF]">
               {AUDIENCE.title}
@@ -178,7 +173,7 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
                     src={pexelsUrl(preview.images[0].imageId, 700)}
                     alt=""
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover ${preview.images[0].objectPositionClass ?? 'object-center'}`}
                   />
                 </div>
               </motion.div>
@@ -199,7 +194,7 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
                     src={pexelsUrl(preview.images[1].imageId, 700)}
                     alt=""
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover ${preview.images[1].objectPositionClass ?? 'object-center'}`}
                   />
                 </div>
               </motion.div>
@@ -270,7 +265,6 @@ export function AudienceSection({ currency, onSelectCta }: CurrencyCtaProps) {
               />
             </div>
           </div>
-        </div>
       </div>
     </section>
   );
@@ -390,13 +384,12 @@ export function OutcomesSection() {
   return (
     <section
       id="logros"
-      className="w-full bg-white text-[#0A0C1A] p-[var(--band-inset)]"
+      className="w-full relative z-20 bg-[#fcf6ea] text-[#0A0C1A] rounded-t-[var(--edge-r)] rounded-b-[var(--edge-r)] -mt-[var(--edge-r)] overflow-hidden pt-[var(--section-py)] pb-[calc(var(--section-py)*0.65)] px-[var(--gutter)]"
       aria-labelledby="outcomes-heading"
     >
-      <div className="w-full relative bg-[#fcf6ea] rounded-[var(--band-r)] overflow-hidden pt-[var(--section-py)] pb-[calc(var(--section-py)*0.6)] px-[var(--gutter)]">
-        <SectionBackdrop shape="benefits" colors={['#fdebc9', '#FFFFFF']} opacities={[0.7, 0.85]} />
+      <SectionBackdrop shape="benefits" colors={['#fdebc9', '#FFFFFF']} opacities={[0.7, 0.85]} />
 
-        <div className="relative z-10">
+      <div className="relative z-10">
           <div className="text-center max-w-[calc(var(--u)*1280)] mx-auto mb-[calc(var(--u)*24)] space-y-[calc(var(--u)*24)]">
             <h2 id="outcomes-heading" className="aardvark-h2 text-[#0A0C1A]">
               {OUTCOMES.title}
@@ -440,7 +433,6 @@ export function OutcomesSection() {
               })}
             </ul>
           </div>
-        </div>
       </div>
     </section>
   );
@@ -526,8 +518,6 @@ const MENTOR_STYLES: Array<{
   innerBg: string;
   stampBg: string;
   stampText: string;
-  blockBackColor: string;
-  blockPreset: SquaiBlockPreset;
   tilt: string;
   cropTight: boolean;
 }> = [
@@ -536,8 +526,6 @@ const MENTOR_STYLES: Array<{
     innerBg: 'bg-white',
     stampBg: 'bg-[#8A8EF9]',
     stampText: 'text-[#0A0C1A]',
-    blockBackColor: '#8A8EF9',
-    blockPreset: 'mentor-laura',
     tilt: '-rotate-[1.8deg]',
     cropTight: false,
   },
@@ -546,8 +534,6 @@ const MENTOR_STYLES: Array<{
     innerBg: 'bg-[#eef0fd]',
     stampBg: 'bg-[#0A0C1A]',
     stampText: 'text-[#F9C24D]',
-    blockBackColor: '#FFFFFF',
-    blockPreset: 'mentor-sebastian',
     tilt: 'rotate-[1.8deg]',
     cropTight: true,
   },
@@ -591,7 +577,6 @@ export function MentorsSection({ currency, onSelectCta }: CurrencyCtaProps) {
                 aria-labelledby={`mentor-${mentor.id}-name`}
               >
                 <div className={`relative w-full ${style.tilt} hover:rotate-0 transition-transform duration-300 flex`}>
-                  <SquaiCornerBlocks size="card" preset={style.blockPreset} backColor={style.blockBackColor} />
 
                   <div
                     className={`absolute -top-5 -right-5 sm:top-[calc(var(--mc-stamp-offset)*-1)] sm:right-[calc(var(--mc-stamp-offset)*-1)] z-30 ${style.stampBg} ${style.stampText} px-4 py-2 sm:px-[21px] sm:py-[10px] rounded-[16px] sm:rounded-[21px] shadow-xl rotate-6 font-display font-bold text-sm sm:text-[length:var(--mc-stamp-font)] tracking-tight pointer-events-none`}
@@ -617,19 +602,29 @@ export function MentorsSection({ currency, onSelectCta }: CurrencyCtaProps) {
                         <h3 id={`mentor-${mentor.id}-name`} className="aardvark-h3 text-[#0A0C1A]">
                           {mentor.name}
                         </h3>
-                        <p className="font-human text-sm sm:text-[18px] text-[#5a5bb6] leading-tight">{mentor.role}</p>
+                        <p className="font-sans font-semibold text-sm sm:text-[18px] text-[#5a5bb6] leading-tight">
+                          {mentor.role}
+                        </p>
                       </div>
 
-                      <ul className="pl-[64px] min-[380px]:pl-[72px] sm:pl-[88px] py-2 flex flex-col items-start gap-2" aria-label={`Temas de ${mentor.name}`}>
-                        {mentor.tags.map((tag) => (
-                          <li
-                            key={tag}
-                            className="px-3 py-1 min-[380px]:px-3.5 min-[380px]:py-1.5 sm:px-[18px] sm:py-[10px] rounded-lg sm:rounded-[10px] text-[13px] min-[380px]:text-sm sm:text-[18px] leading-tight font-display font-bold bg-[#0A0C1A] text-[#F4F6FF]"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="relative pl-[64px] min-[380px]:pl-[72px] sm:pl-[88px] py-2 my-auto">
+                        <svg
+                          viewBox="0 0 64 64"
+                          aria-hidden="true"
+                          focusable="false"
+                          className={`absolute -top-2 left-[48px] min-[380px]:left-[56px] sm:left-[68px] w-14 h-14 sm:w-16 sm:h-16 pointer-events-none select-none ${
+                            idx === 0 ? 'text-[#fde4b5]' : 'text-[#d2d7fc]'
+                          }`}
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M14 14h14v16c0 10.5-5.2 17.6-14 21l-3.6-6.8c5.2-2.2 7.8-6.2 8.2-11.2H14V14Zm28 0h14v16c0 10.5-5.2 17.6-14 21l-3.6-6.8c5.2-2.2 7.8-6.2 8.2-11.2H42V14Z"
+                          />
+                        </svg>
+                        <p className="relative z-10 font-human text-[15px] sm:text-[19px] leading-[1.35] text-[#303163]">
+                          “{mentor.quote}”
+                        </p>
+                      </div>
 
                       <p className="aardvark-body text-[#1c1e2e] leading-snug">{mentor.bio}</p>
                     </div>
@@ -661,10 +656,50 @@ export function MentorsSection({ currency, onSelectCta }: CurrencyCtaProps) {
 }
 
 /* ============================================================
-   11. PREGUNTAS FRECUENTES · Dudas antes de pagar (.faq White Band)
-   Rounded bottom so the footer tucks underneath.
+   11. PREGUNTAS FRECUENTES · Dudas antes de pagar
+   Composición de aardvarkbookclub.com/faq: barra lateral fija con
+   categorías en pasteles suaves, grupos ordenados por tema y tarjetas
+   plegables con animación de aparición en scroll.
    ============================================================ */
 type FaqCategory = (typeof FAQ.categories)[number];
+type FaqGroupCategory = Exclude<FaqCategory, 'Todas'>;
+
+const FAQ_CATEGORY_ORDER: readonly FaqGroupCategory[] = ['Programa', 'Pagos', 'Requisitos'];
+
+const FAQ_CATEGORY_THEME: Record<
+  FaqCategory,
+  {
+    bgClass: string;
+    activeBgClass: string;
+    blockBackColor: string;
+    preset: (typeof FAQ_PILL_PRESETS)[number];
+  }
+> = {
+  Todas: {
+    bgClass: 'bg-[#eef0fd]',
+    activeBgClass: 'bg-[#d2d7fc]',
+    blockBackColor: '#969bfc',
+    preset: 'pill-diag-tl',
+  },
+  Programa: {
+    bgClass: 'bg-[#fcf0db]',
+    activeBgClass: 'bg-[#fde4b5]',
+    blockBackColor: '#ffd688',
+    preset: 'pill-diag-tr',
+  },
+  Pagos: {
+    bgClass: 'bg-[#e1e4fd]',
+    activeBgClass: 'bg-[#c3c9fc]',
+    blockBackColor: '#8A8EF9',
+    preset: 'pill-bottom-spread',
+  },
+  Requisitos: {
+    bgClass: 'bg-[#f2f3f6]',
+    activeBgClass: 'bg-[#d9dcea]',
+    blockBackColor: '#b4bafc',
+    preset: 'pill-edge-mix',
+  },
+};
 
 const FAQ_PILL_PRESETS = ['pill-diag-tl', 'pill-diag-tr', 'pill-bottom-spread', 'pill-edge-mix'] as const;
 
@@ -672,101 +707,148 @@ export function FaqSection() {
   const [activeCategory, setActiveCategory] = useState<FaqCategory>('Todas');
   const [openFaqId, setOpenFaqId] = useState<string>(FAQ.items[0]?.id ?? '');
 
-  const filteredFaqs =
-    activeCategory === 'Todas' ? FAQ.items : FAQ.items.filter((item) => item.category === activeCategory);
+  const visibleGroups: readonly FaqGroupCategory[] =
+    activeCategory === 'Todas' ? FAQ_CATEGORY_ORDER : [activeCategory];
 
   return (
     <section
       id="preguntas"
-      className="w-full relative z-20 bg-white text-[#0A0C1A] overflow-hidden rounded-b-[var(--edge-r)] py-[var(--section-py)] px-[var(--gutter)] scroll-mt-10"
+      className="w-full relative z-20 bg-white text-[#0A0C1A] rounded-b-[var(--edge-r)] py-[var(--section-py)] px-[var(--gutter)] scroll-mt-10 overflow-x-clip"
       aria-labelledby="faq-heading"
     >
       <SectionBackdrop shape="faq" colors={['#eef0fd']} opacities={[0.9]} align="xMinYMin" />
 
-      <div className="mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*64)]">
-        <div className="lg:col-span-5 space-y-[calc(var(--u)*24)]">
-          <h2 id="faq-heading" className="aardvark-h2 text-[#0A0C1A]">
-            {FAQ.title}
-          </h2>
-          <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*590)]">{FAQ.lead}</p>
+      <div className="mx-auto max-w-[calc(var(--u)*1680)] relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*56)] items-start">
+        <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-[calc(var(--u)*24)]">
+          <div className="space-y-[calc(var(--u)*16)]">
+            <h2 id="faq-heading" className="aardvark-h2 text-[#0A0C1A]">
+              {FAQ.title}
+            </h2>
+            <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*520)]">{FAQ.lead}</p>
+          </div>
 
-          <div className="flex flex-wrap gap-[calc(var(--u)*16)] pt-[calc(var(--u)*24)]" role="group" aria-label="Filtrar preguntas">
-            {FAQ.categories.map((cat, idx) => {
-              const isActive = activeCategory === cat;
-              return (
-                <div key={cat} className={isActive ? 'relative z-10' : 'relative z-0'}>
-                  <AardvarkPillButton
-                    label={cat}
-                    active={isActive}
-                    withBlocks
-                    blockPreset={FAQ_PILL_PRESETS[idx % FAQ_PILL_PRESETS.length]}
-                    blockBackColor="#ffd688"
-                    ariaPressed={isActive}
-                    bgClass={isActive ? 'bg-[#F9C24D]' : 'bg-[#eef0fd]'}
-                    textClass="text-[#0A0C1A]"
-                    onClick={() => {
-                      setActiveCategory(cat);
-                      const first =
-                        cat === 'Todas' ? FAQ.items[0]?.id : FAQ.items.find((f) => f.category === cat)?.id;
-                      if (first) setOpenFaqId(first);
-                    }}
-                  />
-                </div>
-              );
-            })}
+          <div className="space-y-4 pt-2">
+            <span className="block font-display font-bold text-base sm:text-lg text-[#303163]">
+              Categorías
+            </span>
+            <div
+              className="flex flex-wrap lg:flex-col lg:items-start gap-4"
+              role="group"
+              aria-label="Filtrar preguntas"
+            >
+              {FAQ.categories.map((cat) => {
+                const isActive = activeCategory === cat;
+                const theme = FAQ_CATEGORY_THEME[cat];
+                return (
+                  <div key={cat} className={isActive ? 'relative z-10' : 'relative z-0'}>
+                    <AardvarkPillButton
+                      label={cat}
+                      active={isActive}
+                      withBlocks
+                      blockPreset={theme.preset}
+                      blockBackColor={theme.blockBackColor}
+                      ariaPressed={isActive}
+                      bgClass={isActive ? theme.activeBgClass : theme.bgClass}
+                      textClass="text-[#0A0C1A]"
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        const first =
+                          cat === 'Todas'
+                            ? FAQ.items[0]?.id
+                            : FAQ.items.find((f) => f.category === cat)?.id;
+                        if (first) setOpenFaqId(first);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        <div className="lg:col-span-7 w-full max-w-[calc(var(--u)*936)] lg:ml-auto space-y-[calc(var(--u)*14)]">
-          {filteredFaqs.map((item) => {
-            const isOpen = openFaqId === item.id;
-            const panelId = `${item.id}-panel`;
-            return (
-              <div
-                key={item.id}
-                className={`rounded-[var(--faq-r)] transition-colors duration-200 ${
-                  isOpen ? 'bg-[#eef0fd]' : 'bg-[#f2f3f6] hover:bg-[#eef0fd]'
-                }`}
-              >
-                <h3>
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqId(isOpen ? '' : item.id)}
-                    aria-expanded={isOpen}
-                    aria-controls={panelId}
-                    className="w-full min-h-[max(56px,calc(var(--u)*96))] py-[var(--faq-py)] px-[var(--faq-px)] flex items-center justify-between gap-4 text-left cursor-pointer group"
+        <div className="lg:col-span-8 w-full max-w-[calc(var(--u)*960)] lg:ml-auto space-y-[calc(var(--u)*48)]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
+              className="space-y-[calc(var(--u)*48)]"
+            >
+              {visibleGroups.map((group) => {
+                const groupItems = FAQ.items.filter((item) => item.category === group);
+                return (
+                  <motion.div
+                    key={group}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.36, ease: [0.32, 0.72, 0, 1] }}
+                    className="space-y-[calc(var(--u)*14)]"
                   >
-                    <span className="font-display font-bold text-[length:var(--fs-lead)] leading-[1.2] tracking-[-0.02em] text-[#0A0C1A] group-hover:text-[#303163] transition-colors">
-                      {item.q}
-                    </span>
-                    <span
-                      className={`w-[max(32px,calc(var(--u)*38))] h-[max(32px,calc(var(--u)*38))] rounded-full inline-flex items-center justify-center shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'bg-[#0A0C1A] text-[#F4F6FF] rotate-45' : 'bg-white text-[#0A0C1A]'
-                      }`}
-                      aria-hidden="true"
-                    >
-                      <Plus className="w-1/2 h-1/2" />
-                    </span>
-                  </button>
-                </h3>
+                    <h3 className="aardvark-h3 text-[#0A0C1A] mb-[calc(var(--u)*16)]">
+                      {group}
+                    </h3>
 
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={panelId}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-[var(--faq-px)] pb-[var(--faq-py)] pr-[calc(var(--u)*96)] aardvark-body text-[#525770]">{item.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+                    <div className="space-y-[calc(var(--u)*14)]">
+                      {groupItems.map((item) => {
+                        const isOpen = openFaqId === item.id;
+                        const panelId = `${item.id}-panel`;
+                        return (
+                          <div
+                            key={item.id}
+                            className={`rounded-[var(--faq-r)] transition-colors duration-200 ${
+                              isOpen ? 'bg-[#eef0fd]' : 'bg-[#f2f3f6] hover:bg-[#eef0fd]'
+                            }`}
+                          >
+                            <h4>
+                              <button
+                                type="button"
+                                onClick={() => setOpenFaqId(isOpen ? '' : item.id)}
+                                aria-expanded={isOpen}
+                                aria-controls={panelId}
+                                className="w-full min-h-[max(56px,calc(var(--u)*92))] py-[var(--faq-py)] px-[var(--faq-px)] flex items-center justify-between gap-4 text-left cursor-pointer group"
+                              >
+                                <span className="font-display font-bold text-[length:var(--fs-lead)] leading-[1.2] tracking-[-0.02em] text-[#0A0C1A] group-hover:text-[#303163] transition-colors">
+                                  {item.q}
+                                </span>
+                                <span
+                                  className={`w-[max(32px,calc(var(--u)*38))] h-[max(32px,calc(var(--u)*38))] rounded-full inline-flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                                    isOpen ? 'bg-[#0A0C1A] text-[#F4F6FF] rotate-45' : 'bg-white text-[#0A0C1A]'
+                                  }`}
+                                  aria-hidden="true"
+                                >
+                                  <Plus className="w-1/2 h-1/2" />
+                                </span>
+                              </button>
+                            </h4>
+
+                            <AnimatePresence initial={false}>
+                              {isOpen && (
+                                <motion.div
+                                  id={panelId}
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
+                                  className="overflow-hidden"
+                                >
+                                  <p className="px-[var(--faq-px)] pb-[var(--faq-py)] pr-[calc(var(--u)*96)] aardvark-body text-[#525770]">
+                                    {item.a}
+                                  </p>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

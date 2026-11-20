@@ -16,7 +16,6 @@ import {
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { AardvarkButtonAlt, SquaiSocialLinks } from './components/AardvarkPrimitives';
 import { SignupFormSection } from './components/SignupFormSection';
-import { BoldCheckoutModal } from './components/BoldCheckoutModal';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { NotificationCenter } from './components/NotificationCenter';
 import { SquaiLockup } from './components/SquaiBrand';
@@ -155,7 +154,7 @@ function LandingContent() {
         {/* 8 Quiénes enseñan */}
         <MentorsSection currency={currency} onSelectCta={goToSignup} />
         {/* 9 Lo que dicen */}
-        <TestimonialsSection onSelectCta={() => goToSignup(currency, 'Testimonios CTA: Reservar mi cupo')} />
+        <TestimonialsSection />
         {/* 10 Inscripción */}
         <SignupFormSection />
         {/* 11 Preguntas frecuentes */}
@@ -166,7 +165,7 @@ function LandingContent() {
       <footer
         id="contacto"
         aria-label="Pie de página"
-        className="w-full relative z-0 bg-[#303163] text-[#F4F6FF] -mt-[var(--edge-r)] pt-[calc(var(--edge-r)+var(--section-py))] pb-[calc(var(--u)*40)] overflow-hidden"
+        className="w-full relative z-0 bg-[#303163] text-[#F4F6FF] -mt-[var(--edge-r)] pt-[calc(var(--edge-r)+var(--section-py))] pb-0 overflow-hidden"
       >
         <div className="mx-auto px-[var(--gutter)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16">
@@ -246,7 +245,7 @@ function LandingContent() {
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Tu correo electrónico"
-                  className="aardvark-input flex-none sm:flex-1 bg-[#F4F6FF] text-[#0A0C1A] placeholder:text-[#7a7f9c] focus:bg-white transition-colors outline-none"
+                  className="aardvark-input flex-none sm:flex-1 bg-white text-[#0A0C1A] placeholder:text-[#7a7f9c] transition-colors outline-none"
                 />
                 <AardvarkButtonAlt
                   type="submit"
@@ -259,8 +258,10 @@ function LandingContent() {
               <p className="text-sm text-[#d2d7fc] tabular-nums">{FOOTER.priceLine}</p>
             </div>
           </div>
+        </div>
 
-          <div className="py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-[#d2d7fc]">
+        <div className="w-full bg-[#0A0C1A] text-[#d2d7fc] py-5 sm:py-6 px-[var(--gutter)] sm:px-24">
+          <div className="mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm">
             <span>© 2026 {FOOTER.rights}</span>
             <nav aria-label="Documentos legales">
               <ul className="flex flex-wrap gap-x-6 gap-y-2">
@@ -299,7 +300,6 @@ function LandingContent() {
         )}
       </AnimatePresence>
 
-      <BoldCheckoutModal />
       <WhatsAppWidget />
       <NotificationCenter />
     </div>

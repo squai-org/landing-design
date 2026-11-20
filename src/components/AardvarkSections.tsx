@@ -8,8 +8,7 @@ import {
 } from './AardvarkPrimitives';
 import { SectionBackdrop } from './Backdrops';
 import { SquaiMark } from './SquaiBrand';
-import { CertificateMockup, GuideMockup } from './IncludesMockups';
-import { FLOW, INCLUDES, SESSIONS, pexelsUrl } from '../content/landing';
+import { FLOW, INCLUDES, SESSIONS } from '../content/landing';
 
 interface SectionCtaProps {
   onSelectCta: () => void;
@@ -19,22 +18,17 @@ interface CardStyle {
   cardBg: string;
   blockBackColor: string;
   blockPreset: SquaiBlockPreset;
-  tagStyles: Array<{ bg: string; text: string }>;
   tilt: string;
   staggerClass: string;
 }
 
 /* Composición de las 4 tarjetas (.books de la referencia: 372 × ~718, radio 32).
-   Color: tintes Periwinkle por tarjeta; el acento Gold queda en una etiqueta. */
+   Ilustraciones directo sobre el color de cada tarjeta, como en FlowSection. */
 const INCLUDE_CARD_STYLES: CardStyle[] = [
   {
     cardBg: 'bg-[#eef0fd]',
     blockBackColor: '#b4bafc',
     blockPreset: 'mod-1',
-    tagStyles: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
-      { bg: 'bg-[#8A8EF9]', text: 'text-[#0A0C1A]' },
-    ],
     tilt: '-rotate-2',
     staggerClass: 'lg:translate-y-0',
   },
@@ -42,10 +36,6 @@ const INCLUDE_CARD_STYLES: CardStyle[] = [
     cardBg: 'bg-[#d2d7fc]',
     blockBackColor: '#a5abfc',
     blockPreset: 'mod-2',
-    tagStyles: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F9C24D]' },
-      { bg: 'bg-white', text: 'text-[#0A0C1A]' },
-    ],
     tilt: 'rotate-[1.8deg]',
     staggerClass: 'lg:translate-y-6',
   },
@@ -53,10 +43,6 @@ const INCLUDE_CARD_STYLES: CardStyle[] = [
     cardBg: 'bg-[#e1e4fd]',
     blockBackColor: '#969bfc',
     blockPreset: 'mod-3',
-    tagStyles: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
-      { bg: 'bg-[#8A8EF9]', text: 'text-[#0A0C1A]' },
-    ],
     tilt: '-rotate-[1.6deg]',
     staggerClass: 'lg:translate-y-1',
   },
@@ -64,10 +50,6 @@ const INCLUDE_CARD_STYLES: CardStyle[] = [
     cardBg: 'bg-[#8A8EF9]',
     blockBackColor: '#5a5bb6',
     blockPreset: 'mod-4',
-    tagStyles: [
-      { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]' },
-      { bg: 'bg-white', text: 'text-[#0A0C1A]' },
-    ],
     tilt: 'rotate-2',
     staggerClass: 'lg:translate-y-7',
   },
@@ -125,40 +107,26 @@ export function IncludesSection({ onSelectCta }: SectionCtaProps) {
                   />
 
                   <div
-                    className={`relative z-10 rounded-[var(--card-r)] ${style.cardBg} flex flex-col justify-between shadow-lg h-full min-h-[530px] lg:min-h-[calc(var(--u)*718)]`}
+                    className={`relative z-10 rounded-[var(--card-r)] ${style.cardBg} flex flex-col justify-between shadow-lg h-full min-h-[480px] lg:min-h-[calc(var(--u)*660)]`}
                   >
                     <button
                       type="button"
                       onClick={onSelectCta}
-                      className="w-full flex-1 text-left p-[calc(var(--u)*16)] pb-[calc(var(--u)*24)] flex flex-col justify-between gap-[calc(var(--u)*16)] cursor-pointer rounded-[var(--card-r)] focus-visible:outline-offset-4"
+                      className="w-full flex-1 text-left p-[calc(var(--u)*28)] lg:p-[calc(var(--u)*32)] flex flex-col justify-between gap-[calc(var(--u)*20)] cursor-pointer rounded-[var(--card-r)] focus-visible:outline-offset-4"
                     >
-                      <div className="aspect-[4/4.6] w-full rounded-[var(--media-r)] overflow-hidden bg-white">
-                        {card.photo ? (
-                          <img
-                            src={pexelsUrl(card.photo.imageId)}
-                            alt={card.photo.alt}
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
-                          />
-                        ) : card.mockup === 'guide' ? (
-                          <GuideMockup />
-                        ) : (
-                          <CertificateMockup />
-                        )}
+                      <div className="flex-1 flex items-end justify-center pt-2">
+                        <img
+                          src={card.illustration.src}
+                          alt={card.illustration.alt}
+                          width={1400}
+                          height={1365}
+                          loading="lazy"
+                          draggable={false}
+                          className="block w-full h-auto aspect-[1400/1365] select-none transition-transform duration-300 group-hover/card:scale-[1.03]"
+                        />
                       </div>
 
-                      <div className="flex flex-wrap gap-[calc(var(--u)*6)] px-[calc(var(--u)*4)]">
-                        {card.tags.map((tag, tagIdx) => {
-                          const tagStyle = style.tagStyles[tagIdx % style.tagStyles.length];
-                          return (
-                            <span key={tag} className={`aardvark-tag ${tagStyle.bg} ${tagStyle.text}`}>
-                              {tag}
-                            </span>
-                          );
-                        })}
-                      </div>
-
-                      <div className="space-y-[calc(var(--u)*10)] px-[calc(var(--u)*4)]">
+                      <div className="space-y-[calc(var(--u)*10)]">
                         <h3 className="aardvark-h3 text-[#0A0C1A]">{card.title}</h3>
                         <p className="aardvark-small text-[#1c1e2e]">{card.note}</p>
                       </div>
@@ -218,9 +186,10 @@ export function FlowSection({ onSelectCta }: SectionCtaProps) {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 lg:justify-end">
-              <span className="w-[max(44px,calc(var(--u)*56))] h-[max(44px,calc(var(--u)*56))] rounded-full bg-white inline-flex items-center justify-center shrink-0">
-                <SquaiMark variant="color" className="w-1/2 h-1/2" />
-              </span>
+              <SquaiMark
+                variant="color"
+                className="w-[max(36px,calc(var(--u)*48))] h-[max(36px,calc(var(--u)*48))] shrink-0"
+              />
               <AardvarkButtonAlt label={FLOW.cta} variant="dark" onClick={onSelectCta} />
             </div>
           </div>
@@ -268,10 +237,10 @@ export function FlowSection({ onSelectCta }: SectionCtaProps) {
                         src={item.illustration.src}
                         alt={item.illustration.alt}
                         width={1400}
-                        height={1210}
+                        height={1365}
                         loading="lazy"
                         draggable={false}
-                        className="block w-full h-auto select-none"
+                        className="block w-full h-auto aspect-[1400/1365] select-none"
                       />
                     </div>
 
@@ -303,7 +272,6 @@ interface SessionSlideStyle {
   cardBg: string;
   blockColor: string;
   blockPreset: SquaiBlockPreset;
-  tags: Array<{ bg: string; text: string }>;
 }
 
 /* Tarjetas claras: la ilustración de línea (tinta Midnight, relleno
@@ -313,37 +281,21 @@ const SESSION_SLIDE_STYLES: SessionSlideStyle[] = [
     cardBg: 'bg-[#8A8EF9]',
     blockColor: '#303163',
     blockPreset: 'mod-1',
-    tags: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
-      { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]' },
-    ],
   },
   {
     cardBg: 'bg-[#F9C24D]',
     blockColor: '#8A8EF9',
     blockPreset: 'mod-2',
-    tags: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
-      { bg: 'bg-white', text: 'text-[#0A0C1A]' },
-    ],
   },
   {
     cardBg: 'bg-[#d2d7fc]',
     blockColor: '#F9C24D',
     blockPreset: 'mod-3',
-    tags: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
-      { bg: 'bg-[#8A8EF9]', text: 'text-[#0A0C1A]' },
-    ],
   },
   {
     cardBg: 'bg-[#fcf0db]',
     blockColor: '#8A8EF9',
     blockPreset: 'mod-4',
-    tags: [
-      { bg: 'bg-[#0A0C1A]', text: 'text-[#F4F6FF]' },
-      { bg: 'bg-[#F9C24D]', text: 'text-[#0A0C1A]' },
-    ],
   },
 ];
 
@@ -453,8 +405,6 @@ export function SessionsSection({ onSelectCta }: SectionCtaProps) {
       className="w-full relative bg-white text-[#0A0C1A] overflow-clip scroll-mt-10 pb-[var(--books-pb)]"
       aria-labelledby="sessions-heading"
     >
-      <SectionBackdrop shape="flow" colors={['#eef0fd']} flip="x" align="xMidYMax" />
-
       <div className="relative z-10">
         <header className="relative text-center px-[var(--gutter)] pt-[var(--books-header-pt)] pb-[var(--books-header-pb)]">
           <p className="hidden lg:block absolute top-[calc(var(--u)*150)] left-[calc(var(--u)*116)] -rotate-[10deg] aardvark-handwritten-lg text-[#5a5bb6] max-w-[18ch] text-left">
@@ -486,9 +436,9 @@ export function SessionsSection({ onSelectCta }: SectionCtaProps) {
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
           onClickCapture={onClickCapture}
-          className="sessions-track overflow-x-auto overscroll-x-contain snap-x snap-mandatory lg:snap-none focus-visible:outline-offset-[-6px]"
+          className="sessions-track overflow-x-auto overflow-y-hidden overscroll-x-contain touch-pan-x touch-pan-y snap-x snap-mandatory lg:snap-none focus-visible:outline-offset-[-6px]"
         >
-          <ol className="flex items-center w-max px-[var(--books-list-px)] py-[var(--books-list-py)]">
+          <ol className="flex items-center w-max px-[var(--books-list-px)] pt-[calc(var(--books-list-py)+calc(var(--u)*24))] pb-[calc(var(--books-list-py)+calc(var(--u)*64))]">
             {SESSIONS.items.map((session, idx) => {
               const style = SESSION_SLIDE_STYLES[idx % SESSION_SLIDE_STYLES.length];
               const motionPreset = SESSION_SLIDE_MOTION[idx % SESSION_SLIDE_MOTION.length];
@@ -507,42 +457,34 @@ export function SessionsSection({ onSelectCta }: SectionCtaProps) {
                   >
                     <SquaiCornerBlocks size="card" preset={style.blockPreset} hoverOnly backColor={style.blockColor} />
 
-                    <div className={`session-slide__bg relative z-[1] ${style.cardBg} rounded-[var(--card-r)] flex items-end`} aria-hidden="true">
+                    <div
+                      className={`session-slide__bg relative z-[1] ${style.cardBg} rounded-[var(--card-r)] flex items-end min-h-[480px] lg:min-h-[calc(var(--u)*660)]`}
+                      aria-hidden="true"
+                    >
                       <div className={`session-slide__bg-bottom ${style.cardBg}`} />
                     </div>
 
-                    <div className="relative z-[1] flex flex-col gap-[var(--books-item-gap)] p-[var(--books-item-pad)] pb-[calc(var(--books-item-pad)*1.5)] text-[#0A0C1A]">
-                      <img
-                        src={session.illustration.src}
-                        alt={session.illustration.alt}
-                        width={1400}
-                        height={1210}
-                        loading="lazy"
-                        draggable={false}
-                        className="block w-full h-auto aspect-[1400/1210] select-none"
-                      />
+                    <div className="relative z-[1] flex flex-col justify-between gap-[calc(var(--u)*20)] p-[calc(var(--u)*28)] lg:p-[calc(var(--u)*32)] min-h-[480px] lg:min-h-[calc(var(--u)*660)] text-[#0A0C1A]">
+                      <div className="flex-1 flex items-end justify-center pt-2">
+                        <img
+                          src={session.illustration.src}
+                          alt={session.illustration.alt}
+                          width={1400}
+                          height={1365}
+                          loading="lazy"
+                          draggable={false}
+                          className="block w-full h-auto aspect-[1400/1365] select-none"
+                        />
+                      </div>
 
-                      <div className="flex flex-col gap-[calc(var(--u)*10)] px-[calc(var(--u)*2)]">
-                        <div className="flex flex-wrap gap-[calc(var(--u)*4)]">
-                          <span className={`aardvark-tag ${style.tags[0].bg} ${style.tags[0].text}`}>
-                            <span className="sr-only">Sesión {session.number}, </span>
-                            <time dateTime={session.isoDate}>
-                              {session.date} · {SESSIONS.time}
-                            </time>
-                          </span>
-                          {session.tags.map((tag, tagIdx) => {
-                            const tagStyle = style.tags[(tagIdx + 1) % style.tags.length];
-                            return (
-                              <span key={tag} className={`aardvark-tag ${tagStyle.bg} ${tagStyle.text}`}>
-                                {tag}
-                              </span>
-                            );
-                          })}
-                        </div>
-                        <h3 id={`session-${session.number}-title`} className="aardvark-h3">
+                      <div className="space-y-[calc(var(--u)*10)]">
+                        <time dateTime={session.isoDate} className="sr-only">
+                          Sesión {session.number}, {session.date} · {SESSIONS.time}
+                        </time>
+                        <h3 id={`session-${session.number}-title`} className="aardvark-h3 text-[#0A0C1A]">
                           {session.topic}
                         </h3>
-                        <p className="aardvark-small session-slide__copy text-[#1c1e2e]">{session.copy}</p>
+                        <p className="aardvark-small text-[#1c1e2e]">{session.copy}</p>
                       </div>
                     </div>
 
