@@ -119,6 +119,37 @@
   --frame-r: calc(var(--u) * 40);
   --frame-b: calc(var(--u) * 8);
 
+  /* Encabezado: medidas de .hero de la referencia (móvil, 402). */
+  --hero-x: calc(var(--u) * 16);
+  --hero-title-top: calc(var(--u) * 196);
+  --hero-title-w: 100%;
+  --hero-gap-title: calc(var(--u) * 16);
+  --hero-gap-cta: calc(var(--u) * 16);
+  --hero-p-fs: max(16px, calc(var(--u) * 18));
+  --hero-p-w: 100%;
+  --hero-note-x: calc(var(--u) * 229);
+  --hero-note-y: calc(var(--u) * 114);
+  --hero-note-w: calc(var(--u) * 137);
+
+  /* Carrusel de sesiones (.books de la referencia, 1 em = 16 unidades). */
+  --books-header-pt: calc(var(--u) * 72);
+  --books-header-pb: calc(var(--u) * 24);
+  --books-header-gap: calc(var(--u) * 12);
+  --books-pb: calc(var(--u) * 40);
+  --books-list-px: calc(var(--u) * 8);
+  --books-list-py: calc(var(--u) * 40);
+  --books-item-w: calc(var(--u) * 258);
+  --books-item-px: calc(var(--u) * 12);
+  --books-item-pad: calc(var(--u) * 12);
+  --books-item-gap: calc(var(--u) * 12);
+  --slider-btn: max(44px, calc(var(--u) * 56));
+
+  /* Etiquetas de logros (.benefits__label-inner). */
+  --fs-label: calc(var(--u) * 30);
+  --label-r: calc(var(--u) * 22);
+  --label-px: calc(var(--u) * 12);
+  --label-py: calc(var(--u) * 9);
+
   --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-soft-overshoot: cubic-bezier(0.59, 1, 0.88, 1.01);
   --ease-bounce: cubic-bezier(0.34, 1.57, 0.64, 1);
@@ -130,6 +161,15 @@
 @media (min-width: 768px) {
   :root {
     --u: calc(100vw / 834);
+    --fs-label: calc(var(--u) * 52);
+    --hero-title-w: calc(var(--u) * 740);
+    --hero-p-w: calc(var(--u) * 315);
+    --hero-note-x: calc(var(--u) * 629);
+    --hero-note-y: calc(var(--u) * 123);
+    --hero-note-w: calc(var(--u) * 138);
+    --label-r: calc(var(--u) * 40);
+    --label-px: calc(var(--u) * 20);
+    --label-py: calc(var(--u) * 12);
     --fs-h1: calc(var(--u) * 96);
     --fs-badge: calc(var(--u) * 32);
     --input-h: calc(var(--u) * 58);
@@ -179,6 +219,36 @@
 
     --frame-r: calc(var(--u) * 80);
     --frame-b: calc(var(--u) * 16);
+
+    --hero-x: calc(var(--u) * 20);
+    --hero-title-top: calc(var(--u) * 240);
+    --hero-title-w: calc(var(--u) * 1232);
+    --hero-gap-title: calc(var(--u) * 32);
+    --hero-gap-cta: calc(var(--u) * 16);
+    --hero-p-fs: max(16px, calc(var(--u) * 24));
+    --hero-p-w: calc(var(--u) * 421);
+    --hero-note-x: calc(var(--u) * 1693);
+    --hero-note-y: calc(var(--u) * 518);
+    --hero-note-w: calc(var(--u) * 153);
+
+    --books-header-pt: calc(var(--u) * 220);
+    --books-header-pb: calc(var(--u) * 80);
+    --books-header-gap: calc(var(--u) * 32);
+    --books-pb: calc(var(--u) * 125);
+    --books-list-px: calc(var(--u) * 16);
+    --books-list-py: calc(var(--u) * 56);
+    --books-item-w: calc(var(--u) * 416);
+    --books-item-px: calc(var(--u) * 32);
+    --books-item-pad: calc(var(--u) * 16);
+    --books-item-gap: calc(var(--u) * 16);
+    --slider-btn: calc(var(--u) * 72);
+
+    /* 104 en la referencia (etiquetas en inglés, más cortas); las nuestras
+       son ~1,5 veces más largas, así que bajan a 84 para ocupar el mismo ancho. */
+    --fs-label: calc(var(--u) * 84);
+    --label-r: calc(var(--u) * 70);
+    --label-px: calc(var(--u) * 32);
+    --label-py: calc(var(--u) * 22);
   }
 }
 
@@ -217,6 +287,19 @@
   letter-spacing: -0.05em;
   -webkit-text-stroke: 0.018em currentColor;
   paint-order: stroke fill;
+}
+
+/* Encabezado con las proporciones de .hero de la referencia: título de
+   160/96/52 unidades con interlineado 0,8, párrafo de 24/18 con 1,2 y
+   alto de 1400 unidades en desktop (en móvil, al menos una pantalla). */
+.aardvark-hero-title {
+  line-height: 0.8;
+}
+
+.aardvark-hero-lead {
+  font-size: var(--hero-p-fs);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .aardvark-h2 {
@@ -307,24 +390,6 @@
   font-weight: 700;
   font-size: var(--fs-tag);
   line-height: 1;
-}
-
-/* Texto curvo de Presentación (unidades del viewBox de 1920): da 48, 96
-   y 186 px de diseño en móvil, tablet y desktop sobre el ancho de la banda. */
-.aardvark-curve-text {
-  font-size: 249px;
-}
-
-@media (min-width: 768px) {
-  .aardvark-curve-text {
-    font-size: 230px;
-  }
-}
-
-@media (min-width: 992px) {
-  .aardvark-curve-text {
-    font-size: 191px;
-  }
 }
 
 /* Inputs del formulario y del newsletter (form__input de la referencia). */
@@ -663,6 +728,179 @@
 }
 
 /* ============================================================
+   Carrusel de sesiones (.books-slider de la referencia)
+   ============================================================ */
+.sessions-track {
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.sessions-track::-webkit-scrollbar {
+  display: none;
+}
+
+.sessions-track[data-dragging='true'] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.sessions-track[data-dragging='true'] .session-slide__link {
+  pointer-events: none;
+}
+
+.session-slide {
+  user-select: none;
+}
+
+.session-slide__inner {
+  display: grid;
+  transition: rotate 0.35s var(--ease-bounce);
+}
+
+.session-slide__inner > * {
+  grid-area: 1 / 1;
+}
+
+.session-slide__inner > .session-slide__cta,
+.session-slide__inner > .session-slide__link {
+  grid-area: auto;
+}
+
+.session-slide__bg {
+  width: 100%;
+  height: 100%;
+}
+
+.session-slide__bg-bottom {
+  width: 100%;
+  height: calc(var(--u) * 80);
+  border-bottom-left-radius: var(--card-r);
+  border-bottom-right-radius: var(--card-r);
+  transition: translate 0.4s var(--ease-smooth);
+}
+
+.session-slide__copy {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.session-slide__cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--btn-h) * -0.85);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.session-slide__cta .aardvark-btn-alt__text-wrap,
+.session-slide__cta .aardvark-btn-alt__icon-wrap {
+  opacity: 0;
+  translate: 0 -1.5em 0;
+  transition:
+    opacity 0.1s var(--ease-smooth),
+    translate 0.35s var(--button-alt-ease-bounce),
+    rotate 0.35s var(--button-alt-ease-bounce),
+    transform 0.35s var(--button-alt-ease-bounce);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .session-slide:has(.session-slide__link:is(:hover, :focus-visible)) .session-slide__inner {
+    rotate: calc(var(--session-rot, 0deg) * 1.3);
+    transition: rotate 0.35s 0.1s var(--ease-bounce);
+  }
+
+  .session-slide:has(.session-slide__link:is(:hover, :focus-visible)) .session-slide__bg-bottom {
+    translate: 0 calc(var(--btn-h) * 0.5) 0;
+    transition: translate 0.35s 0.1s var(--ease-bounce);
+  }
+
+  .session-slide:has(.session-slide__link:is(:hover, :focus-visible)) .squai-corner-hover-only {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .session-slide:has(.session-slide__link:is(:hover, :focus-visible)) .session-slide__cta .aardvark-btn-alt__text-wrap {
+    opacity: 1;
+    translate: 0 0 0;
+    rotate: -16deg;
+    transform: rotate(16deg);
+    transition:
+      opacity 0.2s var(--ease-smooth),
+      translate 0.35s var(--button-alt-ease-bounce),
+      rotate 0.15s var(--button-alt-ease-bounce),
+      transform 0.35s 0.2s var(--button-alt-ease-bounce);
+    transition-delay: 0.15s;
+  }
+
+  .session-slide:has(.session-slide__link:is(:hover, :focus-visible)) .session-slide__cta .aardvark-btn-alt__icon-wrap {
+    opacity: 1;
+    translate: 0 0 0;
+    rotate: 16deg;
+    transform: rotate(-16deg);
+    transition:
+      opacity 0.2s var(--ease-smooth),
+      translate 0.35s var(--button-alt-ease-bounce),
+      rotate 0.15s var(--button-alt-ease-bounce),
+      transform 0.35s 0.2s var(--button-alt-ease-bounce);
+    transition-delay: 0.15s;
+  }
+}
+
+/* Flechas del carrusel (.books-slider__controls-button) */
+.slider-arrow {
+  display: inline-grid;
+  width: var(--slider-btn);
+  height: var(--slider-btn);
+  padding: 0;
+  color: #FFFFFF;
+  cursor: pointer;
+  user-select: none;
+  transition: scale 0.15s var(--ease-click), opacity 0.25s ease-out;
+}
+
+.slider-arrow:active {
+  scale: 0.9;
+}
+
+.slider-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+  pointer-events: none;
+}
+
+.slider-arrow__bg {
+  grid-area: 1 / 1;
+  border-radius: 50%;
+  background-color: #0A0C1A;
+  transition:
+    scale 0.15s var(--ease-soft-overshoot),
+    transform 0.15s var(--ease-soft-overshoot);
+}
+
+.slider-arrow__icon {
+  grid-area: 1 / 1;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .slider-arrow:is(:hover, :focus-visible) .slider-arrow__bg {
+    scale: 0.955 0.925;
+    transform: scale(1.047, 1.081);
+    transition:
+      scale 0.15s var(--ease-soft-overshoot),
+      transform 0.35s 0.15s var(--ease-bounce);
+  }
+}
+
+/* ============================================================
    Aardvark Flow Cards Overlap
    ============================================================ */
 @media (min-width: 1024px) {
@@ -737,6 +975,53 @@
 }
 
 /* ============================================================
+   Fondos de formas (SectionBackdrop): respiración de la referencia.
+   El trazo del mismo color engorda la forma y la rota 2°; se pausa
+   fuera de pantalla.
+   ============================================================ */
+.squai-blob {
+  overflow: hidden;
+}
+
+.squai-blob path {
+  stroke-width: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: squai-blob-breathe 6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+
+.squai-blob--small path {
+  animation-name: squai-blob-breathe-small;
+}
+
+.squai-blob[data-breathing='on'] path {
+  animation-play-state: running;
+}
+
+@keyframes squai-blob-breathe {
+  0%, 100% {
+    stroke-width: 0;
+    rotate: 0deg;
+  }
+  50% {
+    stroke-width: 60px;
+    rotate: 2deg;
+  }
+}
+
+@keyframes squai-blob-breathe-small {
+  0%, 100% {
+    stroke-width: 0;
+    rotate: 0deg;
+  }
+  50% {
+    stroke-width: 35px;
+    rotate: 2deg;
+  }
+}
+
+/* ============================================================
    Continuous Marquee Strip
    ============================================================ */
 @keyframes aardvark-marquee {
@@ -768,6 +1053,7 @@
   .aardvark-marquee-track,
   .aardvark-marquee-track-reverse,
   .aardvark-char,
+  .squai-blob path,
   .squai-block-tl-back,
   .squai-block-tl-front,
   .squai-block-tr-back,

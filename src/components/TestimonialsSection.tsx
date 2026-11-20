@@ -1,4 +1,5 @@
 import React from 'react';
+import { SectionBackdrop } from './Backdrops';
 import { motion } from 'motion/react';
 import { AardvarkButtonAlt, SquaiSingleBlock } from './AardvarkPrimitives';
 import { SquaiMark } from './SquaiBrand';
@@ -66,14 +67,16 @@ export function TestimonialsSection({ onSelectCta }: { onSelectCta: () => void }
       className="w-full relative z-20 bg-white text-[#0A0C1A] rounded-t-[var(--edge-r)] -mt-10 sm:-mt-16 lg:-mt-24 pt-[var(--section-py)] pb-[calc(var(--section-py)*0.6)] px-[var(--gutter)] scroll-mt-24"
       aria-labelledby="testimonials-heading"
     >
-      <div className="text-center max-w-[calc(var(--u)*1200)] mx-auto mb-[calc(var(--u)*56)] space-y-[calc(var(--u)*20)]">
+      <SectionBackdrop shape="flow" colors={['#fcf6ea']} flip="y" align="xMidYMin" />
+
+      <div className="relative z-10 text-center max-w-[calc(var(--u)*1200)] mx-auto mb-[calc(var(--u)*56)] space-y-[calc(var(--u)*20)]">
         <h2 id="testimonials-heading" className="aardvark-h2 text-[#0A0C1A]">
           {TESTIMONIALS.title}
         </h2>
         <p className="aardvark-lead text-[#525770] max-w-[calc(var(--u)*760)] mx-auto">{TESTIMONIALS.lead}</p>
       </div>
 
-      <div className="relative max-w-[calc(var(--u)*1242)] mx-auto rounded-[var(--frame-r)] border-[length:var(--frame-b)] border-[#0A0C1A] bg-[#e1e4fd] px-[calc(var(--u)*20)] lg:px-[calc(var(--u)*56)] pt-[calc(var(--u)*30)] pb-[calc(var(--u)*56)] lg:min-h-[calc(var(--u)*897)]">
+      <div className="relative z-10 max-w-[calc(var(--u)*1242)] mx-auto rounded-[var(--frame-r)] border-[length:var(--frame-b)] border-[#0A0C1A] bg-[#e1e4fd] px-[calc(var(--u)*20)] lg:px-[calc(var(--u)*56)] pt-[calc(var(--u)*30)] pb-[calc(var(--u)*56)] lg:min-h-[calc(var(--u)*897)]">
         {/* Squai marks in place of the reference emojis */}
         <SquaiMark
           variant="color"

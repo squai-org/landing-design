@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { SectionBackdrop } from './Backdrops';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -110,7 +111,9 @@ export function SignupFormSection() {
       className="w-full relative z-20 bg-white py-[calc(var(--section-py)*0.6)] px-[var(--gutter)] scroll-mt-24"
       aria-labelledby="signup-heading"
     >
-      <div className="mx-auto grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*64)] items-start">
+      <SectionBackdrop shape="benefits" colors={['#eef0fd', '#f9faff']} opacities={[0.8, 1]} flip="x" small />
+
+      <div className="relative z-10 mx-auto grid grid-cols-1 lg:grid-cols-12 gap-[calc(var(--u)*64)] items-start">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
