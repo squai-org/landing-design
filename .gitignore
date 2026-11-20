@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Datos locales del servidor de desarrollo (inscripciones, eventos). Nunca versionar.
+.squai-store.json
